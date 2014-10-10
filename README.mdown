@@ -5,3 +5,5 @@ Amos Byon,
 Jessica Lai,
 Jon Park.
 Kevin Kim 
+
+Testing: checking that EGit is working - Amos

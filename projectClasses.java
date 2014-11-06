@@ -31,17 +31,23 @@ public abstract class Player extends Thread{
 	public void updateEnergy(){
 		
 	}
-	public String returnHealth(){
-
-	}
-	
-	
-	
 	public void updateX(){
 
 	}
 	public void updateY(){
 
+	}
+	public int getPosX(){
+		return posX;
+	}
+	public int getPosY(){
+		return posY;
+	}
+	public String getHealth(){
+		return hp;
+	}
+	public String getAttempts(){
+		return attempts;
 	}
 	public boolean validMove(){
 		//check if there's something blocking their way 

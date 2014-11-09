@@ -187,9 +187,10 @@ public class Rock extends Obstacle{
 
 	}
 }
-public class Tree extends 
-
 public class Server{
+
+}
+public class Tree extends Obstace{
 	public Tree(){
 
 	}
@@ -204,7 +205,7 @@ public class chatBox extends Thread{
 	JScrollPane scrollText;
 	JButton send;
 	PrintWriter pw; 
-	BufferedRead br; 
+	BufferedReader br; 
 	Player[] playerList; 
 	public chatBox(){ 
 
@@ -242,9 +243,24 @@ public class mainWin extends JFrame implements Runnable{
 }
 
 public class MiniMap extends FullMap{
+	Player currPlayer;
 
 }
 
 public class FullMap extends JFrame{
+	Player[] playerList; 
+	ArrayList<Obstacle> obstacleList; 
+	ArrayList<Item> itemList;
+	
+	private int centerX; //center x position
+	private int centerY; //center y position
 
+
+
+}
+
+class drawPanel extends JPanel{
+	void paintComponent(Graphics G){
+		super(G.paintComponent);
+	}
 }

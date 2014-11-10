@@ -1,4 +1,4 @@
-//What it would look like if it were in java and without game engine
+ //What it would look like if it were in java and without game engine
 //Amos, Anne, Jess, Jon, Kevin
 
 public abstract class Player extends Thread{

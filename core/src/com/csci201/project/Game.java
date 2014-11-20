@@ -32,7 +32,7 @@ public class Game implements ApplicationListener {
 	@Override
 	public void create() {
 	    batch = new SpriteBatch();
-	    FileHandle characterFileHandle = Gdx.files.internal("santa.png"); 
+	    FileHandle characterFileHandle = Gdx.files.internal("penguin.png"); 
 	    characterTexture = new Texture(characterFileHandle);
 	    width = characterTexture.getWidth()/3;
 	    height = characterTexture.getHeight()/4;
@@ -53,11 +53,11 @@ public class Game implements ApplicationListener {
 		   if(Gdx.input.isKeyPressed(Keys.A)) {
 			   
 			   if(left.getRightFoot()){
-				   character.setRegion(0, height*3, width, height);
+				   character.setRegion(0, height*1, width, height);
 			   }
 			   
 			   else if (left.getLeftFoot()){
-				   character.setRegion(width*1, height*3, width, height);
+				   character.setRegion(width*2, height*1, width, height);
 				   
 			   }
 			   
@@ -69,11 +69,11 @@ public class Game implements ApplicationListener {
 		   if(Gdx.input.isKeyPressed(Keys.D)) {
 		      
 			   if(right.getRightFoot()){
-				   character.setRegion(0, height*1, width, height);
+				   character.setRegion(0, height*2, width, height);
 			   }
 			   
 			   else if (right.getLeftFoot()){
-				   character.setRegion(width*1, height*1, width, height);
+				   character.setRegion(width*2, height*2, width, height);
 				   
 			   }
 			   
@@ -86,11 +86,11 @@ public class Game implements ApplicationListener {
 		   if(Gdx.input.isKeyPressed(Keys.W)) {
 		      
 			   if(up.getRightFoot()){
-				   character.setRegion(0, height*0, width, height);
+				   character.setRegion(0, height*3, width, height);
 			   }
 			   
 			   else if (up.getLeftFoot()){
-				   character.setRegion(width*2, height*0, width, height);
+				   character.setRegion(width*2, height*3, width, height);
 				   
 			   }
 			   
@@ -104,11 +104,11 @@ public class Game implements ApplicationListener {
 		   if(Gdx.input.isKeyPressed(Keys.S)) {
 		      
 			   if(down.getRightFoot()){
-				   character.setRegion(0, height*2, width, height);
+				   character.setRegion(0, height*0, width, height);
 			   }
 			   
 			   else if (down.getLeftFoot()){
-				   character.setRegion(width*2, height*2, width, height);
+				   character.setRegion(width*2, height*0, width, height);
 				   
 			   }
 

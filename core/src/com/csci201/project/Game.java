@@ -29,10 +29,16 @@ public class Game implements ApplicationListener {
 	private int width;
 	private int height;
 	
+	private Projectile p;
+	private Texture projectileTexture;
+	
+	private int projX;
+	private int projY;
+	
 	@Override
 	public void create() {
 	    batch = new SpriteBatch();
-	    FileHandle characterFileHandle = Gdx.files.internal("penguin.png"); 
+	    FileHandle characterFileHandle = Gdx.files.internal("reindeer.png"); 
 	    characterTexture = new Texture(characterFileHandle);
 	    width = characterTexture.getWidth()/3;
 	    height = characterTexture.getHeight()/4;
@@ -45,6 +51,16 @@ public class Game implements ApplicationListener {
 	    right = new MoveState();
 	    left = new MoveState();
 	    up = new MoveState();
+	    
+	    
+	    //Projectile data
+	    FileHandle projectileFileHandle = Gdx.files.internal("projectile.png"); 
+		projectileTexture = new Texture(projectileFileHandle);
+		   
+		p = new Projectile(projectileTexture, projectileTexture.getWidth(), projectileTexture.getHeight());
+		   
+		projX = 0;
+		projY = 0;
 	    
 	}
 	
@@ -63,7 +79,7 @@ public class Game implements ApplicationListener {
 			   
 			  left.changeFoot();
 			  
-		      characterX -= Gdx.graphics.getDeltaTime() * characterSpeed;
+		      characterX -= Gdx.graphics.getDeltaTime() * characterSpeed - 1;
 		   }
 		   
 		   if(Gdx.input.isKeyPressed(Keys.D)) {
@@ -115,13 +131,33 @@ public class Game implements ApplicationListener {
 				   
 			   down.changeFoot();
 			   
-			   characterY -= Gdx.graphics.getDeltaTime() * characterSpeed;
+			   characterY -= Gdx.graphics.getDeltaTime() * characterSpeed - 1;
 		   }
 		   
+		  
+		   
+		   if(Gdx.input.justTouched()){
+			   
+			   
+			   projX = Gdx.input.getX();
+			   projY = Gdx.input.getY();
+			   
+			   
+			   projY = Math.abs(Gdx.graphics.getHeight()-projY);
+			   
+			   p.setPosition(projX, projY);
+			   
+			   
+			  // System.out.println("X: " + x + " Y: " + y);
+			   
+		   }
 		   
 		   Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		   batch.begin();
 		   batch.draw(character, (int)characterX, (int)characterY);
+		   batch.draw(p, projX, projY);
+		   
+		  
 		   batch.end();
 		}
 	

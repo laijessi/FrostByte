@@ -27,50 +27,9 @@ public class ScreenMainMenu implements Screen{
 	TextureRegion titleMenu;
 	SpriteBatch batch;
 	
-	private Stage stage;
-	private Skin skin;
-	private TextButton buttonPlay, buttonExit;
-	
 	//constructor
 	public ScreenMainMenu(Game g){
 		game = g;
-		
-		setUpButtons();
-	}
-	
-	public void setUpButtons(){
-		stage = new Stage();
-		Gdx.input.setInputProcessor(stage);
-		
-		skin = new Skin();
-		Pixmap pixmap = new Pixmap(100, 100, Format.RGBA8888);
-		pixmap.setColor(Color.LIGHT_GRAY);
-		pixmap.fill();
-		
-		skin.add("black", new Texture(pixmap));
-		
-		BitmapFont bfont = new BitmapFont();
-		bfont.scale(1);
-		skin.add("default", bfont);
-		
-		TextButtonStyle tbs = new TextButtonStyle();
-		tbs.up = skin.newDrawable("black", Color.DARK_GRAY);
-		tbs.down = skin.newDrawable("black", Color.DARK_GRAY);
-		tbs.checked = skin.newDrawable("black", Color.BLACK);
-		tbs.over = skin.newDrawable("black", Color.LIGHT_GRAY);
-		
-		tbs.font = skin.getFont("default");
-		
-		buttonPlay = new TextButton("Play", tbs);
-		buttonPlay.setPosition(100, 100);
-		stage.addActor(buttonPlay);
-		
-		buttonPlay.addListener(new ChangeListener(){
-			public void changed(ChangeEvent event, Actor actor){
-				//set a new game screen here
-				//g.setScreen(new whatevs());
-			}
-		});
 	}
 
 	@Override
@@ -82,9 +41,6 @@ public class ScreenMainMenu implements Screen{
 		batch.begin();
 		batch.draw(titleMenu, 0, 0);
 		batch.end();
-		
-		stage.act(1000);
-		stage.draw();
 
 		/*
 		if (time > 1) {
@@ -134,8 +90,6 @@ public class ScreenMainMenu implements Screen{
 		Gdx.app.debug("FrostByte", "dispose main menu");
 		batch.dispose();
 		titleMenu.getTexture().dispose();
-		stage.dispose();
-		skin.dispose();
 	}
 
 }

@@ -1,12 +1,13 @@
 package com.csci201.project;
 
 import com.badlogic.gdx.ApplicationAdapter;
+import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
-public class Game extends ApplicationAdapter {
+public class FrostByte extends Game {
 	SpriteBatch batch;
 	Texture img;
 	

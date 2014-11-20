@@ -106,6 +106,8 @@ public class ScreenMainMenu implements Screen{
 		titleMenu = new TextureRegion(new Texture(Gdx.files.internal("mainMenu.jpg")), 0, 0, 480, 320);
 		batch = new SpriteBatch();
 		batch.getProjectionMatrix().setToOrtho2D(0, 0, 480, 320);
+		
+		
 	}
 
 	@Override

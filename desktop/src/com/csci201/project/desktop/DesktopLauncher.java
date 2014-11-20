@@ -7,6 +7,11 @@ import com.csci201.project.FrostByte;
 public class DesktopLauncher {
 	public static void main (String[] arg) {
 		LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
+		
+		config.title = "FrostByte";
+		config.useGL30 = false;
+		config.resizable = false;
+		
 		new LwjglApplication(new FrostByte(), config);
 	}
 }

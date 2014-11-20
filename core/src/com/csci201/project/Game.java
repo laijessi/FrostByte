@@ -14,11 +14,11 @@ import com.badlogic.gdx.InputProcessor;
 
 public class Game implements ApplicationListener {
 	private SpriteBatch batch;
-	private Texture marioTexture;
-	private Sprite mario;
-	private int marioX;
-	private int marioY;
-	float marioSpeed = 150f;
+	private Texture characterTexture;
+	private Sprite character;
+	private int characterX;
+	private int characterY;
+	float characterSpeed = 150f;
 	
 	/*Boolean data for movement state tracking*/	
 	private MoveState down;
@@ -32,13 +32,13 @@ public class Game implements ApplicationListener {
 	@Override
 	public void create() {
 	    batch = new SpriteBatch();
-	    FileHandle marioFileHandle = Gdx.files.internal("santa.png"); 
-	    marioTexture = new Texture(marioFileHandle);
-	    width = marioTexture.getWidth()/3;
-	    height = marioTexture.getHeight()/4;
-	    mario = new Sprite(marioTexture, width, height*2, width, height);
-	    marioX = 0;
-	    marioY = 0;
+	    FileHandle characterFileHandle = Gdx.files.internal("santa.png"); 
+	    characterTexture = new Texture(characterFileHandle);
+	    width = characterTexture.getWidth()/3;
+	    height = characterTexture.getHeight()/4;
+	    character = new Sprite(characterTexture, width, height*2, width, height);
+	    characterX = 0;
+	    characterY = 0;
 	    
 	    //MoveState data
 	    down = new MoveState();
@@ -52,44 +52,76 @@ public class Game implements ApplicationListener {
 	public void render() {
 		   if(Gdx.input.isKeyPressed(Keys.A)) {
 			   
+			   if(left.getRightFoot()){
+				   character.setRegion(0, height*3, width, height);
+			   }
+			   
+			   else if (left.getLeftFoot()){
+				   character.setRegion(width*1, height*3, width, height);
+				   
+			   }
+			   
+			  left.changeFoot();
 			  
-			  
-		      marioX -= Gdx.graphics.getDeltaTime() * marioSpeed;
+		      characterX -= Gdx.graphics.getDeltaTime() * characterSpeed;
 		   }
 		   
 		   if(Gdx.input.isKeyPressed(Keys.D)) {
 		      
+			   if(right.getRightFoot()){
+				   character.setRegion(0, height*1, width, height);
+			   }
 			   
-			   marioX += Gdx.graphics.getDeltaTime() * marioSpeed;
+			   else if (right.getLeftFoot()){
+				   character.setRegion(width*1, height*1, width, height);
+				   
+			   }
+			   
+			   right.changeFoot();
+			   
+			   characterX += Gdx.graphics.getDeltaTime() * characterSpeed;
 		   
 		   }
 		   
 		   if(Gdx.input.isKeyPressed(Keys.W)) {
 		      
+			   if(up.getRightFoot()){
+				   character.setRegion(0, height*0, width, height);
+			   }
 			   
-			   marioY += Gdx.graphics.getDeltaTime() * marioSpeed;
+			   else if (up.getLeftFoot()){
+				   character.setRegion(width*2, height*0, width, height);
+				   
+			   }
+			   
+			   up.changeFoot();
+			   
+			   characterY += Gdx.graphics.getDeltaTime() * characterSpeed;
+			   
+			   
 		   }
 		   
 		   if(Gdx.input.isKeyPressed(Keys.S)) {
 		      
 			   if(down.getRightFoot()){
-				   mario.setRegion(0, height*2, width, height);
+				   character.setRegion(0, height*2, width, height);
 			   }
 			   
 			   else if (down.getLeftFoot()){
-				   mario.setRegion(width*2, height*2, width, height);
+				   character.setRegion(width*2, height*2, width, height);
 				   
 			   }
 
 				   
 			   down.changeFoot();
 			   
-			   marioY -= Gdx.graphics.getDeltaTime() * marioSpeed;
+			   characterY -= Gdx.graphics.getDeltaTime() * characterSpeed;
 		   }
+		   
 		   
 		   Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		   batch.begin();
-		   batch.draw(mario, (int)marioX, (int)marioY);
+		   batch.draw(character, (int)characterX, (int)characterY);
 		   batch.end();
 		}
 	

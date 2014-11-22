@@ -3,51 +3,55 @@ package com.csci201.project;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.Pixmap;
-import com.badlogic.gdx.graphics.Pixmap.Format;
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.g2d.TextureAtlas;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.Actor;
-import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
-import com.badlogic.gdx.scenes.scene2d.ui.TextButton.TextButtonStyle;
-import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
+import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 
 public class ScreenMainMenu implements Screen{
 	//class variables
 	Game game;
+	Stage stage;
 	
-	TextureRegion titleMenu;
-	SpriteBatch batch;
+	private TextButton buttonPlay;
+	private TextField fieldHostName;
+	
+	private int xCen;
+	private int yCen;
 	
 	//constructor
 	public ScreenMainMenu(Game g){
 		game = g;
+		stage = new Stage();
+		
+		xCen = Gdx.graphics.getWidth()/2;
+		yCen = Gdx.graphics.getHeight()/2;
+		
+		Gdx.input.setInputProcessor(stage);
+		
+		Skin skin = new Skin(Gdx.files.internal("uiskin.json"));
+		
+		buttonPlay = new TextButton("Play", skin);
+		buttonPlay.setPosition(xCen-150, yCen-30);
+		buttonPlay.setSize(300, 60);
+		
+		fieldHostName = new TextField("", skin);
+		fieldHostName.setPosition(xCen-150, yCen-60);
+		fieldHostName.setSize(300, 30);
+		
+		stage.addActor(buttonPlay);
+		stage.addActor(fieldHostName);
 	}
 
 	@Override
 	public void render(float delta) {
 		// TODO Auto-generated method stub
-		Gdx.gl.glClearColor(0, 0, 0, 1);
+		Gdx.gl.glClearColor(1, 1, 1, 0);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		
-		batch.begin();
-		batch.draw(titleMenu, 0, 0);
-		batch.end();
-
-		/*
-		if (time > 1) {
-			if (Gdx.input.isKeyPressed(Keys.ANY_KEY) || Gdx.input.justTouched()) {
-				game.setScreen(new IntroScreen(game));
-			}
-		}*/
+		stage.act(delta);
+		stage.draw();
 	}
 
 	@Override
@@ -59,11 +63,6 @@ public class ScreenMainMenu implements Screen{
 	@Override
 	public void show() {
 		// TODO Auto-generated method stub
-		titleMenu = new TextureRegion(new Texture(Gdx.files.internal("mainMenu.jpg")), 0, 0, 480, 320);
-		batch = new SpriteBatch();
-		batch.getProjectionMatrix().setToOrtho2D(0, 0, 480, 320);
-		
-		
 	}
 
 	@Override
@@ -88,8 +87,6 @@ public class ScreenMainMenu implements Screen{
 	public void dispose() {
 		// TODO Auto-generated method stub
 		Gdx.app.debug("FrostByte", "dispose main menu");
-		batch.dispose();
-		titleMenu.getTexture().dispose();
 	}
 
 }

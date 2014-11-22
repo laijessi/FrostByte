@@ -1,5 +1,8 @@
 package com.csci201.project;
 
+import java.util.LinkedList;
+import java.util.Queue;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.files.FileHandle;
@@ -35,11 +38,18 @@ public class Character extends Sprite implements InputProcessor{
 	TiledMap tiledMap;
 	OrthographicCamera camera;
 	TiledMapRenderer tiledMapRenderer;
+	
+	
+	
+	private Queue<Projectile> projectiles;
+	
 
 	public Character(){
 		super(characterTexture, width, height*2, width, height);
 		characterX = 280;
 	    characterY = 220;
+	    
+	    projectiles = new LinkedList<Projectile>();
 
 		//MoveState data
 		down = new MoveState();
@@ -58,13 +68,17 @@ public class Character extends Sprite implements InputProcessor{
 		tiledMapRenderer = new OrthogonalTiledMapRenderer(tiledMap);
 	}
 	
+	public void addProjectile(Projectile p){
+		projectiles.add(p);
+	}
+	
+	public Queue<Projectile> getProjectiles(){
+		return projectiles;
+	}
+	
+	
 	public void moveChar(String dir){
-		Gdx.gl.glClearColor(0, 0, 0, 1);
-		Gdx.gl.glBlendFunc(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
-		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-		camera.update();
-		tiledMapRenderer.setView(camera);
-		tiledMapRenderer.render();
+		
 		amountMoved = Gdx.graphics.getDeltaTime() * characterSpeed;
 		if(dir.equals("A")) {
 			if(left.getRightFoot()){
@@ -113,7 +127,19 @@ public class Character extends Sprite implements InputProcessor{
 		}
 	}
 	
+	public void setChar(){
+		Gdx.gl.glClearColor(0, 0, 0, 1);
+		Gdx.gl.glBlendFunc(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
+		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+		camera.update();
+		tiledMapRenderer.setView(camera);
+		tiledMapRenderer.render();
+	}
+	
 	public void drawChar(SpriteBatch batch){
+		
+		
+		
 		camera.update();  
 		batch.setProjectionMatrix(camera.combined);
 		batch.draw(this, (int)characterX, (int)characterY);

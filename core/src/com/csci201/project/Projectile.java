@@ -11,16 +11,19 @@ public class Projectile extends Sprite {
 
 	//private SpriteBatch batch;
 	//private Texture projectileTexture;
-	private int projectileX;
-	private int projectileY;
+	private float projectileX;
+	private float projectileY;
 	private float speed = 200f;
 	
-	private int width;
-	private int height;
+	private float width;
+	private float height;
 	private float shotTime;
 	private float lifeTime;
 	private float posX, posY;
 	private float vecX, vecY;
+	
+	
+	private float radians;
 	
 	/*public Projectile(Texture p, int width, int height){
 		
@@ -42,7 +45,19 @@ public class Projectile extends Sprite {
 	static FileHandle projectileFileHandle = Gdx.files.internal("data/projectile.png"); 
 	static Texture projectileTexture = new Texture(projectileFileHandle);
 	
-	public Projectile(int shipX, int shipY, int mouseX, int mouseY) {  
+	
+	public Projectile(int mouseX, int mouseY) {  
+		super(projectileTexture, 0, 0, 30, 30);
+		
+
+		
+		
+		
+		
+		
+	}
+	
+	public Projectile(float shipX, float shipY, float mouseX, float mouseY) {  
 		super(projectileTexture, 0, 0, 30, 30);
 		
 		this.shotTime = TimeUtils.millis();
@@ -59,11 +74,10 @@ public class Projectile extends Sprite {
 	}
 	
 	public void drawShot(SpriteBatch batch) {
-		this.lifeTime = TimeUtils.millis() - this.shotTime;
-
+		
 		//position = positionBefore + v*t
-		this.posX = this.posX + this.vecX*this.lifeTime*speed*Gdx.graphics.getDeltaTime();
-		this.posY = this.posY + this.vecY*this.lifeTime*speed*Gdx.graphics.getDeltaTime();
+		this.posX = this.posX + 5;
+		this.posY = this.posY + 5;
 		batch.draw(this, posX, posY);
 	}
 	

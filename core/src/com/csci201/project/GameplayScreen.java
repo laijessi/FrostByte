@@ -22,6 +22,7 @@ public class GameplayScreen extends ApplicationAdapter{
 	@Override
 	public void create() {
 
+		
 		batch = new SpriteBatch();
 		character = new Character();
 
@@ -33,11 +34,16 @@ public class GameplayScreen extends ApplicationAdapter{
 
 		projX = 0;
 		projY = 0;
+	
 */
+		
 	}
 
 	@Override
 	public void render() {
+		
+		character.setChar();
+		
 		if(Gdx.input.isKeyPressed(Keys.A)) {
 			character.moveChar("A");
 		}
@@ -53,16 +59,25 @@ public class GameplayScreen extends ApplicationAdapter{
 		}
 		batch.begin();
 
+		//System.out.println("Rendering");
+		
 		character.drawChar(batch);
 		//batch.draw(character, (int)characterX, (int)characterY);
 		
-		/*if(Gdx.input.justTouched()){
+		if(Gdx.input.justTouched()){
 			projX = Gdx.input.getX();
 			projY = Gdx.input.getY();
-			p = new Projectile(characterX, characterY, projX, projY);
+			character.addProjectile( new Projectile(projX, projY) );
+		
+		}
+		
+		for(Projectile p : character.getProjectiles()){
+			
 			p.drawShot(batch);
-			batch.draw(p,projX,projY);
-		/*	projX = Gdx.input.getX();
+		}
+			
+			
+			/*	projX = Gdx.input.getX();
 			projY = Gdx.input.getY();
 
 

@@ -92,14 +92,14 @@ public class GameplayScreen extends ApplicationAdapter implements InputProcessor
 
 
 		//Projectile data
-		FileHandle projectileFileHandle = Gdx.files.internal("data/projectile.png"); 
+	/*	FileHandle projectileFileHandle = Gdx.files.internal("data/projectile.png"); 
 		projectileTexture = new Texture(projectileFileHandle);
 
-		p = new Projectile(projectileTexture, projectileTexture.getWidth(), projectileTexture.getHeight());
+		//p = new Projectile(projectileTexture, projectileTexture.getWidth(), projectileTexture.getHeight());
 
 		projX = 0;
 		projY = 0;
-
+*/
 	}
 
 	@Override
@@ -183,12 +183,19 @@ public class GameplayScreen extends ApplicationAdapter implements InputProcessor
 			camera.translate(0, (int)-amountMoved);  
 		}
 
+		batch.begin();
 
-
+		camera.update();  
+		batch.setProjectionMatrix(camera.combined);
+		batch.draw(character, (int)characterX, (int)characterY);
+		
 		if(Gdx.input.justTouched()){
-
-
 			projX = Gdx.input.getX();
+			projY = Gdx.input.getY();
+			p = new Projectile(characterX, characterY, projX, projY);
+			p.drawShot(batch);
+			batch.draw(p,projX,projY);
+		/*	projX = Gdx.input.getX();
 			projY = Gdx.input.getY();
 
 
@@ -196,19 +203,10 @@ public class GameplayScreen extends ApplicationAdapter implements InputProcessor
 
 			p.setPosition(projX, projY);
 
-
+*/
 			// System.out.println("X: " + x + " Y: " + y);
-
+			//batch.draw(p, projX, projY);
 		}
-
-		//Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-		batch.begin();
-
-		camera.update();  
-		batch.setProjectionMatrix(camera.combined);
-		batch.draw(character, (int)characterX, (int)characterY);
-		batch.draw(p, projX, projY);
-
 
 		batch.end();
 	}

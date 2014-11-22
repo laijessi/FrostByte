@@ -199,7 +199,7 @@ public class Game extends ApplicationAdapter implements InputProcessor {
 
 		}
 
-		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+		//Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		batch.begin();
 
 		camera.update();  

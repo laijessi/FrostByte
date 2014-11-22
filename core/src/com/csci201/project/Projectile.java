@@ -20,8 +20,8 @@ public class Projectile extends Sprite {
 	private float shotTime;
 	private float lifeTime;
 	private float posX, posY;
-	private float vecX, vecY;
-	
+	private float goX, goY;
+	private float xDistance, yDistance;
 	
 	private float radians;
 	
@@ -57,7 +57,7 @@ public class Projectile extends Sprite {
 		
 	}
 	
-	public Projectile(float shipX, float shipY, float mouseX, float mouseY) {  
+	public Projectile(float goX, float goY, float shipX, float shipY) {  
 		super(projectileTexture, 0, 0, 30, 30);
 		
 		this.shotTime = TimeUtils.millis();
@@ -65,19 +65,30 @@ public class Projectile extends Sprite {
 		this.posX = shipX;
 		this.posY = shipY;
 
+		this.goX = goX;
+		this.goY = goY;
+		
+		this.xDistance = (goX - posX);
+		this.yDistance = (goY - posY);
+		
+		
 		//I used aVector = aVector.nor() here before but for some reason didn't work
-		float tmp = (float) (Math.pow(mouseX-shipX, 2) + Math.pow(mouseY-shipY, 2));
-		tmp = (float) Math.sqrt(Math.abs(tmp));
 
-		this.vecX = (mouseX-shipX)/tmp;
-		this.vecY = (mouseY-shipY)/tmp;
+		radians = (float) Math.atan(yDistance/xDistance);
+		
 	}
 	
 	public void drawShot(SpriteBatch batch) {
 		
 		//position = positionBefore + v*t
-		this.posX = this.posX + 5;
-		this.posY = this.posY + 5;
+		int ACCELERATOR = 5;
+		
+		this.posX += Math.cos(radians) * ACCELERATOR;
+		this.posY += Math.sin(radians) * ACCELERATOR;
+		
+		//System.out.println("Away from x by: " + Math.abs(goX-posX));
+		//System.out.println("Away from y by: " + Math.abs(goY-posY));
+		
 		batch.draw(this, posX, posY);
 	}
 	

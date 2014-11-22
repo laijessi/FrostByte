@@ -67,7 +67,7 @@ public class GameplayScreen extends ApplicationAdapter{
 		if(Gdx.input.justTouched()){
 			projX = Gdx.input.getX();
 			projY = Gdx.input.getY();
-			character.addProjectile( new Projectile(projX, projY) );
+			character.addProjectile( new Projectile(projX, projY, character.getCharacterX(), character.getCharacterY()));
 		
 		}
 		

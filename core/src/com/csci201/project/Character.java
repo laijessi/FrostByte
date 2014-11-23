@@ -20,9 +20,9 @@ public class Character extends Sprite implements InputProcessor{
 
 	static FileHandle characterFileHandle = Gdx.files.internal("data/reindeer.png"); 
 	private static Texture characterTexture = new Texture(characterFileHandle);
-	private int characterX;
-	private int characterY;
-	float characterSpeed = 150f;
+	private float characterX;
+	private float characterY;
+	float characterSpeed = 200f;
 	float amountMoved; 
 
 	/*Boolean data for movement state tracking*/	
@@ -78,6 +78,7 @@ public class Character extends Sprite implements InputProcessor{
 	
 	
 	public void moveChar(String dir){
+
 		
 		amountMoved = Gdx.graphics.getDeltaTime() * characterSpeed;
 		if(dir.equals("A")) {
@@ -88,8 +89,8 @@ public class Character extends Sprite implements InputProcessor{
 				this.setRegion(width*2, height*1, width, height);
 			}
 			left.changeFoot();
-			characterX -= amountMoved - 1;
-			camera.translate((int)-amountMoved,0);
+			characterX -= amountMoved;
+			camera.translate((float)-amountMoved,0);
 		}
 		else if(dir.equals("D")){
 			if(right.getRightFoot()){
@@ -101,7 +102,7 @@ public class Character extends Sprite implements InputProcessor{
 			}
 			right.changeFoot();
 			characterX += amountMoved;
-			camera.translate((int)amountMoved,0);
+			camera.translate((float)amountMoved,0);
 		}
 		else if(dir.equals("W")){
 			if(up.getRightFoot()){
@@ -112,7 +113,7 @@ public class Character extends Sprite implements InputProcessor{
 			}
 			up.changeFoot();
 			characterY += amountMoved;
-			camera.translate(0,(int)amountMoved);
+			camera.translate(0,(float)amountMoved);
 		}
 		else if(dir.equals("S")){
 			if(down.getRightFoot()){
@@ -122,8 +123,8 @@ public class Character extends Sprite implements InputProcessor{
 				this.setRegion(width*2, height*0, width, height);
 			}
 			down.changeFoot();
-			characterY -= amountMoved - 1;
-			camera.translate(0, (int)-amountMoved);  
+			characterY -= amountMoved;
+			camera.translate(0, (float)-amountMoved);  
 		}
 	}
 	
@@ -137,13 +138,19 @@ public class Character extends Sprite implements InputProcessor{
 	}
 	
 	public void drawChar(SpriteBatch batch){
-		
-		
-		
 		camera.update();  
 		batch.setProjectionMatrix(camera.combined);
 		batch.draw(this, (int)characterX, (int)characterY);
 	}
+	
+	public float getCharacterX(){
+		return characterX;
+	}
+	
+	public float getCharacterY(){
+		return characterY;
+	}
+	
 
 	@Override
 	public boolean keyDown(int keycode) {

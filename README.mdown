@@ -1,17 +1,34 @@
-201 Group: 
+FrostByte
+============
 
-Anne Kao, 
-Amos Byon, 
-Jessica Lai,
-Jon Park.
-Kevin Kim 
+FrostByte is a Java based desktop game that uses the open-source libGDX framework. In FrostByte, 4 players will sign into a server using a specifided host name. Each of these players will then select a character to battle in the arena. In the arena, players will fight to their snowy deaths, until there is only one standing. That player will be deemed the sole victor of this year's holiday season. 
 
-Testing: checking that EGit is working - Amos
+FrostByte contains special features such as networking to incorporate a chat feature which players can use to communicate with eachother. Though the game is technically free-for-all, mischievous players can form secret alliances by "whispering" other players in the server.
 
-Testing: got my laptop back! Checking eGit - Anne
+###Game Features
+1. Movement
+	* Movement in FrostByte is defined by the WASD keys. W moves up, A moves left, S moves down, and D moves right
+2. Attacks
+	* Projectiles are fired with a left mouse click
+3. Items
+	* Items can be picked up for various power-ups. These power-ups have a limited duration and take effect as soon as they are picked up.
+4. Health
+	* Health is what keeps you alive in FrostByte. Attacks make it drop, and one it hits zero you are out of the arena.
+5. Energy
+	* Each attack consumes energy. Energy will constantly replenish, based on a timer, albeit gradually. We hope to implement future features that expend energy, such as sepcial moves and blinking
+6. Chat
+	* FrostByte enables players to communicate with eachother via a built-in chat client. This chat client is written using networking principles.
 
-Hi i am kevin
+###Code Location
+1. Java Back-End
+	* All Java back-end code can be found in core/src/com/csci201/project
 
-im da winna man
-
-WORK GOD DAMN IT
+###Future expansion
+1. libGDX provides the ability to easily translate code into other platforms (web, android)
+	* We hope to deploy a mobile version of the application for friends to play together when they're out and have some free time
+2. Implement additional features for gameplay
+	* Blink feature: by pressing the spacebar players can teleport 100 units in the direction they are facing, at the expense of energy
+	* Special Abilities: create "special moves" for each character, that has different effects such as freezing enemies, knocking enemies back, etc.
+3. Create additional maps for varied gameplay
+4. Create an equipment toolbar for players to buy equipment that increases their health or damage
+	* Additionally, there would be a shop where players can trade in "gold" from kills to buy special armor or weapons

@@ -25,6 +25,10 @@ public class Projectile extends Sprite {
 	
 	private float radians;
 	
+	private float distance;
+	
+	private boolean exists;
+	
 	/*public Projectile(Texture p, int width, int height){
 		
 		super(p, 0, 0, width, height);
@@ -59,8 +63,6 @@ public class Projectile extends Sprite {
 	
 	public Projectile(float goX, float goY, float shipX, float shipY) {  
 		super(projectileTexture, 0, 0, 30, 30);
-		
-		this.shotTime = TimeUtils.millis();
 
 		this.posX = shipX;
 		this.posY = shipY;
@@ -68,20 +70,41 @@ public class Projectile extends Sprite {
 		this.goX = goX;
 		this.goY = goY;
 		
-		this.xDistance = (goX - posX);
-		this.yDistance = (goY - posY);
+		this.xDistance = (goX);
+		this.yDistance = -1*(goY);
+		
+		System.out.println("STARTX IS : " + shipX);
+		System.out.println("STARTY IS : " + shipY);
+		
+		System.out.println("GO TO X IS : " + goX);
+		System.out.println("GO TO Y IS : " + goY);
+		
+		System.out.println("X DISTANCE IS: " + xDistance);
+		System.out.println("Y DISTANCE IS: " + yDistance);
 		
 		
+		exists = true;
+		distance = 0;
 		//I used aVector = aVector.nor() here before but for some reason didn't work
 
 		radians = (float) Math.atan(yDistance/xDistance);
 		
+		//Calculations receive proper snowball angle if projectile is in Quadrants 2 or 3
+		
+		if(xDistance < 0 && yDistance > 0){
+			radians += Math.PI;
+		}
+		if(xDistance < 0 && yDistance < 0){
+			radians += Math.PI;
+		}
 	}
 	
 	public void drawShot(SpriteBatch batch) {
 		
 		//position = positionBefore + v*t
-		int ACCELERATOR = 5;
+		
+		//Lucky number
+		double ACCELERATOR = 7.77;
 		
 		this.posX += Math.cos(radians) * ACCELERATOR;
 		this.posY += Math.sin(radians) * ACCELERATOR;
@@ -90,6 +113,19 @@ public class Projectile extends Sprite {
 		//System.out.println("Away from y by: " + Math.abs(goY-posY));
 		
 		batch.draw(this, posX, posY);
+	}
+
+	public float distanceUp() {
+		return distance++;
+		
+	}
+	
+	public boolean exists(){
+		return exists;
+	}
+	
+	public void setExists(boolean b){
+		exists = b;
 	}
 	
 }

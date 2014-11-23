@@ -6,6 +6,8 @@ import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.math.Vector3;
 
 
 public class GameplayScreen extends ApplicationAdapter{
@@ -67,13 +69,31 @@ public class GameplayScreen extends ApplicationAdapter{
 		if(Gdx.input.justTouched()){
 			projX = Gdx.input.getX();
 			projY = Gdx.input.getY();
-			character.addProjectile( new Projectile(projX, projY, character.getCharacterX(), character.getCharacterY()));
+			
+		    Vector2 centerPosition = new Vector2(character.getX(), character.getY());
+
+		    Vector3 worldCoordinates = new Vector3(projX, 600, projY);
+		    //camera.unproject(worldCoordinates);
+
+		    Vector2 mouseLoc = new Vector2(worldCoordinates.x, worldCoordinates.y);
+			
+			//TODO: 320 and 240 are hard-coded to allow the projectile to 
+		    //interpret the current map's origin as (0,0), find the actual
+		    //dimensions of the height and width of the screen and divide by 2
+		    
+		    
+			character.addProjectile( new Projectile(projX-320, projY-240, character.getCharacterX(), character.getCharacterY()));
 		
 		}
-		
+	
 		for(Projectile p : character.getProjectiles()){
 			
-			p.drawShot(batch);
+			if(p.exists()){
+				p.drawShot(batch);
+			}
+			if(p.distanceUp() > 100){
+				p.setExists(false);
+			}
 		}
 			
 			

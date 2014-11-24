@@ -1,13 +1,13 @@
 package com.csci201.project;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Intersector;
 import com.badlogic.gdx.math.Rectangle;
-import com.badlogic.gdx.utils.TimeUtils;
 
 public class Projectile extends Sprite {
 
@@ -53,16 +53,10 @@ public class Projectile extends Sprite {
 	static FileHandle projectileFileHandle = Gdx.files.internal("data/projectile.png"); 
 	static Texture projectileTexture = new Texture(projectileFileHandle);
 	
+	private Sound sound;
 	
 	public Projectile(int mouseX, int mouseY) {  
 		super(projectileTexture, 0, 0, 30, 30);
-		
-
-		
-		
-		
-		
-		
 	}
 	
 	public Projectile(float goX, float goY, float shipX, float shipY) {  
@@ -104,6 +98,10 @@ public class Projectile extends Sprite {
 		else if(xDistance < 0 && yDistance < 0){
 			radians += Math.PI;
 		}
+		
+		sound = Gdx.audio.newSound(Gdx.files.internal("throw.mp3"));
+		sound.play(1f);
+		//sound.dispose();
 	}
 	
 	public void drawShot(SpriteBatch batch) {

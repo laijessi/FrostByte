@@ -35,6 +35,10 @@ public class Character extends Sprite implements InputProcessor{
 	private MoveState left;
 	private MoveState up;
 	
+	private long startTime; //for item 
+	private boolean itemActive;
+	private Item currItem; 
+	
 	private static int width = characterTexture.getWidth()/3;
 	private static int height = characterTexture.getHeight()/4;
 	
@@ -49,7 +53,7 @@ public class Character extends Sprite implements InputProcessor{
 	private boolean wentLeft = false, wentRight = false, wentUp = false, wentDown = false;
 	private Array<Rectangle> collisionRects; 
 	private Rectangle characterCollisionBox; 
-	
+	private Array<Rectangle> itemRects;
 	private Queue<Projectile> projectiles;
 	
 
@@ -59,6 +63,8 @@ public class Character extends Sprite implements InputProcessor{
 	    characterY = 220;
 	    
 	    projectiles = new LinkedList<Projectile>();
+	    
+	    itemActive = false;
 
 		//MoveState data
 		down = new MoveState();
@@ -170,8 +176,52 @@ public class Character extends Sprite implements InputProcessor{
 			camera.translate(0, (float)-amountMoved);  
 		}
 		
+		
+		
 		characterCollisionBox.setPosition(characterX, characterY); 
 		
+		//Item detect 
+		
+		if(itemActive){
+			System.out.println("This is start time " +  startTime/1000 + " My time " + System.currentTimeMillis()/1000 );
+			if(System.currentTimeMillis() >= startTime + 5000){
+				itemActive = false;
+				if(currItem.getType().equals("Strength")){
+
+				}
+				if(currItem.getType().equals("Speed")){
+					characterSpeed /= 2;
+					System.out.println("Character speed " + characterSpeed);
+					currItem.setAvailable();
+				}
+			}
+			
+		}
+		int val = gotItem();
+		if(val != -1){
+			String powerType = mainMap.getItemList().get(val).getType();
+			if(mainMap.getItemList().get(val).isActive()){
+				mainMap.getItemList().get(val).deactivate();
+				startTime = System.currentTimeMillis();
+				if(powerType.equals("Strength")){
+					
+				}
+				if(powerType.equals("Speed")){
+					currItem =  mainMap.getItemList().get(val);
+					itemActive = true;
+					characterSpeed *= 2;
+					System.out.println("Character speed " + characterSpeed);
+				}
+				if(powerType.equals("Health")){
+
+				}
+			}
+			else{
+				
+			}
+			
+		}
+
 		if(detectCollision()) {
 			if(wentUp) {
 				System.out.println("Went Up");
@@ -202,6 +252,7 @@ public class Character extends Sprite implements InputProcessor{
 			wentLeft = false;
 			wentRight = false;
 		}
+		
 	}
 	
 	private boolean detectCollision() {
@@ -214,6 +265,16 @@ public class Character extends Sprite implements InputProcessor{
 		}
 		
 		return false; 
+	}
+	private int gotItem(){
+		//sees if character is touching any items 
+		for(int i = 0; i < mainMap.getItemRects().size; i++){
+			Rectangle mapItemBox = mainMap.getItemRects().get(i);
+			if(Intersector.overlaps(characterCollisionBox, mapItemBox)){
+				return i;
+			}
+		}
+		return -1;
 	}
 	
 	public void setChar(){

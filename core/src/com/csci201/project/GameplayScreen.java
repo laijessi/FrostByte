@@ -8,8 +8,10 @@ import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
+import com.badlogic.gdx.utils.Array;
 
 
 public class GameplayScreen extends ApplicationAdapter{
@@ -25,7 +27,6 @@ public class GameplayScreen extends ApplicationAdapter{
 	//private Item item;
 	private ArrayList<Item> itemList = new ArrayList<Item>();
 	
-	
 	public GameplayScreen(){}
 
 	
@@ -40,6 +41,13 @@ public class GameplayScreen extends ApplicationAdapter{
 			Item temp = new Item(i);
 			itemList.add(temp);
 		}
+		mainMap.takeItemList(itemList);
+		//Give map my locations
+		Array<Rectangle> itemRect = new Array<Rectangle>();
+		for(int i = 0; i < itemList.size(); i++){
+			itemRect.add(itemList.get(i).getRect());
+		}
+		mainMap.takeItemRects(itemRect);
 		
 		
 		//Projectile data

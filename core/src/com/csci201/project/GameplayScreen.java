@@ -30,7 +30,7 @@ public class GameplayScreen extends ApplicationAdapter{
 
 		
 		batch = new SpriteBatch();
-		mainMap = new MainMap("map1.tmx");
+		mainMap = new MainMap("map2.tmx");
 		character = new Character(mainMap);
 		item = new Item();
 		

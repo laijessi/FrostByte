@@ -16,7 +16,7 @@ public class MainMap {
 	private Array<Rectangle> collisionRects; 
 	
 	public MainMap (String mapName) {
-		mainMap = new TmxMapLoader().load("map1.tmx");
+		mainMap = new TmxMapLoader().load(mapName);
         tiledMapRenderer = new OrthogonalTiledMapRenderer(mainMap);
         
         setUpCollisionRectangles(); 

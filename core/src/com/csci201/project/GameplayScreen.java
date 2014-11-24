@@ -89,7 +89,9 @@ public class GameplayScreen implements Screen{
 
 		//System.out.println("Rendering");
 		for(int i = 0; i < itemList.size(); i++){
-			itemList.get(i).drawItem(batch);
+			if(itemList.get(i).isActive()){
+				itemList.get(i).drawItem(batch);
+			}
 		}
 		character.drawChar(batch);
 		//batch.draw(character, (int)characterX, (int)characterY);

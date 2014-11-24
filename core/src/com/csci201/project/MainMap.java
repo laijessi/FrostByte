@@ -1,5 +1,7 @@
 package com.csci201.project;
 
+import java.util.ArrayList;
+
 import com.badlogic.gdx.maps.MapObjects;
 import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.maps.tiled.TiledMap;
@@ -14,6 +16,8 @@ public class MainMap {
 	private TiledMap mainMap; 
 	private TiledMapRenderer  tiledMapRenderer;
 	private Array<Rectangle> collisionRects; 
+	private Array<Rectangle> itemRects;
+	private ArrayList<Item> itemList;
 	
 	public MainMap (String mapName) {
 		mainMap = new TmxMapLoader().load(mapName);
@@ -45,5 +49,17 @@ public class MainMap {
 	
 	public Array<Rectangle> getCollisionRects() {
 		return collisionRects;
+	}
+	public void takeItemRects(Array<Rectangle> itemRects){
+		this.itemRects = itemRects;
+	}
+	public void takeItemList(ArrayList<Item> itemList){
+		this.itemList = itemList;
+	}
+	public Array<Rectangle> getItemRects() {
+		return itemRects;
+	}
+	public ArrayList<Item> getItemList(){
+		return itemList;
 	}
 }

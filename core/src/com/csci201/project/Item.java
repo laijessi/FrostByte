@@ -12,6 +12,7 @@ import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapRenderer;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
+import com.badlogic.gdx.math.Rectangle;
 
 public class Item extends Sprite{
 	static FileHandle itemFileHandle = Gdx.files.internal("data/item.png"); //whatever shit it is  
@@ -20,7 +21,9 @@ public class Item extends Sprite{
 	private float startY; 
 	private int increaseFactor;
 	private String type; 
-
+	private Rectangle itemRect;
+	private boolean available;
+	
 	TiledMap tiledMap;
 	TiledMapRenderer tiledMapRenderer;
 	public Item(){
@@ -35,10 +38,12 @@ public class Item extends Sprite{
 	}
 	public Item(int val){
 		super(itemTexture);
+		available = true;
 		tiledMap = new TmxMapLoader().load("map1.tmx");
 		tiledMapRenderer = new OrthogonalTiledMapRenderer(tiledMap);
 		System.out.println("This is val " + val);
 		randomItem();
+		
 		if(val == 0){
 			this.startX = 416;
 			this.startY = 1344;
@@ -63,7 +68,11 @@ public class Item extends Sprite{
 			System.out.println("Idek");
 		}
 		this.increaseFactor = 2;
+		itemRect = new Rectangle(startX, startY, 32, 64);
 		System.out.println("Was drawn here " + startX + " " + startY);
+	}
+	public Rectangle getRect(){
+		return itemRect;
 	}
 	public void randomItem(){
 		Random ran = new Random(); 
@@ -117,5 +126,17 @@ public class Item extends Sprite{
 	}
 	public void drawItem(SpriteBatch batch){
 		batch.draw(this, (int)startX, (int)startY);
+	}
+	public void deactivate(){
+	
+		available = false;
+
+		
+	}
+	public boolean isActive(){
+		return available;
+	}
+	public void setAvailable(){
+		available = true;
 	}
 }

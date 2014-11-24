@@ -1,5 +1,4 @@
 package com.csci201.project;
-/*package edu.usc.parkjona;
 
 import com.badlogic.gdx.maps.MapObjects;
 import com.badlogic.gdx.maps.objects.RectangleMapObject;
@@ -11,12 +10,12 @@ import com.badlogic.gdx.math.Intersector;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.utils.Array;
 
-public class Map {
+public class MainMap {
 	private TiledMap mainMap; 
 	private TiledMapRenderer  tiledMapRenderer;
 	private Array<Rectangle> collisionRects; 
 	
-	public Map (String mapName) {
+	public MainMap (String mapName) {
 		mainMap = new TmxMapLoader().load("map1.tmx");
         tiledMapRenderer = new OrthogonalTiledMapRenderer(mainMap);
         
@@ -40,14 +39,11 @@ public class Map {
 		return mainMap; 
 	}
 	
-	public boolean detectCollision(Character character) {
-		for(int i = 0; i < collisionRects.size; i++) {
-			Rectangle temp = collisionRects.get(i);
-			if (Intersector.overlaps(character.getCollisionRectangle(), temp)) {
-				return true; 
-			}
-		}
-		
-		return false; 
+	public TiledMapRenderer getMapRenderer() {
+		return tiledMapRenderer; 
 	}
-}*/
+	
+	public Array<Rectangle> getCollisionRects() {
+		return collisionRects;
+	}
+}

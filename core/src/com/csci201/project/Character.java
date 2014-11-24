@@ -15,6 +15,9 @@ import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapRenderer;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
+import com.badlogic.gdx.math.Intersector;
+import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.utils.Array;
 
 public class Character extends Sprite implements InputProcessor{
 
@@ -36,17 +39,23 @@ public class Character extends Sprite implements InputProcessor{
 	
 	private Energybar energybar;
 	
-	Texture img;
-	TiledMap tiledMap;
+	//main variables
+	MainMap mainMap; 
 	OrthographicCamera camera;
-	TiledMapRenderer tiledMapRenderer;
 	
+	/*Texture img;
+	TiledMap tiledMap;
+	TiledMapRenderer tiledMapRenderer;*/
 	
+	//collision variables
+	private boolean wentLeft = false, wentRight = false, wentUp = false, wentDown = false;
+	private Array<Rectangle> collisionRects; 
+	private Rectangle characterCollisionBox; 
 	
 	private Queue<Projectile> projectiles;
 	
 
-	public Character(){
+	public Character(MainMap mainMap){
 		super(characterTexture, width, height*2, width, height);
 		characterX = 280;
 	    characterY = 220;
@@ -69,9 +78,18 @@ public class Character extends Sprite implements InputProcessor{
 		camera = new OrthographicCamera();
 		camera.setToOrtho(false,w,h);
 		camera.update();
-		tiledMap = new TmxMapLoader().load("map1.tmx");
-		tiledMapRenderer = new OrthogonalTiledMapRenderer(tiledMap);
+		//tiledMap = new TmxMapLoader().load("map1.tmx");
+		//tiledMapRenderer = new OrthogonalTiledMapRenderer(tiledMap);
 		
+		//collision initialization
+		characterCollisionBox = new Rectangle(characterX, characterY + 2*this.getHeight()/3, this.getWidth(), this.getHeight()/3);
+		
+		//map initialization
+		this.mainMap = mainMap; 
+	}
+	
+	public Rectangle getCollisionRectangle() {
+		return characterCollisionBox; 
 	}
 	
 	public void addProjectile(Projectile p){
@@ -90,11 +108,10 @@ public class Character extends Sprite implements InputProcessor{
 	
 	
 	
-	public void moveChar(String dir){
-
-		
+	public void moveChar(String dir) {
 		amountMoved = Gdx.graphics.getDeltaTime() * characterSpeed;
 		if(dir.equals("A")) {
+			wentLeft = true; 
 			if(left.getRightFoot()){
 				this.setRegion(0, height*1, width, height);
 			}
@@ -106,6 +123,7 @@ public class Character extends Sprite implements InputProcessor{
 			camera.translate((float)-amountMoved,0);
 		}
 		else if(dir.equals("D")){
+			wentRight = true; 
 			if(right.getRightFoot()){
 				this.setRegion(0, height*2, width, height);
 			}
@@ -118,6 +136,7 @@ public class Character extends Sprite implements InputProcessor{
 			camera.translate((float)amountMoved,0);
 		}
 		else if(dir.equals("W")){
+			wentUp = true; 
 			if(up.getRightFoot()){
 				this.setRegion(0, height*3, width, height);
 			}
@@ -129,6 +148,7 @@ public class Character extends Sprite implements InputProcessor{
 			camera.translate(0,(float)amountMoved);
 		}
 		else if(dir.equals("S")){
+			wentDown = true; 
 			if(down.getRightFoot()){
 				this.setRegion(0, height*0, width, height);
 			}
@@ -139,6 +159,51 @@ public class Character extends Sprite implements InputProcessor{
 			characterY -= amountMoved;
 			camera.translate(0, (float)-amountMoved);  
 		}
+		
+		characterCollisionBox.setPosition(characterX, characterY); 
+		
+		if(detectCollision()) {
+			if(wentUp) {
+				System.out.println("Went Up");
+				characterY -= amountMoved;
+				camera.translate(0, (float)(-amountMoved)); 
+			}
+
+			if(wentDown) {
+				System.out.println("Went Down");
+				characterY += amountMoved + 1;
+				camera.translate(0, (float)(1.3 * amountMoved)); 
+			}
+
+			if(wentRight) {
+				System.out.println("Went Right");
+				characterX -= amountMoved;
+				camera.translate((float)(-amountMoved), 0); 
+			}
+
+			if(wentLeft) {
+				System.out.println("Went Left");
+				characterX += amountMoved + 1;
+				camera.translate((float)(1.3 * amountMoved), 0); 
+			}
+
+			wentUp = false; 
+			wentDown = false;
+			wentLeft = false;
+			wentRight = false;
+		}
+	}
+	
+	private boolean detectCollision() {
+		//sees if character is touching any collision rectangles
+		for(int i = 0; i < mainMap.getCollisionRects().size; i++) {
+			Rectangle mapCollisionBox = mainMap.getCollisionRects().get(i);
+			if (Intersector.overlaps(characterCollisionBox, mapCollisionBox)) {
+				return true; 
+			}
+		}
+		
+		return false; 
 	}
 	
 	public void setChar(){
@@ -146,8 +211,8 @@ public class Character extends Sprite implements InputProcessor{
 		Gdx.gl.glBlendFunc(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		camera.update();
-		tiledMapRenderer.setView(camera);
-		tiledMapRenderer.render();
+		mainMap.getMapRenderer().setView(camera);
+		mainMap.getMapRenderer().render();
 	}
 	
 	public void drawChar(SpriteBatch batch){

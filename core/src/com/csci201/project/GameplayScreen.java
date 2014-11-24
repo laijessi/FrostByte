@@ -10,7 +10,7 @@ import com.badlogic.gdx.math.Vector3;
 
 
 public class GameplayScreen extends ApplicationAdapter{
-
+	private MainMap mainMap; 
 	private SpriteBatch batch;
 
 	private Character character;
@@ -30,7 +30,8 @@ public class GameplayScreen extends ApplicationAdapter{
 
 		
 		batch = new SpriteBatch();
-		character = new Character();
+		mainMap = new MainMap("map1.tmx");
+		character = new Character(mainMap);
 		item = new Item();
 		
 		

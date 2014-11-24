@@ -2,6 +2,7 @@ package com.csci201.project.desktop;
 
 import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
+import com.csci201.project.FrostByte;
 import com.csci201.project.GameplayScreen;
 
 public class DesktopLauncher {
@@ -12,6 +13,6 @@ public class DesktopLauncher {
 		config.useGL30 = false;
 		config.resizable = false;
 		
-		new LwjglApplication(new GameplayScreen(), config);
+		new LwjglApplication(new FrostByte(), config);
 	}
 }

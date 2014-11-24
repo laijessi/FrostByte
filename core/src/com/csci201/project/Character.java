@@ -227,10 +227,41 @@ public class Character extends Sprite implements InputProcessor{
 					currItem.setAvailable();
 				}
 			}
+		}else{ //only get items when you don't have another one 
+			int val = gotItem();
+			if(val != -1){
+				String powerType = mainMap.getItemList().get(val).getType();
+				if(mainMap.getItemList().get(val).isActive()){
+					mainMap.getItemList().get(val).deactivate();
+					startTime = System.currentTimeMillis();
+					if(powerType.equals("Strength")){
+						//Sound strength = Gdx.audio.newSound(Gdx.files.internal("strength.mp3"));
+						//strength.play(1f);
+						currItem =  mainMap.getItemList().get(val);
+						itemActive = true;
+						
+					}
+					if(powerType.equals("Speed")){
+						//Sound speed = Gdx.audio.newSound(Gdx.files.internal("speed.mp3"));
+						//speed.play(1f);
+						currItem =  mainMap.getItemList().get(val);
+						itemActive = true;
+						characterSpeed *= 2;
+						System.out.println("Character speed " + characterSpeed);
+					}
+					if(powerType.equals("Health")){
+						//Sound health = Gdx.audio.newSound(Gdx.files.internal("health.mp3"));
+						//health.play(1f);
+						healthbar.addHealth(); //add 10 
+						System.out.println("Added 10 health");
+						currItem =  mainMap.getItemList().get(val);
+						itemActive = true;
+					}
+				}	
+			}//end item function stuff 
 			
 		}
-		int val = gotItem();
-		//TODO: add sound files
+		/*int val = gotItem();
 		if(val != -1){
 			String powerType = mainMap.getItemList().get(val).getType();
 			if(mainMap.getItemList().get(val).isActive()){
@@ -259,12 +290,9 @@ public class Character extends Sprite implements InputProcessor{
 					currItem =  mainMap.getItemList().get(val);
 					itemActive = true;
 				}
-			}
-			else{
-				
-			}
-			
-		}
+			}	
+		}//end item function stuff 
+		*/
 		
 		
 		characterCollisionBox.setPosition(characterX, characterY);

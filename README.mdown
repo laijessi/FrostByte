@@ -1,7 +1,7 @@
 FrostByte
 ============
 
-FrostByte is a Java based desktop game that uses the open-source libGDX framework. In FrostByte, 4 players will sign into a server using a specifided host name. Each of these players will then select a character to battle in the arena. In the arena, players will fight to their snowy deaths, until there is only one standing. That player will be deemed the sole victor of this year's holiday season. 
+FrostByte is a Java based desktop game that uses the open-source libGDX framework. In FrostByte, 4 players will sign into a server using a specified host name. Each of these players will then select a character to battle in the arena. In the arena, players will fight to their snowy deaths, until there is only one standing. That player will be deemed the sole victor of this year's holiday season. 
 
 FrostByte contains special features such as networking to incorporate a chat feature which players can use to communicate with eachother. Though the game is technically free-for-all, mischievous players can form secret alliances by "whispering" other players in the server.
 

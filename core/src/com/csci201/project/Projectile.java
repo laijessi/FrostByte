@@ -5,6 +5,8 @@ import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.Intersector;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.utils.TimeUtils;
 
 public class Projectile extends Sprite {
@@ -28,6 +30,8 @@ public class Projectile extends Sprite {
 	private float distance;
 	
 	private boolean exists;
+	
+	private Rectangle projectileCollisionBox; 
 	
 	/*public Projectile(Texture p, int width, int height){
 		
@@ -64,6 +68,8 @@ public class Projectile extends Sprite {
 	public Projectile(float goX, float goY, float shipX, float shipY) {  
 		super(projectileTexture, 0, 0, 30, 30);
 
+		projectileCollisionBox = new Rectangle(posX, posY, this.getWidth(), this.getHeight());
+		
 		this.posX = shipX;
 		this.posY = shipY;
 
@@ -110,7 +116,7 @@ public class Projectile extends Sprite {
 		this.posX += Math.cos(radians) * ACCELERATOR;
 		this.posY += Math.sin(radians) * ACCELERATOR;
 		
-		
+		projectileCollisionBox.setPosition(posX, posY); 
 		//System.out.println("X is " + posX  + "Y is " + posY);
 		//System.out.println("Away from x by: " + Math.abs(goX-posX));
 		//System.out.println("Away from y by: " + Math.abs(goY-posY));
@@ -118,6 +124,18 @@ public class Projectile extends Sprite {
 		batch.draw(this, posX, posY);
 	}
 
+	public boolean detectCollision(MainMap mainMap) {
+		//sees if character is touching any collision rectangles
+		for(int i = 0; i < mainMap.getProjectileCollisionRects().size; i++) {
+			Rectangle mapCollisionBox = mainMap.getProjectileCollisionRects().get(i);
+			if (Intersector.overlaps(projectileCollisionBox, mapCollisionBox)) {
+				return true; 
+			}
+		}
+		
+		return false; 
+	}
+	
 	public float distanceUp() {
 		return distance++;
 		

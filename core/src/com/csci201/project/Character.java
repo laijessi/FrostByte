@@ -77,7 +77,7 @@ public class Character extends Sprite implements InputProcessor{
 		camera.update();
 		
 		//collision initialization
-		characterCollisionBox = new Rectangle(characterX, characterY + 2*this.getHeight()/3, this.getWidth(), this.getHeight()/3);
+		characterCollisionBox = new Rectangle(characterX, characterY + 2*this.getHeight()/3, this.getWidth() - 10, this.getHeight()/3);
 		
 		//map initialization
 		this.mainMap = mainMap; 
@@ -170,27 +170,23 @@ public class Character extends Sprite implements InputProcessor{
 		
 		characterCollisionBox.setPosition(characterX, characterY); 
 		
-		if(detectCollision()) {
+		if(detectCollision()) { 
 			if(wentUp) {
-				System.out.println("Went Up");
 				characterY -= amountMoved;
 				camera.translate(0, (float)(-amountMoved)); 
 			}
 
 			if(wentDown) {
-				System.out.println("Went Down");
 				characterY += amountMoved;
 				camera.translate(0, (float)(amountMoved)); 
 			}
 
 			if(wentRight) {
-				System.out.println("Went Right");
 				characterX -= amountMoved;
 				camera.translate((float)(-amountMoved), 0); 
 			}
 
 			if(wentLeft) {
-				System.out.println("Went Left");
 				characterX += amountMoved;
 				camera.translate((float)(amountMoved), 0); 
 			}

@@ -95,7 +95,7 @@ public class GameplayScreen extends ApplicationAdapter{
 				character.addProjectile( new Projectile(projX - Gdx.graphics.getWidth()/2,
 										projY-Gdx.graphics.getHeight()/2,
 										character.getCharacterX(),
-										character.getCharacterY()));
+										character.getCharacterY() - 5));
 			}
 		}
 	

@@ -30,9 +30,11 @@ public class Character extends Sprite implements InputProcessor{
 	private MoveState right;
 	private MoveState left;
 	private MoveState up;
-
+	
 	private static int width = characterTexture.getWidth()/3;
 	private static int height = characterTexture.getHeight()/4;
+	
+	private Energybar energybar;
 	
 	Texture img;
 	TiledMap tiledMap;
@@ -57,6 +59,9 @@ public class Character extends Sprite implements InputProcessor{
 		left = new MoveState();
 		up = new MoveState();
 		
+		//energy data
+		energybar = new Energybar();
+		
 		// camera data
 		Gdx.input.setInputProcessor(this);
 		float w = Gdx.graphics.getWidth();
@@ -66,15 +71,23 @@ public class Character extends Sprite implements InputProcessor{
 		camera.update();
 		tiledMap = new TmxMapLoader().load("map1.tmx");
 		tiledMapRenderer = new OrthogonalTiledMapRenderer(tiledMap);
+		
 	}
 	
 	public void addProjectile(Projectile p){
 		projectiles.add(p);
+		energybar.setEnergy(-10);
+		
 	}
 	
 	public Queue<Projectile> getProjectiles(){
 		return projectiles;
 	}
+	
+	public Energybar getEnergybar(){
+		return energybar;
+	}
+	
 	
 	
 	public void moveChar(String dir){
@@ -140,7 +153,7 @@ public class Character extends Sprite implements InputProcessor{
 	public void drawChar(SpriteBatch batch){
 		camera.update();  
 		batch.setProjectionMatrix(camera.combined);
-		batch.draw(this, (int)characterX, (int)characterY);
+		batch.draw(this, characterX, characterY);
 	}
 	
 	public float getCharacterX(){
@@ -199,4 +212,6 @@ public class Character extends Sprite implements InputProcessor{
 		// TODO Auto-generated method stub
 		return false;
 	}
+
+	
 }

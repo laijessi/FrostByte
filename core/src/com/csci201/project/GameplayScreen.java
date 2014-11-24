@@ -2,6 +2,8 @@
 package com.csci201.project;
 
 
+import java.util.ArrayList;
+
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
@@ -20,7 +22,8 @@ public class GameplayScreen extends ApplicationAdapter{
 	private int projY;
 	
 	
-	private Item item;
+	//private Item item;
+	private ArrayList<Item> itemList = new ArrayList<Item>();
 	
 	
 	public GameplayScreen(){}
@@ -33,7 +36,10 @@ public class GameplayScreen extends ApplicationAdapter{
 		batch = new SpriteBatch();
 		mainMap = new MainMap("map2.tmx");
 		character = new Character(mainMap);
-		item = new Item();
+		for(int i = 0; i < 5; i++){
+			Item temp = new Item(i);
+			itemList.add(temp);
+		}
 		
 		
 		//Projectile data
@@ -68,7 +74,9 @@ public class GameplayScreen extends ApplicationAdapter{
 		batch.begin();
 
 		//System.out.println("Rendering");
-		item.drawItem(batch);
+		for(int i = 0; i < itemList.size(); i++){
+			itemList.get(i).drawItem(batch);
+		}
 		character.drawChar(batch);
 		//batch.draw(character, (int)characterX, (int)characterY);
 		

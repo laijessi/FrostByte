@@ -33,6 +33,38 @@ public class Item extends Sprite{
 		System.out.println("Was drawn here " + startX + " " + startY);
 		this.increaseFactor = 2;
 	}
+	public Item(int val){
+		super(itemTexture);
+		tiledMap = new TmxMapLoader().load("map1.tmx");
+		tiledMapRenderer = new OrthogonalTiledMapRenderer(tiledMap);
+		System.out.println("This is val " + val);
+		randomItem();
+		if(val == 0){
+			this.startX = 416;
+			this.startY = 1344;
+		}
+		else if(val == 1){
+			this.startX = 1216;
+			this.startY = 608;
+		}
+		else if(val == 2){
+			this.startX = 384;
+			this.startY = 256;
+		}
+		else if(val == 3){
+			this.startX = 1472;
+			this.startY = 1840; 
+		}
+		else if(val == 4){
+			this.startX = 800; 
+			this.startY = 864;
+		}
+		else{
+			System.out.println("Idek");
+		}
+		this.increaseFactor = 2;
+		System.out.println("Was drawn here " + startX + " " + startY);
+	}
 	public void randomItem(){
 		Random ran = new Random(); 
 		int val = ran.nextInt(3);

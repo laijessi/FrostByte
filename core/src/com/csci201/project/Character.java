@@ -215,8 +215,11 @@ public class Character extends Sprite implements InputProcessor{
 			System.out.println("This is start time " +  startTime/1000 + " My time " + System.currentTimeMillis()/1000 );
 			if(System.currentTimeMillis() >= startTime + 5000){
 				itemActive = false;
+				if(currItem.getType().equals("Health")){
+					currItem.setAvailable();
+				}
 				if(currItem.getType().equals("Strength")){
-
+					currItem.setAvailable();
 				}
 				if(currItem.getType().equals("Speed")){
 					characterSpeed /= 2;
@@ -236,6 +239,8 @@ public class Character extends Sprite implements InputProcessor{
 				if(powerType.equals("Strength")){
 					//Sound strength = Gdx.audio.newSound(Gdx.files.internal("strength.mp3"));
 					//strength.play(1f);
+					currItem =  mainMap.getItemList().get(val);
+					itemActive = true;
 					
 				}
 				if(powerType.equals("Speed")){
@@ -249,7 +254,10 @@ public class Character extends Sprite implements InputProcessor{
 				if(powerType.equals("Health")){
 					//Sound health = Gdx.audio.newSound(Gdx.files.internal("health.mp3"));
 					//health.play(1f);
-
+					healthbar.addHealth(); //add 10 
+					System.out.println("Added 10 health");
+					currItem =  mainMap.getItemList().get(val);
+					itemActive = true;
 				}
 			}
 			else{
@@ -261,7 +269,6 @@ public class Character extends Sprite implements InputProcessor{
 		
 		characterCollisionBox.setPosition(characterX, characterY);
 	}
-	
 	private boolean detectCollision(float x,float y) {
 		//sees if character is touching any collision rectangles
 		Rectangle nextBox = characterCollisionBox; 

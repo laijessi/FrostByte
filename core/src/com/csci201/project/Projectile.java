@@ -62,7 +62,7 @@ public class Projectile extends Sprite {
 	public Projectile(float goX, float goY, float shipX, float shipY) {  
 		super(projectileTexture, 0, 0, 30, 30);
 
-		projectileCollisionBox = new Rectangle(posX, posY, this.getWidth(), this.getHeight());
+		projectileCollisionBox = new Rectangle(posX, posY, this.getWidth() - 10, this.getHeight() -10);
 		
 		this.posX = shipX;
 		this.posY = shipY;

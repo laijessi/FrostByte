@@ -18,6 +18,7 @@ public class MainMap {
 	private Array<Rectangle> collisionRects; 
 	private Array<Rectangle> itemRects;
 	private ArrayList<Item> itemList;
+	private Array<Rectangle> projectileCollisionRects; 
 	
 	public MainMap (String mapName) {
 		mainMap = new TmxMapLoader().load(mapName);
@@ -33,10 +34,19 @@ public class MainMap {
 	                RectangleMapObject obj = (RectangleMapObject) collisionObjects.get(i);
 	                Rectangle rect = obj.getRectangle();
 	                collisionRects.add(new Rectangle(rect.x, rect.y, rect.width, rect.height));
-	                System.out.println("Rectangle " + i);
-	                System.out.println("X: " + rect.x + " Y: " + rect.y + " width: " + rect.width + "rect.height: " + rect.height);
-	                System.out.println();
 	    }
+	    
+	    collisionObjects = mainMap.getLayers().get("RiverLayer").getObjects();
+	    projectileCollisionRects = new Array<Rectangle>();
+	    for (int i = 0; i < collisionObjects.getCount(); i++) {
+	                RectangleMapObject obj = (RectangleMapObject) collisionObjects.get(i);
+	                Rectangle rect = obj.getRectangle();
+	                projectileCollisionRects.add(new Rectangle(rect.x, rect.y, rect.width, rect.height));
+	    }
+	}
+	
+	public Array<Rectangle> getProjectileCollisionRects() {
+		return projectileCollisionRects;
 	}
 	
 	public TiledMap getMap() {

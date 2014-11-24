@@ -41,7 +41,7 @@ public class GameplayScreen implements Screen{
 
 		
 		batch = new SpriteBatch();
-		mainMap = new MainMap("map2.tmx");
+		mainMap = new MainMap("map3.tmx");
 		character = new Character(mainMap);
 		for(int i = 0; i < 5; i++){
 			Item temp = new Item(i);
@@ -111,7 +111,7 @@ public class GameplayScreen implements Screen{
 				character.addProjectile( new Projectile(projX - Gdx.graphics.getWidth()/2,
 										projY-Gdx.graphics.getHeight()/2,
 										character.getCharacterX(),
-										character.getCharacterY()));
+										character.getCharacterY() - 5));
 			}
 		}
 	
@@ -120,7 +120,7 @@ public class GameplayScreen implements Screen{
 			if(p.exists()){
 				p.drawShot(batch);
 			}
-			if(p.distanceUp() > 60){
+			if(p.distanceUp() > 100 || p.detectCollision(mainMap)){
 				p.setExists(false);
 			}
 		}

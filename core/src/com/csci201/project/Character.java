@@ -85,7 +85,7 @@ public class Character extends Sprite implements InputProcessor{
 		camera.update();
 		
 		//collision initialization
-		characterCollisionBox = new Rectangle(characterX, characterY + 2*this.getHeight()/3, this.getWidth(), this.getHeight()/3);
+		characterCollisionBox = new Rectangle(characterX, characterY + 2*this.getHeight()/3, this.getWidth() - 10, this.getHeight()/3);
 		
 		//map initialization
 		this.mainMap = mainMap; 
@@ -114,6 +114,7 @@ public class Character extends Sprite implements InputProcessor{
 	public void moveChar(String dir) {
 		amountMoved = Gdx.graphics.getDeltaTime() * characterSpeed;
 		
+		
 		if(dir.equals("A")) {
 			wentLeft = true; 
 			
@@ -125,9 +126,16 @@ public class Character extends Sprite implements InputProcessor{
 				this.setRegion(width*2, height*1, width, height);
 			}
 			
-			left.changeFoot();
-			characterX -= amountMoved;
-			camera.translate((float)-amountMoved,0);
+			if(detectCollision(-amountMoved, 0)) {
+				//do nothing
+				left.changeFoot();
+			}
+			
+			else {
+				left.changeFoot();
+				characterX -= amountMoved;
+				camera.translate((float)-amountMoved,0);
+			}
 		}
 		
 		else if(dir.equals("D")){
@@ -141,9 +149,16 @@ public class Character extends Sprite implements InputProcessor{
 				this.setRegion(width*2, height*2, width, height);
 			}
 			
-			right.changeFoot();
-			characterX += amountMoved;
-			camera.translate((float)amountMoved,0);
+			if(detectCollision(amountMoved, 0)) {
+				//do nothing
+				right.changeFoot();
+			}
+			
+			else {
+				right.changeFoot();
+				characterX += amountMoved;
+				camera.translate((float)amountMoved,0);
+			}
 		}
 		else if(dir.equals("W")){
 			wentUp = true; 
@@ -156,9 +171,16 @@ public class Character extends Sprite implements InputProcessor{
 				this.setRegion(width*2, height*3, width, height);
 			}
 			
-			up.changeFoot();
-			characterY += amountMoved;
-			camera.translate(0,(float)amountMoved);
+			if(detectCollision(0, amountMoved)) {
+				//do nothing
+				up.changeFoot();
+			}
+			
+			else {
+				up.changeFoot();
+				characterY += amountMoved;
+				camera.translate(0,(float)amountMoved);
+			}
 		}
 		else if(dir.equals("S")){
 			wentDown = true; 
@@ -171,9 +193,16 @@ public class Character extends Sprite implements InputProcessor{
 				this.setRegion(width*2, height*0, width, height);
 			}
 			
-			down.changeFoot();
-			characterY -= amountMoved;
-			camera.translate(0, (float)-amountMoved);  
+			if(detectCollision(0, -amountMoved)) {
+				//do nothing
+				down.changeFoot();
+			}
+			
+			else{
+				down.changeFoot();
+				characterY -= amountMoved;
+				camera.translate(0, (float)-amountMoved);  
+			}
 		}
 		
 		
@@ -221,45 +250,18 @@ public class Character extends Sprite implements InputProcessor{
 			}
 			
 		}
-
-		if(detectCollision()) {
-			if(wentUp) {
-				System.out.println("Went Up");
-				characterY -= amountMoved;
-				camera.translate(0, (float)(-amountMoved)); 
-			}
-
-			if(wentDown) {
-				System.out.println("Went Down");
-				characterY += amountMoved;
-				camera.translate(0, (float)(amountMoved)); 
-			}
-
-			if(wentRight) {
-				System.out.println("Went Right");
-				characterX -= amountMoved;
-				camera.translate((float)(-amountMoved), 0); 
-			}
-
-			if(wentLeft) {
-				System.out.println("Went Left");
-				characterX += amountMoved;
-				camera.translate((float)(amountMoved), 0); 
-			}
-
-			wentUp = false; 
-			wentDown = false;
-			wentLeft = false;
-			wentRight = false;
-		}
 		
+		
+		characterCollisionBox.setPosition(characterX, characterY);
 	}
 	
-	private boolean detectCollision() {
+	private boolean detectCollision(float x,float y) {
 		//sees if character is touching any collision rectangles
+		Rectangle nextBox = characterCollisionBox; 
+		nextBox.setPosition(characterCollisionBox.getX() + x, characterCollisionBox.getY() + y);
 		for(int i = 0; i < mainMap.getCollisionRects().size; i++) {
 			Rectangle mapCollisionBox = mainMap.getCollisionRects().get(i);
-			if (Intersector.overlaps(characterCollisionBox, mapCollisionBox)) {
+			if (Intersector.overlaps(nextBox, mapCollisionBox)) {
 				return true; 
 			}
 		}

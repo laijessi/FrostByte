@@ -45,6 +45,7 @@ public class ScreenMainMenu implements Screen{
 		Gdx.input.setInputProcessor(stage);
 		
 		addUIElem();
+		addListeners();
 	}
 	
 	public void initUIElem(){
@@ -86,8 +87,8 @@ public class ScreenMainMenu implements Screen{
 		buttonPlay.addListener(new ClickListener(){
 			@Override
 			public void touchUp(InputEvent e, float x, float y, int point, int button){
-				//TODO: start the game here
-				//game.setScreen(screen);
+				game.setScreen(new GameplayScreen(game));
+				//TODO: need to add in server socket things
 			}
 		});
 	}

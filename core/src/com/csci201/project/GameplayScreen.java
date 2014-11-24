@@ -5,8 +5,10 @@ package com.csci201.project;
 import java.util.ArrayList;
 
 import com.badlogic.gdx.ApplicationAdapter;
+import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
+import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
@@ -14,7 +16,7 @@ import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.Array;
 
 
-public class GameplayScreen extends ApplicationAdapter{
+public class GameplayScreen implements Screen{
 	private MainMap mainMap; 
 	private static SpriteBatch batch;
 
@@ -27,10 +29,14 @@ public class GameplayScreen extends ApplicationAdapter{
 	//private Item item;
 	private ArrayList<Item> itemList = new ArrayList<Item>();
 	
-	public GameplayScreen(){}
+	Game game;
+	
+	public GameplayScreen(Game g){
+		game = g;
+		create();
+	}
 
 	
-	@Override
 	public void create() {
 
 		
@@ -62,7 +68,7 @@ public class GameplayScreen extends ApplicationAdapter{
 	}
 
 	@Override
-	public void render() {
+	public void render(float delta) {
 		
 		character.setChar();
 		
@@ -128,6 +134,48 @@ public class GameplayScreen extends ApplicationAdapter{
 		*/
 
 		batch.end();
+	}
+
+
+	@Override
+	public void resize(int width, int height) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	@Override
+	public void show() {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	@Override
+	public void hide() {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	@Override
+	public void pause() {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	@Override
+	public void resume() {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	@Override
+	public void dispose() {
+		// TODO Auto-generated method stub
+		
 	}
 
 	public static SpriteBatch getBatch(){

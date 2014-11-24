@@ -13,6 +13,7 @@ public class GameplayScreen extends ApplicationAdapter{
 	private SpriteBatch batch;
 
 	private Character character;
+	private Item item;
 
 	private int projX;
 	private int projY;
@@ -24,7 +25,8 @@ public class GameplayScreen extends ApplicationAdapter{
 
 		batch = new SpriteBatch();
 		character = new Character();
-
+		item = new Item();
+		
 		//Projectile data
 	/*	FileHandle projectileFileHandle = Gdx.files.internal("data/projectile.png"); 
 		projectileTexture = new Texture(projectileFileHandle);
@@ -52,8 +54,10 @@ public class GameplayScreen extends ApplicationAdapter{
 			character.moveChar("S");
 		}
 		batch.begin();
-
+		item.drawItem(batch);
 		character.drawChar(batch);
+		//item.drawItem(batch);
+		System.out.println("Item location is: " + (float)item.getStartX() + " " + (float)item.getStartY());
 		//batch.draw(character, (int)characterX, (int)characterY);
 		
 		/*if(Gdx.input.justTouched()){

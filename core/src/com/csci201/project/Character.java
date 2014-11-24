@@ -166,4 +166,5 @@ public class Character extends Sprite implements InputProcessor{
 		// TODO Auto-generated method stub
 		return false;
 	}
+	
 }

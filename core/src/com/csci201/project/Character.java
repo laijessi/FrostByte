@@ -43,10 +43,6 @@ public class Character extends Sprite implements InputProcessor{
 	MainMap mainMap; 
 	OrthographicCamera camera;
 	
-	/*Texture img;
-	TiledMap tiledMap;
-	TiledMapRenderer tiledMapRenderer;*/
-	
 	//collision variables
 	private boolean wentLeft = false, wentRight = false, wentUp = false, wentDown = false;
 	private Array<Rectangle> collisionRects; 
@@ -78,8 +74,6 @@ public class Character extends Sprite implements InputProcessor{
 		camera = new OrthographicCamera();
 		camera.setToOrtho(false,w,h);
 		camera.update();
-		//tiledMap = new TmxMapLoader().load("map1.tmx");
-		//tiledMapRenderer = new OrthogonalTiledMapRenderer(tiledMap);
 		
 		//collision initialization
 		characterCollisionBox = new Rectangle(characterX, characterY + 2*this.getHeight()/3, this.getWidth(), this.getHeight()/3);
@@ -110,20 +104,26 @@ public class Character extends Sprite implements InputProcessor{
 	
 	public void moveChar(String dir) {
 		amountMoved = Gdx.graphics.getDeltaTime() * characterSpeed;
+		
 		if(dir.equals("A")) {
 			wentLeft = true; 
+			
 			if(left.getRightFoot()){
 				this.setRegion(0, height*1, width, height);
 			}
+			
 			else if (left.getLeftFoot()){
 				this.setRegion(width*2, height*1, width, height);
 			}
+			
 			left.changeFoot();
 			characterX -= amountMoved;
 			camera.translate((float)-amountMoved,0);
 		}
+		
 		else if(dir.equals("D")){
 			wentRight = true; 
+			
 			if(right.getRightFoot()){
 				this.setRegion(0, height*2, width, height);
 			}
@@ -131,30 +131,37 @@ public class Character extends Sprite implements InputProcessor{
 			else if (right.getLeftFoot()){
 				this.setRegion(width*2, height*2, width, height);
 			}
+			
 			right.changeFoot();
 			characterX += amountMoved;
 			camera.translate((float)amountMoved,0);
 		}
 		else if(dir.equals("W")){
 			wentUp = true; 
+			
 			if(up.getRightFoot()){
 				this.setRegion(0, height*3, width, height);
 			}
+			
 			else if (up.getLeftFoot()){
 				this.setRegion(width*2, height*3, width, height);
 			}
+			
 			up.changeFoot();
 			characterY += amountMoved;
 			camera.translate(0,(float)amountMoved);
 		}
 		else if(dir.equals("S")){
 			wentDown = true; 
+			
 			if(down.getRightFoot()){
 				this.setRegion(0, height*0, width, height);
 			}
+			
 			else if (down.getLeftFoot()){
 				this.setRegion(width*2, height*0, width, height);
 			}
+			
 			down.changeFoot();
 			characterY -= amountMoved;
 			camera.translate(0, (float)-amountMoved);  
@@ -171,8 +178,8 @@ public class Character extends Sprite implements InputProcessor{
 
 			if(wentDown) {
 				System.out.println("Went Down");
-				characterY += amountMoved + 1;
-				camera.translate(0, (float)(1.3 * amountMoved)); 
+				characterY += amountMoved;
+				camera.translate(0, (float)(amountMoved)); 
 			}
 
 			if(wentRight) {
@@ -183,8 +190,8 @@ public class Character extends Sprite implements InputProcessor{
 
 			if(wentLeft) {
 				System.out.println("Went Left");
-				characterX += amountMoved + 1;
-				camera.translate((float)(1.3 * amountMoved), 0); 
+				characterX += amountMoved;
+				camera.translate((float)(amountMoved), 0); 
 			}
 
 			wentUp = false; 

@@ -1,5 +1,8 @@
 package com.csci201.project;
 
+import java.util.LinkedList;
+import java.util.Queue;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.files.FileHandle;
@@ -17,9 +20,9 @@ public class Character extends Sprite implements InputProcessor{
 
 	static FileHandle characterFileHandle = Gdx.files.internal("data/reindeer.png"); 
 	private static Texture characterTexture = new Texture(characterFileHandle);
-	private int characterX;
-	private int characterY;
-	float characterSpeed = 150f;
+	private float characterX;
+	private float characterY;
+	float characterSpeed = 200f;
 	float amountMoved; 
 
 	/*Boolean data for movement state tracking*/	
@@ -27,25 +30,38 @@ public class Character extends Sprite implements InputProcessor{
 	private MoveState right;
 	private MoveState left;
 	private MoveState up;
-
+	
 	private static int width = characterTexture.getWidth()/3;
 	private static int height = characterTexture.getHeight()/4;
+	
+	private Energybar energybar;
 	
 	Texture img;
 	TiledMap tiledMap;
 	OrthographicCamera camera;
 	TiledMapRenderer tiledMapRenderer;
+	
+	
+	
+	private Queue<Projectile> projectiles;
+	
 
 	public Character(){
 		super(characterTexture, width, height*2, width, height);
 		characterX = 280;
 	    characterY = 220;
+	    
+	    projectiles = new LinkedList<Projectile>();
 
 		//MoveState data
 		down = new MoveState();
 		right = new MoveState();
 		left = new MoveState();
 		up = new MoveState();
+		
+		//energy data
+		energybar = new Energybar();
+		
 		
 		// camera data
 		Gdx.input.setInputProcessor(this);
@@ -56,15 +72,31 @@ public class Character extends Sprite implements InputProcessor{
 		camera.update();
 		tiledMap = new TmxMapLoader().load("map1.tmx");
 		tiledMapRenderer = new OrthogonalTiledMapRenderer(tiledMap);
+		
 	}
 	
+	public void addProjectile(Projectile p){
+		projectiles.add(p);
+		energybar.setEnergy(-10);
+		
+
+		System.out.println("Energy is " + energybar.getEnergy());
+
+	}
+	
+	public Queue<Projectile> getProjectiles(){
+		return projectiles;
+	}
+	
+	public Energybar getEnergybar(){
+		return energybar;
+	}
+	
+	
+	
 	public void moveChar(String dir){
-		Gdx.gl.glClearColor(0, 0, 0, 1);
-		Gdx.gl.glBlendFunc(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
-		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-		camera.update();
-		tiledMapRenderer.setView(camera);
-		tiledMapRenderer.render();
+
+		
 		amountMoved = Gdx.graphics.getDeltaTime() * characterSpeed;
 		if(dir.equals("A")) {
 			if(left.getRightFoot()){
@@ -74,8 +106,8 @@ public class Character extends Sprite implements InputProcessor{
 				this.setRegion(width*2, height*1, width, height);
 			}
 			left.changeFoot();
-			characterX -= amountMoved - 1;
-			camera.translate((int)-amountMoved,0);
+			characterX -= amountMoved;
+			camera.translate((float)-amountMoved,0);
 		}
 		else if(dir.equals("D")){
 			if(right.getRightFoot()){
@@ -87,7 +119,7 @@ public class Character extends Sprite implements InputProcessor{
 			}
 			right.changeFoot();
 			characterX += amountMoved;
-			camera.translate((int)amountMoved,0);
+			camera.translate((float)amountMoved,0);
 		}
 		else if(dir.equals("W")){
 			if(up.getRightFoot()){
@@ -98,7 +130,7 @@ public class Character extends Sprite implements InputProcessor{
 			}
 			up.changeFoot();
 			characterY += amountMoved;
-			camera.translate(0,(int)amountMoved);
+			camera.translate(0,(float)amountMoved);
 		}
 		else if(dir.equals("S")){
 			if(down.getRightFoot()){
@@ -108,16 +140,34 @@ public class Character extends Sprite implements InputProcessor{
 				this.setRegion(width*2, height*0, width, height);
 			}
 			down.changeFoot();
-			characterY -= amountMoved - 1;
-			camera.translate(0, (int)-amountMoved);  
+			characterY -= amountMoved;
+			camera.translate(0, (float)-amountMoved);  
 		}
+	}
+	
+	public void setChar(){
+		Gdx.gl.glClearColor(0, 0, 0, 1);
+		Gdx.gl.glBlendFunc(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
+		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+		camera.update();
+		tiledMapRenderer.setView(camera);
+		tiledMapRenderer.render();
 	}
 	
 	public void drawChar(SpriteBatch batch){
 		camera.update();  
 		batch.setProjectionMatrix(camera.combined);
-		batch.draw(this, (int)characterX, (int)characterY);
+		batch.draw(this, characterX, characterY);
 	}
+	
+	public float getCharacterX(){
+		return characterX;
+	}
+	
+	public float getCharacterY(){
+		return characterY;
+	}
+	
 
 	@Override
 	public boolean keyDown(int keycode) {
@@ -166,5 +216,6 @@ public class Character extends Sprite implements InputProcessor{
 		// TODO Auto-generated method stub
 		return false;
 	}
+
 	
 }

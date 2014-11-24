@@ -104,7 +104,7 @@ public class GameplayScreen extends ApplicationAdapter{
 			if(p.exists()){
 				p.drawShot(batch);
 			}
-			if(p.distanceUp() > 100){
+			if(p.distanceUp() > 60){
 				p.setExists(false);
 			}
 		}

@@ -18,15 +18,22 @@ public class GameplayScreen extends ApplicationAdapter{
 	private int projX;
 	private int projY;
 	
+	
+	private Item item;
+	
+	
 	public GameplayScreen(){}
 
+	
 	@Override
 	public void create() {
 
 		
 		batch = new SpriteBatch();
 		character = new Character();
-
+		item = new Item();
+		
+		
 		//Projectile data
 	/*	FileHandle projectileFileHandle = Gdx.files.internal("data/projectile.png"); 
 		projectileTexture = new Texture(projectileFileHandle);
@@ -59,7 +66,7 @@ public class GameplayScreen extends ApplicationAdapter{
 		batch.begin();
 
 		//System.out.println("Rendering");
-		
+		item.drawItem(batch);
 		character.drawChar(batch);
 		//batch.draw(character, (int)characterX, (int)characterY);
 		

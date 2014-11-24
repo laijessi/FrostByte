@@ -4,15 +4,13 @@ package com.csci201.project;
 
 import java.util.ArrayList;
 
-import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
-import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.Array;
 
 
@@ -32,6 +30,9 @@ public class GameplayScreen implements Screen{
 	Game game;
 	
 	public GameplayScreen(Game g){
+		Sound sound = Gdx.audio.newSound(Gdx.files.internal("soundtrack.mp3"));
+		long id = sound.play(.5f);
+		sound.setLooping(id,true);
 		game = g;
 		create();
 	}

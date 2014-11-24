@@ -227,21 +227,28 @@ public class Character extends Sprite implements InputProcessor{
 			
 		}
 		int val = gotItem();
+		//TODO: add sound files
 		if(val != -1){
 			String powerType = mainMap.getItemList().get(val).getType();
 			if(mainMap.getItemList().get(val).isActive()){
 				mainMap.getItemList().get(val).deactivate();
 				startTime = System.currentTimeMillis();
 				if(powerType.equals("Strength")){
+					//Sound strength = Gdx.audio.newSound(Gdx.files.internal("strength.mp3"));
+					//strength.play(1f);
 					
 				}
 				if(powerType.equals("Speed")){
+					//Sound speed = Gdx.audio.newSound(Gdx.files.internal("speed.mp3"));
+					//speed.play(1f);
 					currItem =  mainMap.getItemList().get(val);
 					itemActive = true;
 					characterSpeed *= 2;
 					System.out.println("Character speed " + characterSpeed);
 				}
 				if(powerType.equals("Health")){
+					//Sound health = Gdx.audio.newSound(Gdx.files.internal("health.mp3"));
+					//health.play(1f);
 
 				}
 			}

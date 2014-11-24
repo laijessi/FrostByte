@@ -14,7 +14,7 @@ import com.badlogic.gdx.math.Vector3;
 
 public class GameplayScreen extends ApplicationAdapter{
 	private MainMap mainMap; 
-	private SpriteBatch batch;
+	private static SpriteBatch batch;
 
 	private Character character;
 
@@ -120,5 +120,9 @@ public class GameplayScreen extends ApplicationAdapter{
 		*/
 
 		batch.end();
+	}
+
+	public static SpriteBatch getBatch(){
+		return batch;
 	}
 }

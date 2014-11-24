@@ -24,8 +24,8 @@ public class Character extends Sprite implements InputProcessor{
 
 	static FileHandle characterFileHandle = Gdx.files.internal("data/reindeer.png"); 
 	private static Texture characterTexture = new Texture(characterFileHandle);
-	private float characterX;
-	private float characterY;
+	private static float characterX;
+	private static float characterY;
 	float characterSpeed = 200f;
 	float amountMoved; 
 
@@ -39,6 +39,7 @@ public class Character extends Sprite implements InputProcessor{
 	private static int height = characterTexture.getHeight()/4;
 	
 	private Energybar energybar;
+	private Healthbar healthbar;
 	
 	//main variables
 	MainMap mainMap; 
@@ -67,6 +68,7 @@ public class Character extends Sprite implements InputProcessor{
 		
 		//energy data
 		energybar = new Energybar();
+		healthbar = new Healthbar();
 		
 		// camera data
 		Gdx.input.setInputProcessor(this);
@@ -227,13 +229,15 @@ public class Character extends Sprite implements InputProcessor{
 		camera.update();  
 		batch.setProjectionMatrix(camera.combined);
 		batch.draw(this, characterX, characterY);
+		energybar.drawBar();
+		healthbar.drawBar();
 	}
 	
-	public float getCharacterX(){
+	public static float getCharacterX(){
 		return characterX;
 	}
 	
-	public float getCharacterY(){
+	public static float getCharacterY(){
 		return characterY;
 	}
 	

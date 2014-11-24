@@ -69,21 +69,20 @@ public class GameplayScreen extends ApplicationAdapter{
 		if(Gdx.input.justTouched()){
 			projX = Gdx.input.getX();
 			projY = Gdx.input.getY();
-			
-		    Vector2 centerPosition = new Vector2(character.getX(), character.getY());
-
-		    Vector3 worldCoordinates = new Vector3(projX, 600, projY);
-		    //camera.unproject(worldCoordinates);
-
-		    Vector2 mouseLoc = new Vector2(worldCoordinates.x, worldCoordinates.y);
+		
 			
 			//TODO: 320 and 240 are hard-coded to allow the projectile to 
 		    //interpret the current map's origin as (0,0), find the actual
 		    //dimensions of the height and width of the screen and divide by 2
 		    
+			//System.out.println(Gdx.graphics.getWidth());
 		    
-			character.addProjectile( new Projectile(projX-320, projY-240, character.getCharacterX(), character.getCharacterY()));
-		
+			if(character.getEnergybar().getEnergy() >= 10){
+				character.addProjectile( new Projectile(projX - Gdx.graphics.getWidth()/2,
+										projY-Gdx.graphics.getHeight()/2,
+										character.getCharacterX(),
+										character.getCharacterY()));
+			}
 		}
 	
 		for(Projectile p : character.getProjectiles()){

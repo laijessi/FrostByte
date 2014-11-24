@@ -73,7 +73,7 @@ public class Projectile extends Sprite {
 		this.xDistance = (goX);
 		this.yDistance = -1*(goY);
 		
-		System.out.println("STARTX IS : " + shipX);
+		/*System.out.println("STARTX IS : " + shipX);
 		System.out.println("STARTY IS : " + shipY);
 		
 		System.out.println("GO TO X IS : " + goX);
@@ -81,6 +81,7 @@ public class Projectile extends Sprite {
 		
 		System.out.println("X DISTANCE IS: " + xDistance);
 		System.out.println("Y DISTANCE IS: " + yDistance);
+		*/
 		
 		
 		exists = true;
@@ -94,7 +95,7 @@ public class Projectile extends Sprite {
 		if(xDistance < 0 && yDistance > 0){
 			radians += Math.PI;
 		}
-		if(xDistance < 0 && yDistance < 0){
+		else if(xDistance < 0 && yDistance < 0){
 			radians += Math.PI;
 		}
 	}
@@ -109,6 +110,8 @@ public class Projectile extends Sprite {
 		this.posX += Math.cos(radians) * ACCELERATOR;
 		this.posY += Math.sin(radians) * ACCELERATOR;
 		
+		
+		//System.out.println("X is " + posX  + "Y is " + posY);
 		//System.out.println("Away from x by: " + Math.abs(goX-posX));
 		//System.out.println("Away from y by: " + Math.abs(goY-posY));
 		

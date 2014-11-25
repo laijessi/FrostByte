@@ -20,6 +20,9 @@ public class GameplayScreen implements Screen{
 
 	private Character character;
 
+	private ArrayList<Character> characters;
+	
+	
 	private int projX;
 	private int projY;
 	
@@ -34,13 +37,13 @@ public class GameplayScreen implements Screen{
 		long id = sound.play(.5f);
 		sound.setLooping(id,true);
 		game = g;
+		characters = new ArrayList<Character>();
 		create();
 	}
 
 	
 	public void create() {
 
-		
 		batch = new SpriteBatch();
 		mainMap = new MainMap("map3.tmx");
 		character = new Character(mainMap);

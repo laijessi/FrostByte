@@ -8,6 +8,10 @@ import java.awt.event.AdjustmentEvent;
 import java.awt.event.AdjustmentListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.net.Socket;
+import java.util.Scanner;
 import java.util.Vector;
 
 import javax.swing.BoxLayout;
@@ -61,6 +65,20 @@ public class ChatWindow extends JFrame{
 		addListeners();
 		
 		setVisible(true);
+		
+		/*try{
+			Socket s = new Socket(hostname, port);
+			input = new Scanner(s.getInputStream());
+			output = new PrintWriter(s.getOutputStream());
+			
+			output.println("connect");
+			output.flush();
+			
+			clientThread ct = new clientThread(s);
+			ct.start();
+		}catch (IOException ioe){
+			System.out.println("IOException in client constructor");
+		}*/
 	}
 	
 	private void createWindow() {
@@ -153,17 +171,8 @@ public class ChatWindow extends JFrame{
 	}
 	
 	class typeAreaListener implements KeyListener{
-
-		@Override
-		public void keyTyped(KeyEvent e) {
-			// TODO Auto-generated method stub
-			
-		}
-
 		@Override
 		public void keyPressed(KeyEvent e) {
-			// TODO Auto-generated method stub
-			//if(e.equals(obj))
 			switch(e.getKeyCode()){
 				case KeyEvent.VK_ENTER:
 					if(!typeArea.getText().equals("")){
@@ -182,11 +191,9 @@ public class ChatWindow extends JFrame{
 		}
 
 		@Override
-		public void keyReleased(KeyEvent e) {
-			// TODO Auto-generated method stub
-			
-		}
-		
+		public void keyReleased(KeyEvent e) {}
+		@Override
+		public void keyTyped(KeyEvent e) {}
 	}
 
 }

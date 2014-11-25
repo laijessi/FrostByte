@@ -112,6 +112,7 @@ public class Character extends Sprite implements InputProcessor{
 			if(line.equals("Begin")){
 				pw = new PrintWriter(s.getOutputStream());
 				pw.println("sending to server");
+				pw.flush();
 			}
 			
 			while (true){

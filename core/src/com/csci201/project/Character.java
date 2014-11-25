@@ -1,8 +1,15 @@
 
 package com.csci201.project;
 
+import java.io.PrintWriter;
+import java.net.Socket;
 import java.util.LinkedList;
 import java.util.Queue;
+import java.util.Scanner;
+
+import javax.swing.JDialog;
+import javax.swing.JLabel;
+import javax.swing.SwingConstants;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputProcessor;
@@ -12,10 +19,6 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.maps.tiled.TiledMap;
-import com.badlogic.gdx.maps.tiled.TiledMapRenderer;
-import com.badlogic.gdx.maps.tiled.TmxMapLoader;
-import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Intersector;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.utils.Array;
@@ -56,6 +59,11 @@ public class Character extends Sprite implements InputProcessor{
 	private Array<Rectangle> itemRects;
 	private Queue<Projectile> projectiles;
 	
+	//server variables
+	private PrintWriter pw;
+	private Scanner sc;
+	public Socket s;
+	
 
 	public Character(MainMap mainMap){
 		super(characterTexture, width, height*2, width, height);
@@ -89,6 +97,33 @@ public class Character extends Sprite implements InputProcessor{
 		
 		//map initialization
 		this.mainMap = mainMap; 
+		
+		connect();
+	}
+	
+	public void connect(){
+		try{
+			int port = 12345;
+			String host = "127.0.0.1";
+			s = new Socket(host, port);
+
+			sc = new Scanner(s.getInputStream());
+			String line = sc.nextLine();
+			if(line.equals("Begin")){
+				pw = new PrintWriter(s.getOutputStream());
+				pw.println("sending to server");
+				pw.flush();
+			}
+			
+			//close when loss
+			/*s.close();
+			sc.close();
+			pw.close();*/
+			
+		}
+		catch(Exception e){
+			System.out.println("Exception in client: " + e);
+		}
 	}
 	
 	public Rectangle getCollisionRectangle() {
@@ -260,40 +295,7 @@ public class Character extends Sprite implements InputProcessor{
 				}	
 			}//end item function stuff 
 			
-		}
-		/*int val = gotItem();
-		if(val != -1){
-			String powerType = mainMap.getItemList().get(val).getType();
-			if(mainMap.getItemList().get(val).isActive()){
-				mainMap.getItemList().get(val).deactivate();
-				startTime = System.currentTimeMillis();
-				if(powerType.equals("Strength")){
-					//Sound strength = Gdx.audio.newSound(Gdx.files.internal("strength.mp3"));
-					//strength.play(1f);
-					currItem =  mainMap.getItemList().get(val);
-					itemActive = true;
-					
-				}
-				if(powerType.equals("Speed")){
-					//Sound speed = Gdx.audio.newSound(Gdx.files.internal("speed.mp3"));
-					//speed.play(1f);
-					currItem =  mainMap.getItemList().get(val);
-					itemActive = true;
-					characterSpeed *= 2;
-					System.out.println("Character speed " + characterSpeed);
-				}
-				if(powerType.equals("Health")){
-					//Sound health = Gdx.audio.newSound(Gdx.files.internal("health.mp3"));
-					//health.play(1f);
-					healthbar.addHealth(); //add 10 
-					System.out.println("Added 10 health");
-					currItem =  mainMap.getItemList().get(val);
-					itemActive = true;
-				}
-			}	
-		}//end item function stuff 
-		*/
-		
+		}		
 		
 		characterCollisionBox.setPosition(characterX, characterY);
 	}

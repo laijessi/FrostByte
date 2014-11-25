@@ -50,7 +50,10 @@ public class Server {
 								pw.flush();
 							}
 						}
+						
 					}
+					pw.print("a");
+					pw.flush();
 				}
 			} catch (IOException ioe) {
 				System.out.println("IOExceptionin ServerThreadconstructor: " + ioe.getMessage());

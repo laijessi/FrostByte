@@ -71,7 +71,10 @@ public class GameplayScreen implements Screen{
 	@Override
 	public void render(float delta) {
 		
+		
 		character.setChar();
+		
+		character.moveChar("A");
 		
 		if(Gdx.input.isKeyPressed(Keys.A)) {
 			character.moveChar("A");
@@ -137,6 +140,9 @@ public class GameplayScreen implements Screen{
 		*/
 
 		batch.end();
+		
+		character.listen();
+		
 	}
 
 

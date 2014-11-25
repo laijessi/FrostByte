@@ -18,6 +18,7 @@ import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -47,6 +48,8 @@ public class ChatWindow extends JFrame{
 	String username;
 	
 	//class variables
+	Scanner input;
+	PrintWriter output;
 	
 	//constructor
 	public ChatWindow(String username){
@@ -66,19 +69,19 @@ public class ChatWindow extends JFrame{
 		
 		setVisible(true);
 		
-		/*try{
-			Socket s = new Socket(hostname, port);
+		try{
+			Socket s = new Socket("localhost", 6789);
 			input = new Scanner(s.getInputStream());
 			output = new PrintWriter(s.getOutputStream());
 			
-			output.println("connect");
-			output.flush();
+			//output.println("/connect");
+			//output.flush();
 			
 			clientThread ct = new clientThread(s);
 			ct.start();
 		}catch (IOException ioe){
 			System.out.println("IOException in client constructor");
-		}*/
+		}
 	}
 	
 	private void createWindow() {
@@ -159,6 +162,9 @@ public class ChatWindow extends JFrame{
 				Object[] obj = new Object[1];
 				obj[0] = username + ": " + typeArea.getText();
 				
+				output.println(username + ": " + typeArea.getText());
+				output.flush();
+				
 				dtm.addRow(obj);
 				typeArea.setText("");
 			}
@@ -179,6 +185,9 @@ public class ChatWindow extends JFrame{
 						Object[] obj = new Object[1];
 						obj[0] = username + ": " + typeArea.getText();
 						
+						output.println(username + ": " + typeArea.getText());
+						output.flush();
+						
 						dtm.addRow(obj);
 						typeArea.setText("");
 					}else{
@@ -194,6 +203,49 @@ public class ChatWindow extends JFrame{
 		public void keyReleased(KeyEvent e) {}
 		@Override
 		public void keyTyped(KeyEvent e) {}
+	}
+	
+	class clientThread extends Thread{
+		//class variables
+		Socket s;
+		Scanner threadInput;
+		PrintWriter threadOutput;
+		String message = "";
+		
+		//constructor
+		public clientThread(Socket s){
+			this.s = s;
+		}
+		
+		public void run(){
+			//TODO: impl thread things
+			try{
+				try{
+					threadInput = new Scanner(s.getInputStream());
+					threadOutput = new PrintWriter(s.getOutputStream());
+					threadOutput.flush();
+					
+					while(true){
+						if(threadInput.hasNext()){
+							message = threadInput.nextLine();
+							
+							//might not need this if statement since server will handle all
+							//special cases where you only want to chat to a specific person
+							//if(!message.startsWith("/")){
+								Object[] obj = new Object[1];
+								obj[0] = message;
+								dtm.addRow(obj);
+							//}else{
+							//}
+						}
+					}
+				}finally{
+					s.close();
+				}
+			}catch(IOException ioe){
+				System.out.println("IOException in client thread");
+			}
+		}
 	}
 
 }

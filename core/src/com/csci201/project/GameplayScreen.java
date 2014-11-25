@@ -74,7 +74,6 @@ public class GameplayScreen implements Screen{
 		
 		character.setChar();
 		
-		character.moveChar("A");
 		
 		if(Gdx.input.isKeyPressed(Keys.A)) {
 			character.moveChar("A");

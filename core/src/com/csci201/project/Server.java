@@ -40,6 +40,7 @@ public class Server {
 						sc = new Scanner(s.getInputStream());
 						pw = new PrintWriter( sockets.get(i).getOutputStream() );
 						if (sockets.size() == 2){
+							System.out.println("Server num " + i+1);
 							pw.println("Begin");
 							pw.flush();
 						}

@@ -107,6 +107,12 @@ public class Character extends Sprite implements InputProcessor{
 		System.out.println("In client: ");
 		System.out.println(line);
 		
+		try{
+			pw = new PrintWriter(s.getOutputStream());
+			pw.println("nothing");
+			pw.flush();
+		}
+		catch(Exception e){}
 	}
 	
 	public void connect(){

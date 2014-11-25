@@ -101,6 +101,14 @@ public class Character extends Sprite implements InputProcessor{
 		connect();
 	}
 	
+	public void listen(){
+		
+		String line = sc.nextLine();
+		System.out.println("In client: ");
+		System.out.println(line);
+		
+	}
+	
 	public void connect(){
 		try{
 			int port = 12345;
@@ -114,12 +122,7 @@ public class Character extends Sprite implements InputProcessor{
 				pw.println("sending to server");
 				pw.flush();
 			}
-			
-			while (true){
-				line = sc.nextLine();
-				System.out.println("In client: ");
-				System.out.println(line);
-			}
+
 			
 			//close 
 			/*s.close();

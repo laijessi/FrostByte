@@ -112,10 +112,15 @@ public class Character extends Sprite implements InputProcessor{
 			if(line.equals("Begin")){
 				pw = new PrintWriter(s.getOutputStream());
 				pw.println("sending to server");
-				pw.flush();
 			}
 			
-			//close when loss
+			while (true){
+				line = sc.nextLine();
+				System.out.println("In client: ");
+				System.out.println(line);
+			}
+			
+			//close 
 			/*s.close();
 			sc.close();
 			pw.close();*/

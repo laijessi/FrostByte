@@ -60,7 +60,7 @@ public class ChatServer {
 						}
 						
 						message = input.nextLine();
-						System.out.println(message);
+						//System.out.println(message);
 						
 						if(!message.startsWith("/")){
 							for(int i = 0; i < connections.size(); i++){

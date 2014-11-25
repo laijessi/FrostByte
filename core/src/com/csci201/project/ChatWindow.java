@@ -6,6 +6,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.AdjustmentEvent;
 import java.awt.event.AdjustmentListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
+import java.util.Vector;
 
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
@@ -15,6 +18,9 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextArea;
+import javax.swing.JTextField;
+import javax.swing.SwingConstants;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 
 public class ChatWindow extends JFrame{
@@ -25,20 +31,24 @@ public class ChatWindow extends JFrame{
 	
 	JTable chatArea;
 	DefaultTableModel dtm = new DefaultTableModel(0,0);
-	JTextArea typeArea;
+	JTextField typeArea;
 	
 	JLabel chatTitle;
-	JLabel username;
+	JLabel usernameLabel;
 	
 	JScrollPane chatScroll;
 	
 	JButton submit;
 	
+	String username;
+	
 	//class variables
 	
 	//constructor
-	public ChatWindow(){
+	public ChatWindow(String username){
 		super("Chat Window");
+		
+		this.username = username;
 		
 		createWindow();
 		
@@ -54,7 +64,7 @@ public class ChatWindow extends JFrame{
 	}
 	
 	private void createWindow() {
-		setSize(800, 600);
+		setSize(400, 300);
 		setLocation(200, 200);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	}
@@ -72,10 +82,10 @@ public class ChatWindow extends JFrame{
 		chatArea = new JTable();
 		dtm.setColumnIdentifiers(new String[]{""});
 		chatArea.setModel(dtm);
-		typeArea = new JTextArea();
+		typeArea = new JTextField();
 		
 		chatTitle = new JLabel("FrostByte Chat Window");
-		username = new JLabel("SAMPLE USERNAME HERE");
+		usernameLabel = new JLabel(username);
 		
 		chatScroll = new JScrollPane(chatArea);
 		
@@ -85,7 +95,7 @@ public class ChatWindow extends JFrame{
 	private void styleGuiElem() {
 		// TODO Auto-generated method stub
 		chatTitle.setAlignmentX(Component.CENTER_ALIGNMENT);
-		username.setAlignmentX(Component.CENTER_ALIGNMENT);
+		usernameLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
 		
 		chatArea.setCellSelectionEnabled(false);
 
@@ -94,7 +104,7 @@ public class ChatWindow extends JFrame{
 	private void addGuiElem() {
 		// TODO Auto-generated method stub
 		northPanel.add(chatTitle);
-		northPanel.add(username);
+		northPanel.add(usernameLabel);
 		
 		southPanel.add(typeArea, BorderLayout.CENTER);
 		southPanel.add(submit, BorderLayout.EAST);
@@ -115,26 +125,68 @@ public class ChatWindow extends JFrame{
 		        e.getAdjustable().setValue(e.getAdjustable().getMaximum());  
 		    }
 		});
+		
+		typeArea.addKeyListener(new typeAreaListener());
 	}
 	
 	public static void main(String[] args){
-		new ChatWindow();
+		new ChatWindow("Amos");
 	}
 	
 	class buttonListener implements ActionListener{
-		//class variables
-		
-		//constructor
-		public buttonListener(){
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			if(!typeArea.getText().equals("")){
+				Object[] obj = new Object[1];
+				obj[0] = username + ": " + typeArea.getText();
+				
+				dtm.addRow(obj);
+				typeArea.setText("");
+			}
+			
+			/*int rownum = dtm.getRowCount();
+			DefaultTableCellRenderer rightRender = new DefaultTableCellRenderer();
+			rightRender.setHorizontalAlignment(SwingConstants.RIGHT);
+			chatArea.getColumnModel().getColumn(rownum-1).setCellRenderer(rightRender);*/
+		}
+	}
+	
+	class typeAreaListener implements KeyListener{
+
+		@Override
+		public void keyTyped(KeyEvent e) {
+			// TODO Auto-generated method stub
 			
 		}
 
 		@Override
-		public void actionPerformed(ActionEvent e) {
+		public void keyPressed(KeyEvent e) {
 			// TODO Auto-generated method stub
-			dtm.addRow(new Object[]{typeArea.getText()});
-			typeArea.setText("");
+			//if(e.equals(obj))
+			switch(e.getKeyCode()){
+				case KeyEvent.VK_ENTER:
+					if(!typeArea.getText().equals("")){
+						Object[] obj = new Object[1];
+						obj[0] = username + ": " + typeArea.getText();
+						
+						dtm.addRow(obj);
+						typeArea.setText("");
+					}else{
+						typeArea.setText("");
+					}
+					break;
+				default:
+					break;
+			}
 		}
+
+		@Override
+		public void keyReleased(KeyEvent e) {
+			// TODO Auto-generated method stub
+			
+		}
+		
 	}
 
 }

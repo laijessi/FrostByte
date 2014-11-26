@@ -13,14 +13,7 @@ public class Projectile extends Sprite {
 
 	//private SpriteBatch batch;
 	//private Texture projectileTexture;
-	private float projectileX;
-	private float projectileY;
-	private float speed = 200f;
 	
-	private float width;
-	private float height;
-	private float shotTime;
-	private float lifeTime;
 	private float posX, posY;
 	private float goX, goY;
 	private float xDistance, yDistance;
@@ -103,24 +96,6 @@ public class Projectile extends Sprite {
 		sound.play(1f);
 		//sound.dispose();
 	}
-	
-	public void drawShot(SpriteBatch batch) {
-		
-		//position = positionBefore + v*t
-		
-		//Lucky number
-		double ACCELERATOR = 7.77;
-		
-		this.posX += Math.cos(radians) * ACCELERATOR;
-		this.posY += Math.sin(radians) * ACCELERATOR;
-		
-		projectileCollisionBox.setPosition(posX, posY); 
-		//System.out.println("X is " + posX  + "Y is " + posY);
-		//System.out.println("Away from x by: " + Math.abs(goX-posX));
-		//System.out.println("Away from y by: " + Math.abs(goY-posY));
-		
-		batch.draw(this, posX, posY);
-	}
 
 	public boolean detectCollision(MainMap mainMap) {
 		//sees if character is touching any collision rectangles
@@ -147,4 +122,27 @@ public class Projectile extends Sprite {
 		exists = b;
 	}
 	
+	public void setX(double db){
+		posX += db;
+	}
+	
+	public void setY(double db){
+		posY += db;
+	}
+	
+	public float getX(){
+		return posX;
+	}
+	
+	public float getY(){
+		return posY;
+	}
+	
+	public float getRadians(){
+		return radians;
+	}
+	
+	public Rectangle getColBox(){
+		return projectileCollisionBox;
+	}
 }

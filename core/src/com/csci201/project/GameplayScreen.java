@@ -113,7 +113,14 @@ public class GameplayScreen implements Screen{
 		for(Projectile p : me.getProjectiles()){
 			
 			if(p.exists()){
-				p.drawShot(batch);
+				double ACCELERATOR = 7.77;
+				
+				p.setX( Math.cos(p.getRadians()) * ACCELERATOR );
+				p.setY( Math.sin(p.getRadians()) * ACCELERATOR );
+				
+				p.getColBox().setPosition(p.getX(), p.getY()); 
+
+				batch.draw(p, p.getX(), p.getY());
 			}
 			if(p.distanceUp() > 100 || p.detectCollision(mainMap)){
 				p.setExists(false);

@@ -53,6 +53,7 @@ public class Character extends Sprite implements InputProcessor, Serializable{
 	MainMap mainMap; 
 	
 	
+	
 	//collision variables
 	private boolean wentLeft = false, wentRight = false, wentUp = false, wentDown = false;
 	private Array<Rectangle> collisionRects; 
@@ -66,6 +67,11 @@ public class Character extends Sprite implements InputProcessor, Serializable{
 	public Socket s;
 	
 
+	public String toString(){
+		return "X: " + Float.toString(characterX) + "Y: " + Float.toString(characterY);
+	}
+	
+	
 	public Character(MainMap mainMap){
 		super(characterTexture, width, height*2, width, height);
 		characterX = 280;
@@ -99,45 +105,7 @@ public class Character extends Sprite implements InputProcessor, Serializable{
 		//connect();
 	}
 	
-	public void listen(){
-		
-		String line = sc.nextLine();
-		System.out.println("In client: ");
-		System.out.println(line);
-		
-		try{
-			pw = new PrintWriter(s.getOutputStream());
-			pw.println("nothing");
-			pw.flush();
-		}
-		catch(Exception e){}
-	}
 	
-	public void connect(){
-		try{
-			int port = 12345;
-			String host = "127.0.0.1";
-			s = new Socket(host, port);
-
-			sc = new Scanner(s.getInputStream());
-			String line = sc.nextLine();
-			if(line.equals("Begin")){
-				pw = new PrintWriter(s.getOutputStream());
-				pw.println("sending to server");
-				pw.flush();
-			}
-
-			
-			//close 
-			/*s.close();
-			sc.close();
-			pw.close();*/
-			
-		}
-		catch(Exception e){
-			System.out.println("Exception in client: " + e);
-		}
-	}
 	
 	public Rectangle getCollisionRectangle() {
 		return characterCollisionBox; 

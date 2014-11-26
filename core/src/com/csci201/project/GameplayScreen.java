@@ -39,6 +39,10 @@ public class GameplayScreen implements Screen{
 	//private Item item;
 	private ArrayList<Item> itemList = new ArrayList<Item>();
 	
+	//networkmanager data
+	private NetworkManager network;
+	
+	
 	Game game;
 	
 	public GameplayScreen(Game g){
@@ -75,6 +79,8 @@ public class GameplayScreen implements Screen{
 		mainMap.takeItemRects(itemRect);
 		
 		
+		network = new NetworkManager();
+		
 		//Projectile data
 	/*	FileHandle projectileFileHandle = Gdx.files.internal("data/projectile.png"); 
 		projectileTexture = new Texture(projectileFileHandle);
@@ -105,7 +111,7 @@ public class GameplayScreen implements Screen{
 
 		batch.end();
 		
-		//me.listen();
+		network.ping();
 		
 	}
 	

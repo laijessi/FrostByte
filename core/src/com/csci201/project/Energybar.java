@@ -25,7 +25,7 @@ public class Energybar implements Runnable {
 			try {
 				Thread.sleep(100);
 				if(energy < 100){	
-					energy += 1;
+					energy++;
 				}
 			} catch (InterruptedException e) {
 				e.printStackTrace();

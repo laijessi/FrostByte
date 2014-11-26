@@ -7,7 +7,7 @@ import com.badlogic.gdx.graphics.g2d.NinePatch;
 public class Healthbar implements Runnable{
 	private NinePatch loadingHealthGreen;
 	private int health;
-	private int healthTo;
+	private int healthUpTo;
 	
 	private Thread t;
 	
@@ -16,6 +16,7 @@ public class Healthbar implements Runnable{
 		
 		//health = 100;
 		health = 50; //temporary default
+		healthUpTo = health;
 		t = new Thread(this);
 		t.start();
 
@@ -25,27 +26,20 @@ public class Healthbar implements Runnable{
 		return loadingHealthGreen;
 	}
 	
-	public void addHealth(){
-		if(health + 10 <= 100){
-			health += 10;
-		}
-		else{
-			health = 100;
-		}
-	}
 	public void run(){
-		try{
-			
-			while(health < healthTo){
+	
+		while(true){
+			try{
 				Thread.sleep(100);
-				health++;
-				System.out.println(health);
-				
+				if(health < healthUpTo){
+					health++;
+					if(health >= 100){
+						health = 100;
+					}
+				}
 			}
-			
-		}
-		catch(Exception e){
-			
+			catch(Exception e){
+			}		
 		}
 	}
 
@@ -55,10 +49,8 @@ public class Healthbar implements Runnable{
 	}
 
 	public void setHealth(int i){
-		System.out.println("getting health");
-		healthTo = health + i;
-		t.run();
-		
+
+		healthUpTo = health + i;
 	}
 
 

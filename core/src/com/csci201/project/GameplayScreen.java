@@ -9,6 +9,10 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.audio.Sound;
+import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.NinePatch;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.utils.Array;
@@ -16,16 +20,21 @@ import com.badlogic.gdx.utils.Array;
 
 public class GameplayScreen implements Screen{
 	private MainMap mainMap; 
-	private static SpriteBatch batch;
+	private SpriteBatch batch;
 
-	private Character character;
-
-	private ArrayList<Character> characters;
+	private Character me;
+	private Character opponent;
+	private NinePatch startingBackground; 
 	
+	private ArrayList<Character> characters;
 	
 	private int projX;
 	private int projY;
 	
+	//Camera data
+	private OrthographicCamera camera;
+	private float w = Gdx.graphics.getWidth();
+	private float h = Gdx.graphics.getHeight();
 	
 	//private Item item;
 	private ArrayList<Item> itemList = new ArrayList<Item>();
@@ -46,7 +55,13 @@ public class GameplayScreen implements Screen{
 
 		batch = new SpriteBatch();
 		mainMap = new MainMap("map3.tmx");
-		character = new Character(mainMap);
+		me = new Character(mainMap);
+		startingBackground = new NinePatch(new Texture(Gdx.files.internal("data/bar.png")), 9, 9, 9, 9);
+		
+		camera = new OrthographicCamera();
+		camera.setToOrtho(false,w,h);
+		camera.update();
+		
 		for(int i = 0; i < 5; i++){
 			Item temp = new Item(i);
 			itemList.add(temp);
@@ -74,34 +89,39 @@ public class GameplayScreen implements Screen{
 	@Override
 	public void render(float delta) {
 		
+		setCamera();
 		
-		character.setChar();
+		moveChar();
 		
-		
-		if(Gdx.input.isKeyPressed(Keys.A)) {
-			character.moveChar("A");
-		}
-		if(Gdx.input.isKeyPressed(Keys.D)) {
-			character.moveChar("D");
-		}
-		if(Gdx.input.isKeyPressed(Keys.W)) {
-			character.moveChar("W");
-		}
-
-		if(Gdx.input.isKeyPressed(Keys.S)) {
-			character.moveChar("S");
-		}
 		batch.begin();
 
-		//System.out.println("Rendering");
-		for(int i = 0; i < itemList.size(); i++){
-			if(itemList.get(i).isActive()){
-				itemList.get(i).drawItem(batch);
+		drawItems();
+				
+		drawChar(me);
+		
+		shootProjectile();	
+		
+		drawProjectiles();
+
+		batch.end();
+		
+		//me.listen();
+		
+	}
+	
+	public void drawProjectiles(){
+		for(Projectile p : me.getProjectiles()){
+			
+			if(p.exists()){
+				p.drawShot(batch);
+			}
+			if(p.distanceUp() > 100 || p.detectCollision(mainMap)){
+				p.setExists(false);
 			}
 		}
-		character.drawChar(batch);
-		//batch.draw(character, (int)characterX, (int)characterY);
-		
+	}
+	
+	public void shootProjectile(){
 		if(Gdx.input.justTouched()){
 			projX = Gdx.input.getX();
 			projY = Gdx.input.getY();
@@ -113,47 +133,80 @@ public class GameplayScreen implements Screen{
 		    
 			//System.out.println(Gdx.graphics.getWidth());
 		    
-			if(character.getEnergybar().getEnergy() >= 10){
-				character.addProjectile( new Projectile(projX - Gdx.graphics.getWidth()/2,
-										projY-Gdx.graphics.getHeight()/2,
-										character.getCharacterX(),
-										character.getCharacterY() - 5));
+			if(me.getEnergybar().getEnergy() >= 10){
+				me.addProjectile( new Projectile(projX - w/2,
+										projY-h/2,
+										me.getCharacterX(),
+										me.getCharacterY() - 5));
 			}
 		}
-	
-		for(Projectile p : character.getProjectiles()){
-			
-			if(p.exists()){
-				p.drawShot(batch);
-			}
-			if(p.distanceUp() > 100 || p.detectCollision(mainMap)){
-				p.setExists(false);
-			}
-		}
-			
-			
-			/*	projX = Gdx.input.getX();
-			projY = Gdx.input.getY();
-			projY = Math.abs(Gdx.graphics.getHeight()-projY);
-			p.setPosition(projX, projY);
-			// System.out.println("X: " + x + " Y: " + y);
-			//batch.draw(p, projX, projY);
-		}
-		*/
-
-		batch.end();
-		
-		character.listen();
-		
 	}
 
+	public void drawItems(){
+		
+		for(Item i : itemList){			
+			if(i.isActive()){
+				batch.draw(i, (int)i.getStartX(), (int)i.getStartY());		
+			}
+		}	
+	}
+	
+	public void moveChar(){
+		float amountMoved;// = Gdx.graphics.getDeltaTime() * 200f;
+		
+		if(Gdx.input.isKeyPressed(Keys.A)) {
+			amountMoved = me.moveChar("A");
+			camera.translate((float)-amountMoved,0);							
+		}
+		if(Gdx.input.isKeyPressed(Keys.D)) {
+			amountMoved = me.moveChar("D");
+			camera.translate((float)amountMoved,0);
+			
+		}
+		if(Gdx.input.isKeyPressed(Keys.W)) {
+			amountMoved = me.moveChar("W");
+			camera.translate(0,(float)amountMoved);
+		}
+		
 
+		if(Gdx.input.isKeyPressed(Keys.S)) {
+			amountMoved = me.moveChar("S");
+			camera.translate(0, (float)-amountMoved); 		
+		}
+	}
+	
+	public void setCamera(){
+		Gdx.gl.glClearColor(0, 0, 0, 1);
+		Gdx.gl.glBlendFunc(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
+		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+		camera.update();
+		mainMap.getMapRenderer().setView(camera);
+		mainMap.getMapRenderer().render();
+	}
+	
+	public void drawChar(Character c){
+		camera.update();  
+		batch.setProjectionMatrix(camera.combined);
+		batch.draw(c, c.getCharacterX(), c.getCharacterY());
+		drawEnergybar(c.getEnergybar().getBar(), c);
+		drawHealthbar(c.getHealthbar().getBar(), c);
+	}
+	
+	public void drawEnergybar(NinePatch bar, Character c){
+		startingBackground.draw(batch, c.getCharacterX()-250, c.getCharacterY()-195, 220, 25);
+		bar.draw(batch, c.getCharacterX()-248, c.getCharacterY()-193, c.getEnergybar().getEnergy()*2 + 16, 21);
+	}
+	
+	public void drawHealthbar(NinePatch bar, Character c){
+		startingBackground.draw(batch, c.getCharacterX()-250, c.getCharacterY()-165, 220, 25);
+		bar.draw(batch, c.getCharacterX()-248, c.getCharacterY()-163, c.getHealthbar().getHealth()*2 + 16, 21);
+	}
+	
 	@Override
 	public void resize(int width, int height) {
 		// TODO Auto-generated method stub
 		
 	}
-
 
 	@Override
 	public void show() {
@@ -161,13 +214,11 @@ public class GameplayScreen implements Screen{
 		
 	}
 
-
 	@Override
 	public void hide() {
 		// TODO Auto-generated method stub
 		
 	}
-
 
 	@Override
 	public void pause() {
@@ -175,21 +226,15 @@ public class GameplayScreen implements Screen{
 		
 	}
 
-
 	@Override
 	public void resume() {
 		// TODO Auto-generated method stub
 		
 	}
 
-
 	@Override
 	public void dispose() {
 		// TODO Auto-generated method stub
 		
-	}
-
-	public static SpriteBatch getBatch(){
-		return batch;
 	}
 }

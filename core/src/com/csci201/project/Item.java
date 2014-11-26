@@ -124,9 +124,6 @@ public class Item extends Sprite{
 	public float getStartY(){
 		return this.startY;
 	}
-	public void drawItem(SpriteBatch batch){
-		batch.draw(this, (int)startX, (int)startY);
-	}
 	public void deactivate(){
 	
 		available = false;

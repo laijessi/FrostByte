@@ -50,7 +50,7 @@ public class Character extends Sprite implements InputProcessor{
 	
 	//main variables
 	MainMap mainMap; 
-	OrthographicCamera camera;
+	
 	
 	//collision variables
 	private boolean wentLeft = false, wentRight = false, wentUp = false, wentDown = false;
@@ -86,11 +86,8 @@ public class Character extends Sprite implements InputProcessor{
 		
 		// camera data
 		Gdx.input.setInputProcessor(this);
-		float w = Gdx.graphics.getWidth();
-		float h = Gdx.graphics.getHeight();
-		camera = new OrthographicCamera();
-		camera.setToOrtho(false,w,h);
-		camera.update();
+		
+		
 		
 		//collision initialization
 		characterCollisionBox = new Rectangle(characterX, characterY + 2*this.getHeight()/3, this.getWidth() - 10, this.getHeight()/3);
@@ -98,7 +95,7 @@ public class Character extends Sprite implements InputProcessor{
 		//map initialization
 		this.mainMap = mainMap; 
 		
-		connect();
+		//connect();
 	}
 	
 	public void listen(){
@@ -159,11 +156,13 @@ public class Character extends Sprite implements InputProcessor{
 		return energybar;
 	}
 	
+	public Healthbar getHealthbar(){
+		return healthbar;
+	}
 	
 	
-	public void moveChar(String dir) {
+	public float moveChar(String dir) {
 		amountMoved = Gdx.graphics.getDeltaTime() * characterSpeed;
-		
 		
 		if(dir.equals("A")) {
 			wentLeft = true; 
@@ -176,16 +175,15 @@ public class Character extends Sprite implements InputProcessor{
 				this.setRegion(width*2, height*1, width, height);
 			}
 			
+			left.changeFoot();
 			if(detectCollision(-amountMoved, 0)) {
-				//do nothing
-				left.changeFoot();
+				amountMoved = 0;			
 			}
 			
-			else {
-				left.changeFoot();
-				characterX -= amountMoved;
-				camera.translate((float)-amountMoved,0);
-			}
+			
+			characterX -= amountMoved;
+				
+			
 		}
 		
 		else if(dir.equals("D")){
@@ -199,16 +197,14 @@ public class Character extends Sprite implements InputProcessor{
 				this.setRegion(width*2, height*2, width, height);
 			}
 			
+			right.changeFoot();
 			if(detectCollision(amountMoved, 0)) {
-				//do nothing
-				right.changeFoot();
+				amountMoved = 0;
 			}
 			
-			else {
-				right.changeFoot();
-				characterX += amountMoved;
-				camera.translate((float)amountMoved,0);
-			}
+	
+			characterX += amountMoved;
+			
 		}
 		else if(dir.equals("W")){
 			wentUp = true; 
@@ -221,16 +217,13 @@ public class Character extends Sprite implements InputProcessor{
 				this.setRegion(width*2, height*3, width, height);
 			}
 			
+			up.changeFoot();
 			if(detectCollision(0, amountMoved)) {
-				//do nothing
-				up.changeFoot();
+				amountMoved = 0;			
 			}
 			
-			else {
-				up.changeFoot();
-				characterY += amountMoved;
-				camera.translate(0,(float)amountMoved);
-			}
+			characterY += amountMoved;
+			
 		}
 		else if(dir.equals("S")){
 			wentDown = true; 
@@ -243,28 +236,28 @@ public class Character extends Sprite implements InputProcessor{
 				this.setRegion(width*2, height*0, width, height);
 			}
 			
+			down.changeFoot();
 			if(detectCollision(0, -amountMoved)) {
-				//do nothing
-				down.changeFoot();
+				amountMoved = 0;
 			}
+		
+			characterY -= amountMoved;
 			
-			else{
-				down.changeFoot();
-				characterY -= amountMoved;
-				camera.translate(0, (float)-amountMoved);  
-			}
 		}
 		
 		
 		
 		characterCollisionBox.setPosition(characterX, characterY); 
+		//Item detect 		
+		detectItem();
 		
-		//Item detect 
-		
+		return amountMoved;
+	}
+	
+	private void detectItem(){
 		if(itemActive){
-			System.out.println("This is start time " +  startTime/1000 + " My time " + System.currentTimeMillis()/1000 );
 			if(System.currentTimeMillis() >= startTime + 5000){
-				itemActive = false;
+					itemActive = false;
 				if(currItem.getType().equals("Health")){
 					currItem.setAvailable();
 				}
@@ -273,11 +266,12 @@ public class Character extends Sprite implements InputProcessor{
 				}
 				if(currItem.getType().equals("Speed")){
 					characterSpeed /= 2;
-					System.out.println("Character speed " + characterSpeed);
 					currItem.setAvailable();
 				}
 			}
-		}else{ //only get items when you don't have another one 
+		}
+		//only get items when you don't have another one 
+		else{ 
 			int val = gotItem();
 			if(val != -1){
 				String powerType = mainMap.getItemList().get(val).getType();
@@ -297,24 +291,20 @@ public class Character extends Sprite implements InputProcessor{
 						currItem =  mainMap.getItemList().get(val);
 						itemActive = true;
 						characterSpeed *= 2;
-						System.out.println("Character speed " + characterSpeed);
 					}
 					if(powerType.equals("Health")){
 						//Sound health = Gdx.audio.newSound(Gdx.files.internal("health.mp3"));
 						//health.play(1f);
 						healthbar.addHealth(); //add 10 
-						System.out.println("Added 10 health");
 						currItem =  mainMap.getItemList().get(val);
 						itemActive = true;
 					}
 				}	
-			}//end item function stuff 
-			
+			}
 		}		
-		
-		characterCollisionBox.setPosition(characterX, characterY);
 	}
-	private boolean detectCollision(float x,float y) {
+	
+	public boolean detectCollision(float x,float y) {
 		//sees if character is touching any collision rectangles
 		Rectangle nextBox = characterCollisionBox; 
 		nextBox.setPosition(characterCollisionBox.getX() + x, characterCollisionBox.getY() + y);
@@ -327,6 +317,7 @@ public class Character extends Sprite implements InputProcessor{
 		
 		return false; 
 	}
+	
 	private int gotItem(){
 		//sees if character is touching any items 
 		for(int i = 0; i < mainMap.getItemRects().size; i++){
@@ -338,31 +329,13 @@ public class Character extends Sprite implements InputProcessor{
 		return -1;
 	}
 	
-	public void setChar(){
-		Gdx.gl.glClearColor(0, 0, 0, 1);
-		Gdx.gl.glBlendFunc(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
-		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-		camera.update();
-		mainMap.getMapRenderer().setView(camera);
-		mainMap.getMapRenderer().render();
-	}
-	
-	public void drawChar(SpriteBatch batch){
-		camera.update();  
-		batch.setProjectionMatrix(camera.combined);
-		batch.draw(this, characterX, characterY);
-		energybar.drawBar();
-		healthbar.drawBar();
-	}
-	
-	public static float getCharacterX(){
+	public float getCharacterX(){
 		return characterX;
 	}
 	
-	public static float getCharacterY(){
+	public float getCharacterY(){
 		return characterY;
 	}
-	
 
 	@Override
 	public boolean keyDown(int keycode) {

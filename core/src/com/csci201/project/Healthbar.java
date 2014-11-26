@@ -5,11 +5,10 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.NinePatch;
 
 public class Healthbar implements Runnable{
-	private NinePatch startingBackground, loadingHealthGreen;
+	private NinePatch loadingHealthGreen;
 	private int health;
 	
 	public Healthbar(){
-		startingBackground = new NinePatch(new Texture(Gdx.files.internal("data/bar.png")), 9, 9, 9, 9);
 		loadingHealthGreen = new NinePatch(new Texture(Gdx.files.internal("data/health.png")), 9, 9, 9, 9);
 		
 		//health = 100;
@@ -19,10 +18,10 @@ public class Healthbar implements Runnable{
 
 	}
 	
-	public void drawBar(){
-		startingBackground.draw(GameplayScreen.getBatch(), Character.getCharacterX()-250, Character.getCharacterY()-165, 220, 25);
-		loadingHealthGreen.draw(GameplayScreen.getBatch(), Character.getCharacterX()-248, Character.getCharacterY()-163, health*2 + 16, 21);
+	public NinePatch getBar(){
+		return loadingHealthGreen;
 	}
+	
 	public void addHealth(){
 		if(health + 10 <= 100){
 			health += 10;
@@ -44,12 +43,12 @@ public class Healthbar implements Runnable{
 		}	
 	}
 
-	public int getEnergy(){
+	public int getHealth(){
 		return health;
 
 	}
 
-	public void setEnergy(int i){
+	public void setHealth(int i){
 		health += i;
 	}
 

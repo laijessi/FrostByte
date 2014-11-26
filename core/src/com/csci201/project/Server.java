@@ -37,7 +37,7 @@ public class Server {
 			try {
 				while(true){
 					for (int i = 0; i < sockets.size(); i++){
-						
+						s = sockets.get(i);
 						System.out.println("In server");
 						ObjectInputStream ois = new ObjectInputStream(s.getInputStream());
 						Character c = (Character)ois.readObject();

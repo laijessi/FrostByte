@@ -16,7 +16,7 @@ public class NetworkManager {
 	
 	public NetworkManager(){
 		port = 12345;
-		host = "68.181.65.36";
+		host = "10.120.59.150";
 		this.c = c;
 		
 		connect();
@@ -28,7 +28,9 @@ public class NetworkManager {
 			
 			System.out.println("Connecting");
 			s = new Socket(host, port);
+			System.out.println("Getting oos");
 			ObjectOutputStream oos = new ObjectOutputStream(s.getOutputStream());
+			System.out.println("Writing object c");
 			oos.writeObject(c);
 			oos.flush();
 			System.out.println("Done connecting");

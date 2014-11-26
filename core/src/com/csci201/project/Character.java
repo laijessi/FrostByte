@@ -2,6 +2,7 @@
 package com.csci201.project;
 
 import java.io.PrintWriter;
+import java.io.Serializable;
 import java.net.Socket;
 import java.util.LinkedList;
 import java.util.Queue;
@@ -23,7 +24,7 @@ import com.badlogic.gdx.math.Intersector;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.utils.Array;
 
-public class Character extends Sprite implements InputProcessor{
+public class Character extends Sprite implements InputProcessor, Serializable{
 
 	static FileHandle characterFileHandle = Gdx.files.internal("data/reindeer.png"); 
 	private static Texture characterTexture = new Texture(characterFileHandle);

@@ -26,10 +26,12 @@ public class NetworkManager {
 	public void connect(){
 		try{
 			
+			System.out.println("Connecting");
 			s = new Socket(host, port);
 			ObjectOutputStream oos = new ObjectOutputStream(s.getOutputStream());
 			oos.writeObject(c);
 			oos.flush();
+			System.out.println("Done connecting");
 			
 			//s.close();
 		
@@ -45,9 +47,10 @@ public class NetworkManager {
 	
 		
 		try {
+			System.out.println("Pinging");
 			ObjectInputStream ois = new ObjectInputStream(s.getInputStream());
 			Character opponent = (Character)ois.readObject();
-			//System.out.println(opponent.toString());
+			System.out.println(opponent.toString());
 			
 			
 			ObjectOutputStream oos = new ObjectOutputStream(s.getOutputStream());

@@ -16,7 +16,7 @@ public class NetworkManager {
 	
 	public NetworkManager(){
 		port = 12345;
-		host = "127.0.0.1";
+		host = "68.181.65.36";
 		this.c = c;
 		
 		connect();
@@ -47,7 +47,7 @@ public class NetworkManager {
 		try {
 			ObjectInputStream ois = new ObjectInputStream(s.getInputStream());
 			Character opponent = (Character)ois.readObject();
-			System.out.println(opponent.toString());
+			//System.out.println(opponent.toString());
 			
 			
 			ObjectOutputStream oos = new ObjectOutputStream(s.getOutputStream());

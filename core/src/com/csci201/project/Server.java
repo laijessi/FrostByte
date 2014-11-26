@@ -37,27 +37,18 @@ public class Server {
 			try {
 				while(true){
 					for (int i = 0; i < sockets.size(); i++){
-						sc = new Scanner(s.getInputStream());
-						pw = new PrintWriter( sockets.get(i).getOutputStream() );
-						if (sockets.size() == 2){
-							System.out.println("Server num " + i+1);
-							pw.println("Begin");
-							pw.flush();
-						}
-						if(!sockets.get(i).equals(s)){							
-							if(sc.hasNext()){
-								String line = sc.nextLine();
-								pw.println( line );
-								pw.flush();
-							}
-						}
+						
+						System.out.println("In server");
+						ObjectInputStream ois = new ObjectInputStream(s.getInputStream());
+						Character c = (Character)ois.readObject();
+						System.out.println(c.toString());
 						
 					}
-					pw.print("a");
-					pw.flush();
 				}
 			} catch (IOException ioe) {
 				System.out.println("IOExceptionin ServerThreadconstructor: " + ioe.getMessage());
+			} catch (ClassNotFoundException e) {
+				e.printStackTrace();
 			}
 		}
 	}

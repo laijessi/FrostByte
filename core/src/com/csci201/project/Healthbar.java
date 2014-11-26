@@ -55,6 +55,7 @@ public class Healthbar implements Runnable{
 	}
 
 	public void setHealth(int i){
+		System.out.println("getting health");
 		healthTo = health + i;
 		t.run();
 		

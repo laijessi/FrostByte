@@ -1,5 +1,8 @@
 package com.csci201.project;
 
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.NinePatch;
@@ -8,6 +11,7 @@ public class Healthbar implements Runnable{
 	private NinePatch loadingHealthGreen;
 	private int health;
 	private int healthUpTo;
+	private int healthDownTo;
 	
 	private Thread t;
 	
@@ -17,6 +21,8 @@ public class Healthbar implements Runnable{
 		//health = 100;
 		health = 50; //temporary default
 		healthUpTo = health;
+		healthDownTo = health;
+		
 		t = new Thread(this);
 		t.start();
 
@@ -30,6 +36,7 @@ public class Healthbar implements Runnable{
 	
 		while(true){
 			try{
+
 				Thread.sleep(100);
 				if(health < healthUpTo){
 					health++;
@@ -37,6 +44,7 @@ public class Healthbar implements Runnable{
 						health = 100;
 					}
 				}
+
 			}
 			catch(Exception e){
 			}		
@@ -49,8 +57,25 @@ public class Healthbar implements Runnable{
 	}
 
 	public void setHealth(int i){
+		if(i > 0){
 
-		healthUpTo = health + i;
+			healthUpTo = health + i;
+
+		}
+		
+		/*else if(i < 0){
+			if(healthLock.tryLock()){
+				for(int j = 0; j > i; j--){
+					health--;
+					healthLock.unlock();
+				}
+			}
+			else{
+				for(int j = 0; j > i; j--){
+					health--;
+				}
+			}
+		}*/
 	}
 
 

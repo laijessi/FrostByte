@@ -118,7 +118,7 @@ public class ChatWindow extends JFrame{
 		chatTitle.setAlignmentX(Component.CENTER_ALIGNMENT);
 		usernameLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
 		
-		chatArea.setCellSelectionEnabled(false);
+		chatArea.setEnabled(false);
 
 	}
 	
@@ -138,16 +138,23 @@ public class ChatWindow extends JFrame{
 	}
 	
 	private void addListeners() {
-		// TODO Auto-generated method stub
 		submit.addActionListener(new buttonListener());
 		
-		chatScroll.getVerticalScrollBar().addAdjustmentListener(new AdjustmentListener() {  
+		/*chatScroll.getVerticalScrollBar().addAdjustmentListener(new AdjustmentListener() {  
 		    public void adjustmentValueChanged(AdjustmentEvent e) {  
 		        e.getAdjustable().setValue(e.getAdjustable().getMaximum());  
 		    }
-		});
+		});*/
 		
 		typeArea.addKeyListener(new typeAreaListener());
+	}
+	
+	public void updateScroll(){
+		javax.swing.SwingUtilities.invokeLater(new Runnable(){
+			public void run(){
+				chatScroll.getVerticalScrollBar().setValue(chatScroll.getVerticalScrollBar().getMaximum()+16);
+			}
+		});
 	}
 	
 	public static void main(String[] args){
@@ -158,6 +165,7 @@ public class ChatWindow extends JFrame{
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
+			chatScroll.revalidate();
 			if(!typeArea.getText().equals("")){
 				Object[] obj = new Object[1];
 				obj[0] = username + ": " + typeArea.getText();
@@ -167,6 +175,8 @@ public class ChatWindow extends JFrame{
 				
 				dtm.addRow(obj);
 				typeArea.setText("");
+				
+				updateScroll();
 			}
 			
 			/*int rownum = dtm.getRowCount();
@@ -179,6 +189,7 @@ public class ChatWindow extends JFrame{
 	class typeAreaListener implements KeyListener{
 		@Override
 		public void keyPressed(KeyEvent e) {
+			chatScroll.revalidate();
 			switch(e.getKeyCode()){
 				case KeyEvent.VK_ENTER:
 					if(!typeArea.getText().equals("")){
@@ -190,6 +201,8 @@ public class ChatWindow extends JFrame{
 						
 						dtm.addRow(obj);
 						typeArea.setText("");
+						
+						updateScroll();
 					}else{
 						typeArea.setText("");
 					}
@@ -235,6 +248,7 @@ public class ChatWindow extends JFrame{
 								Object[] obj = new Object[1];
 								obj[0] = message;
 								dtm.addRow(obj);
+								updateScroll();
 							//}else{
 							//}
 						}

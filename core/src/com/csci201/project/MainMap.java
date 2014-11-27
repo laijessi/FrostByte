@@ -1,5 +1,6 @@
 package com.csci201.project;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 import com.badlogic.gdx.maps.MapObjects;
@@ -12,13 +13,13 @@ import com.badlogic.gdx.math.Intersector;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.utils.Array;
 
-public class MainMap {
+public class MainMap implements Serializable{
 	private TiledMap mainMap; 
 	private TiledMapRenderer  tiledMapRenderer;
-	private Array<Rectangle> collisionRects; 
-	private Array<Rectangle> itemRects;
+	private ArrayList<Rectangle> collisionRects; 
+	private ArrayList<Rectangle> itemRects;
 	private ArrayList<Item> itemList;
-	private Array<Rectangle> projectileCollisionRects; 
+	private ArrayList<Rectangle> projectileCollisionRects; 
 	
 	public MainMap (String mapName) {
 		mainMap = new TmxMapLoader().load(mapName);
@@ -29,7 +30,7 @@ public class MainMap {
 	
 	private void setUpCollisionRectangles() {
 		MapObjects collisionObjects = mainMap.getLayers().get("CollisionLayer").getObjects();
-	    collisionRects = new Array<Rectangle>();
+	    collisionRects = new ArrayList<Rectangle>();
 	    for (int i = 0; i < collisionObjects.getCount(); i++) {
 	                RectangleMapObject obj = (RectangleMapObject) collisionObjects.get(i);
 	                Rectangle rect = obj.getRectangle();
@@ -37,7 +38,7 @@ public class MainMap {
 	    }
 	    
 	    collisionObjects = mainMap.getLayers().get("RiverLayer").getObjects();
-	    projectileCollisionRects = new Array<Rectangle>();
+	    projectileCollisionRects = new ArrayList<Rectangle>();
 	    for (int i = 0; i < collisionObjects.getCount(); i++) {
 	                RectangleMapObject obj = (RectangleMapObject) collisionObjects.get(i);
 	                Rectangle rect = obj.getRectangle();
@@ -45,7 +46,7 @@ public class MainMap {
 	    }
 	}
 	
-	public Array<Rectangle> getProjectileCollisionRects() {
+	public ArrayList<Rectangle> getProjectileCollisionRects() {
 		return projectileCollisionRects;
 	}
 	
@@ -57,16 +58,16 @@ public class MainMap {
 		return tiledMapRenderer; 
 	}
 	
-	public Array<Rectangle> getCollisionRects() {
+	public ArrayList<Rectangle> getCollisionRects() {
 		return collisionRects;
 	}
-	public void takeItemRects(Array<Rectangle> itemRects){
-		this.itemRects = itemRects;
+	public void takeItemRects(ArrayList<Rectangle> itemRect){
+		this.itemRects = itemRect;
 	}
 	public void takeItemList(ArrayList<Item> itemList){
 		this.itemList = itemList;
 	}
-	public Array<Rectangle> getItemRects() {
+	public ArrayList<Rectangle> getItemRects() {
 		return itemRects;
 	}
 	public ArrayList<Item> getItemList(){

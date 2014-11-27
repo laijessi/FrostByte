@@ -4,6 +4,7 @@ package com.csci201.project;
 import java.io.PrintWriter;
 import java.io.Serializable;
 import java.net.Socket;
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.Queue;
 import java.util.Scanner;
@@ -24,199 +25,103 @@ import com.badlogic.gdx.math.Intersector;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.utils.Array;
 
-public class Character extends Sprite implements InputProcessor, Serializable{
+public class Character extends Sprite implements InputProcessor {
 
 	static FileHandle characterFileHandle = Gdx.files.internal("data/reindeer.png"); 
 	private static Texture characterTexture = new Texture(characterFileHandle);
-	private static float characterX;
-	private static float characterY;
-	float characterSpeed = 200f;
-	float amountMoved; 
-
-	/*Boolean data for movement state tracking*/	
-	private MoveState down;
-	private MoveState right;
-	private MoveState left;
-	private MoveState up;
-	
-	private long startTime; //for item 
-	private boolean itemActive;
-	private Item currItem; 
 	
 	private static int width = characterTexture.getWidth()/3;
 	private static int height = characterTexture.getHeight()/4;
 	
-	private Energybar energybar;
-	private Healthbar healthbar;
+	private CharacterData charData;
 	
 	//main variables
 	MainMap mainMap; 
 	
-	
-	
-	//collision variables
-	private boolean wentLeft = false, wentRight = false, wentUp = false, wentDown = false;
-	private Array<Rectangle> collisionRects; 
-	private Rectangle characterCollisionBox; 
-	private Array<Rectangle> itemRects;
-	private Queue<Projectile> projectiles;
-	
-	//server variables
-	private PrintWriter pw;
-	private Scanner sc;
-	public Socket s;
-	
-
 	public String toString(){
-		return "X: " + Float.toString(characterX) + "Y: " + Float.toString(characterY);
+		return charData.toString();
 	}
-	
 	
 	public Character(MainMap mainMap){
 		super(characterTexture, width, height*2, width, height);
-		characterX = 280;
-	    characterY = 220;
-	    
-	    projectiles = new LinkedList<Projectile>();
-	    
-	    itemActive = false;
-
-		//MoveState data
-		down = new MoveState();
-		right = new MoveState();
-		left = new MoveState();
-		up = new MoveState();
-		
-		//energy data
-		energybar = new Energybar();
-		healthbar = new Healthbar();
+		System.out.println("Character constructor was called");
+		charData = new CharacterData();
 		
 		// camera data
 		Gdx.input.setInputProcessor(this);
 		
 		
-		
-		//collision initialization
-		characterCollisionBox = new Rectangle(characterX, characterY + 2*this.getHeight()/3, this.getWidth() - 10, this.getHeight()/3);
-		
 		//map initialization
 		this.mainMap = mainMap; 
-		
+
 		//connect();
 	}
-	
-	
-	
-	public Rectangle getCollisionRectangle() {
-		return characterCollisionBox; 
-	}
-	
-	public void addProjectile(Projectile p){
-		projectiles.add(p);
-		energybar.setEnergy(-10);
-		
-	}
-	
-	public Queue<Projectile> getProjectiles(){
-		return projectiles;
-	}
-	
-	public Energybar getEnergybar(){
-		return energybar;
-	}
-	
-	public Healthbar getHealthbar(){
-		return healthbar;
-	}
-	
-	
+
 	public float moveChar(String dir) {
-		amountMoved = Gdx.graphics.getDeltaTime() * characterSpeed;
+		float amountMoved = Gdx.graphics.getDeltaTime() * charData.getCharacterSpeed();
 		
 		if(dir.equals("A")) {
-			wentLeft = true; 
-			
-			if(left.getRightFoot()){
+			if(charData.getLeft().getRightFoot()){
 				this.setRegion(0, height*1, width, height);
 			}
 			
-			else if (left.getLeftFoot()){
+			else if (charData.getLeft().getLeftFoot()){
 				this.setRegion(width*2, height*1, width, height);
 			}
 			
-			left.changeFoot();
+			charData.getLeft().changeFoot();
 			if(detectCollision(-amountMoved, 0)) {
 				amountMoved = 0;			
 			}
-			
-			
-			characterX -= amountMoved;
-				
-			
+			charData.addX(-amountMoved);
 		}
 		
 		else if(dir.equals("D")){
-			wentRight = true; 
-			
-			if(right.getRightFoot()){
+			if(charData.getRight().getRightFoot()){
 				this.setRegion(0, height*2, width, height);
 			}
 
-			else if (right.getLeftFoot()){
+			else if (charData.getRight().getLeftFoot()){
 				this.setRegion(width*2, height*2, width, height);
 			}
 			
-			right.changeFoot();
+			charData.getRight().changeFoot();
 			if(detectCollision(amountMoved, 0)) {
 				amountMoved = 0;
 			}
-			
-	
-			characterX += amountMoved;
-			
+			charData.addX(amountMoved);
 		}
 		else if(dir.equals("W")){
-			wentUp = true; 
-			
-			if(up.getRightFoot()){
+			if(charData.getUp().getRightFoot()){
 				this.setRegion(0, height*3, width, height);
 			}
 			
-			else if (up.getLeftFoot()){
+			else if (charData.getUp().getLeftFoot()){
 				this.setRegion(width*2, height*3, width, height);
 			}
 			
-			up.changeFoot();
+			charData.getUp().changeFoot();
 			if(detectCollision(0, amountMoved)) {
 				amountMoved = 0;			
 			}
-			
-			characterY += amountMoved;
-			
+			charData.addY(amountMoved);
 		}
 		else if(dir.equals("S")){
-			wentDown = true; 
-			
-			if(down.getRightFoot()){
+			if(charData.getDown().getRightFoot()){
 				this.setRegion(0, height*0, width, height);
 			}
 			
-			else if (down.getLeftFoot()){
+			else if (charData.getDown().getLeftFoot()){
 				this.setRegion(width*2, height*0, width, height);
 			}
 			
-			down.changeFoot();
+			charData.getDown().changeFoot();
 			if(detectCollision(0, -amountMoved)) {
 				amountMoved = 0;
 			}
-		
-			characterY -= amountMoved;
-			
+			charData.addY(-amountMoved);
 		}
-		
-		
-		
-		characterCollisionBox.setPosition(characterX, characterY); 
+		charData.getCharacterCollisionBox().setPosition(charData.getX(), charData.getY()); 
 		//Item detect 		
 		detectItem();
 		
@@ -224,18 +129,18 @@ public class Character extends Sprite implements InputProcessor, Serializable{
 	}
 	
 	private void detectItem(){
-		if(itemActive){
-			if(System.currentTimeMillis() >= startTime + 5000){
-					itemActive = false;
-				if(currItem.getType().equals("Health")){
-					currItem.setAvailable();
+		if(charData.isItemActive()){
+			if(System.currentTimeMillis() >= charData.getStartTime() + 5000){
+					charData.setItemActive(false);
+				if(charData.getCurrItem().getType().equals("Health")){
+					charData.getCurrItem().setAvailable();
 				}
-				if(currItem.getType().equals("Strength")){
-					currItem.setAvailable();
+				if(charData.getCurrItem().getType().equals("Strength")){
+					charData.getCurrItem().setAvailable();
 				}
-				if(currItem.getType().equals("Speed")){
-					characterSpeed /= 2;
-					currItem.setAvailable();
+				if(charData.getCurrItem().getType().equals("Speed")){
+					charData.setCharacterSpeed(charData.getCharacterSpeed()/2);
+					charData.getCurrItem().setAvailable();
 				}
 			}
 		}
@@ -246,38 +151,38 @@ public class Character extends Sprite implements InputProcessor, Serializable{
 				String powerType = mainMap.getItemList().get(val).getType();
 				if(mainMap.getItemList().get(val).isActive()){
 					mainMap.getItemList().get(val).deactivate();
-					startTime = System.currentTimeMillis();
+					charData.setStartTime(System.currentTimeMillis());
 					if(powerType.equals("Strength")){
 						//Sound strength = Gdx.audio.newSound(Gdx.files.internal("strength.mp3"));
 						//strength.play(1f);
-						currItem =  mainMap.getItemList().get(val);
-						itemActive = true;
+						charData.setCurrItem(mainMap.getItemList().get(val));
+						charData.setItemActive(true);
 						
 					}
 					if(powerType.equals("Speed")){
 						//Sound speed = Gdx.audio.newSound(Gdx.files.internal("speed.mp3"));
 						//speed.play(1f);
-						currItem =  mainMap.getItemList().get(val);
-						itemActive = true;
-						characterSpeed *= 2;
+						charData.setCurrItem(mainMap.getItemList().get(val));
+						charData.setItemActive(true);
+						charData.setCharacterSpeed(charData.getCharacterSpeed()*2);
 					}
 					if(powerType.equals("Health")){
 						//Sound health = Gdx.audio.newSound(Gdx.files.internal("health.mp3"));
 						//health.play(1f);
-						healthbar.setHealth(10); //add 10 
-						currItem =  mainMap.getItemList().get(val);
-						itemActive = true;
+						charData.setHealth(10); //add 10 
+						charData.setCurrItem(mainMap.getItemList().get(val));
+						charData.setItemActive(true);
 					}
 				}	
 			}
-		}		
+		}	
 	}
 	
 	public boolean detectCollision(float x,float y) {
 		//sees if character is touching any collision rectangles
-		Rectangle nextBox = characterCollisionBox; 
-		nextBox.setPosition(characterCollisionBox.getX() + x, characterCollisionBox.getY() + y);
-		for(int i = 0; i < mainMap.getCollisionRects().size; i++) {
+		Rectangle nextBox = charData.getCharacterCollisionBox(); 
+		nextBox.setPosition(charData.getCharacterCollisionBox().getX() + x, charData.getCharacterCollisionBox().getY() + y);
+		for(int i = 0; i < mainMap.getCollisionRects().size(); i++) {
 			Rectangle mapCollisionBox = mainMap.getCollisionRects().get(i);
 			if (Intersector.overlaps(nextBox, mapCollisionBox)) {
 				return true; 
@@ -289,9 +194,9 @@ public class Character extends Sprite implements InputProcessor, Serializable{
 	
 	private int gotItem(){
 		//sees if character is touching any items 
-		for(int i = 0; i < mainMap.getItemRects().size; i++){
+		for(int i = 0; i < mainMap.getItemRects().size(); i++){
 			Rectangle mapItemBox = mainMap.getItemRects().get(i);
-			if(Intersector.overlaps(characterCollisionBox, mapItemBox)){
+			if(Intersector.overlaps(charData.getCharacterCollisionBox(), mapItemBox)){
 				return i;
 			}
 		}
@@ -299,13 +204,33 @@ public class Character extends Sprite implements InputProcessor, Serializable{
 	}
 	
 	public float getCharacterX(){
-		return characterX;
+		return charData.getX();
 	}
 	
 	public float getCharacterY(){
-		return characterY;
+		return charData.getY();
 	}
-
+	
+	public Queue<Projectile> getProjectiles(){
+		return charData.getProjectiles();
+	}
+	
+	public void addProjectile(Projectile p){
+		charData.addProjectile(p);
+	}
+	
+	public int getEnergy(){
+		return charData.getEnergy();
+	}
+	
+	public int getHealth(){
+		return charData.getHealth();
+	}
+	
+	public CharacterData getCharData(){
+		return charData;
+	}
+	
 	@Override
 	public boolean keyDown(int keycode) {
 		// TODO Auto-generated method stub

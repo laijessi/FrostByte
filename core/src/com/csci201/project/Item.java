@@ -1,5 +1,6 @@
 package com.csci201.project;
 
+import java.io.Serializable;
 import java.util.Random;
 
 import com.badlogic.gdx.Gdx;
@@ -14,7 +15,7 @@ import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Rectangle;
 
-public class Item extends Sprite{
+public class Item extends Sprite implements Serializable{
 	static FileHandle itemFileHandle = Gdx.files.internal("data/item.png"); //whatever shit it is  
 	private static Texture itemTexture = new Texture(itemFileHandle);
 	private float startX; 

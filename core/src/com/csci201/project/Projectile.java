@@ -1,5 +1,7 @@
 package com.csci201.project;
 
+import java.io.Serializable;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.files.FileHandle;
@@ -9,7 +11,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Intersector;
 import com.badlogic.gdx.math.Rectangle;
 
-public class Projectile extends Sprite {
+public class Projectile extends Sprite implements Serializable {
 
 	//private SpriteBatch batch;
 	//private Texture projectileTexture;
@@ -99,7 +101,7 @@ public class Projectile extends Sprite {
 
 	public boolean detectCollision(MainMap mainMap) {
 		//sees if character is touching any collision rectangles
-		for(int i = 0; i < mainMap.getProjectileCollisionRects().size; i++) {
+		for(int i = 0; i < mainMap.getProjectileCollisionRects().size(); i++) {
 			Rectangle mapCollisionBox = mainMap.getProjectileCollisionRects().get(i);
 			if (Intersector.overlaps(projectileCollisionBox, mapCollisionBox)) {
 				return true; 

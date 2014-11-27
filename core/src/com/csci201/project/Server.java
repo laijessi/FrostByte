@@ -40,7 +40,7 @@ public class Server {
 						s = sockets.get(i);
 						System.out.println("In server");
 						ObjectInputStream ois = new ObjectInputStream(s.getInputStream());
-						Character c = (Character)ois.readObject();
+						CharacterData c = (CharacterData)ois.readObject();
 						System.out.println(c.toString());
 						
 					}

@@ -1,5 +1,6 @@
 package com.csci201.project;
 
+import java.io.Serializable;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
@@ -7,8 +8,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.NinePatch;
 
-public class Healthbar implements Runnable{
-	private NinePatch loadingHealthGreen;
+public class Healthbar implements Runnable, Serializable{
 	private int health;
 	private int healthUpTo;
 	private int healthDownTo;
@@ -16,7 +16,6 @@ public class Healthbar implements Runnable{
 	private Thread t;
 	
 	public Healthbar(){
-		loadingHealthGreen = new NinePatch(new Texture(Gdx.files.internal("data/health.png")), 9, 9, 9, 9);
 		
 		//health = 100;
 		health = 50; //temporary default
@@ -27,11 +26,6 @@ public class Healthbar implements Runnable{
 		t.start();
 
 	}
-	
-	public NinePatch getBar(){
-		return loadingHealthGreen;
-	}
-	
 	public void run(){
 	
 		while(true){
@@ -58,9 +52,7 @@ public class Healthbar implements Runnable{
 
 	public void setHealth(int i){
 		if(i > 0){
-
 			healthUpTo = health + i;
-
 		}
 		
 		/*else if(i < 0){

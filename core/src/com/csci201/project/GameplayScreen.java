@@ -25,6 +25,8 @@ public class GameplayScreen implements Screen{
 	private Character me;
 	private Character opponent;
 	private NinePatch startingBackground; 
+	private NinePatch loadingHealthGreen;
+	private NinePatch loadingEnergyBlue;
 	
 	private ArrayList<Character> characters;
 	
@@ -41,7 +43,6 @@ public class GameplayScreen implements Screen{
 	
 	//networkmanager data
 	private NetworkManager network;
-	
 	
 	Game game;
 	
@@ -61,6 +62,8 @@ public class GameplayScreen implements Screen{
 		mainMap = new MainMap("map3.tmx");
 		me = new Character(mainMap);
 		startingBackground = new NinePatch(new Texture(Gdx.files.internal("data/bar.png")), 9, 9, 9, 9);
+		loadingHealthGreen = new NinePatch(new Texture(Gdx.files.internal("data/health.png")), 9, 9, 9, 9);
+		loadingEnergyBlue = new NinePatch(new Texture(Gdx.files.internal("data/energy.png")), 9, 9, 9, 9);
 		
 		camera = new OrthographicCamera();
 		camera.setToOrtho(false,w,h);
@@ -72,14 +75,14 @@ public class GameplayScreen implements Screen{
 		}
 		mainMap.takeItemList(itemList);
 		//Give map my locations
-		Array<Rectangle> itemRect = new Array<Rectangle>();
+		ArrayList<Rectangle> itemRect = new ArrayList<Rectangle>();
 		for(int i = 0; i < itemList.size(); i++){
 			itemRect.add(itemList.get(i).getRect());
 		}
 		mainMap.takeItemRects(itemRect);
 		
 		
-		network = new NetworkManager();
+		//network = new NetworkManager(me);
 		
 		//Projectile data
 	/*	FileHandle projectileFileHandle = Gdx.files.internal("data/projectile.png"); 
@@ -111,7 +114,7 @@ public class GameplayScreen implements Screen{
 
 		batch.end();
 		
-		network.ping();
+		//network.ping();
 		
 	}
 	
@@ -146,7 +149,7 @@ public class GameplayScreen implements Screen{
 		    
 			//System.out.println(Gdx.graphics.getWidth());
 		    
-			if(me.getEnergybar().getEnergy() >= 10){
+			if(me.getEnergy() >= 10){
 				me.addProjectile( new Projectile(projX - w/2,
 										projY-h/2,
 										me.getCharacterX(),
@@ -201,18 +204,19 @@ public class GameplayScreen implements Screen{
 		camera.update();  
 		batch.setProjectionMatrix(camera.combined);
 		batch.draw(c, c.getCharacterX(), c.getCharacterY());
-		drawEnergybar(c.getEnergybar().getBar(), c);
-		drawHealthbar(c.getHealthbar().getBar(), c);
+		System.out.println("From draw character: " + c.toString());
+		drawEnergybar(c);
+		drawHealthbar(c);
 	}
 	
-	public void drawEnergybar(NinePatch bar, Character c){
+	public void drawEnergybar(Character c){
 		startingBackground.draw(batch, c.getCharacterX()-250, c.getCharacterY()-195, 220, 25);
-		bar.draw(batch, c.getCharacterX()-248, c.getCharacterY()-193, c.getEnergybar().getEnergy()*2 + 16, 21);
+		loadingEnergyBlue.draw(batch, c.getCharacterX()-248, c.getCharacterY()-193, c.getEnergy()*2 + 16, 21);
 	}
 	
-	public void drawHealthbar(NinePatch bar, Character c){
+	public void drawHealthbar(Character c){
 		startingBackground.draw(batch, c.getCharacterX()-250, c.getCharacterY()-165, 220, 25);
-		bar.draw(batch, c.getCharacterX()-248, c.getCharacterY()-163, c.getHealthbar().getHealth()*2 + 16, 21);
+		loadingHealthGreen.draw(batch, c.getCharacterX()-248, c.getCharacterY()-163, c.getHealth()*2 + 16, 21);
 	}
 	
 	@Override

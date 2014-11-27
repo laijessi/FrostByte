@@ -1,6 +1,8 @@
 package com.csci201.project;
 
-public class MoveState {
+import java.io.Serializable;
+
+public class MoveState implements Serializable{
 	
 	
 	private boolean isLeftFoot;

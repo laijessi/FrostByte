@@ -18,7 +18,7 @@ public class NetworkManager {
 	
 	public NetworkManager(Character c){
 		port = 12345;
-		host = "localhost";
+		host = "192.168.0.15";
 		this.c = c;
 		connect();
 		
@@ -41,16 +41,13 @@ public class NetworkManager {
 				System.out.println("work");
 			}
 			
-			while(true){
-				CharacterData opponent = (CharacterData)ois.readObject();
-				System.out.println("Opponent: " + opponent.toString());
-			}
 			//s.close();
 		
 			
 		}
 		catch(Exception e){
 			System.out.println("Exception in client: " + e);
+			e.printStackTrace();
 		}
 	}
 	
@@ -61,8 +58,18 @@ public class NetworkManager {
 			oos.writeObject(cd);
 			oos.flush();
 			
+
+			//while(true){
+				ois = new ObjectInputStream(s.getInputStream());
+				CharacterData opponent = (CharacterData)ois.readObject();
+				System.out.println("Opponent: " + opponent.toString());
+			//}
+			
 		} catch (IOException e1) {
 			e1.printStackTrace();
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 		
 

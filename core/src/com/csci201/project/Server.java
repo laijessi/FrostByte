@@ -51,26 +51,28 @@ public class Server {
 						}
 					}
 			
-
+					System.out.println(sockets.size());
 					
-					for (Socket socket : sockets){
-						
-						if(!socket.equals(s)){
-
-							ois = new ObjectInputStream(socket.getInputStream());
+					if(sockets.size() == 2){
+						for (Socket socket : sockets){
 							
-							CharacterData opp = (CharacterData)ois.readObject();
-							
-							System.out.println(opp.toString());
-							
-							oos = new ObjectOutputStream(s.getOutputStream());
-							oos.writeObject(opp);
-							oos.flush();
+							if(!socket.equals(s)){
+	
+								ois = new ObjectInputStream(socket.getInputStream());
+								
+								CharacterData opp = (CharacterData)ois.readObject();
+								
+								System.out.println(opp.toString());
+								
+								oos = new ObjectOutputStream(s.getOutputStream());
+								oos.writeObject(opp);
+								oos.flush();
+							}
 						}
 					}
 				}
 			} catch (IOException ioe) {
-				System.out.println("IOExceptionin ServerThreadconstructor: " + ioe.getMessage());
+				ioe.printStackTrace();
 			} catch (ClassNotFoundException e) {
 				e.printStackTrace();
 			}

@@ -98,9 +98,9 @@ public class GameplayScreen implements Screen{
 	@Override
 	public void render(float delta) {
 		
-		//network.pingSend(me.getCharData());
+		network.pingSend(me.getCharData());
 		
-		//network.pingReceive();
+		network.pingReceive();
 		
 		setCamera();
 		

@@ -55,10 +55,8 @@ public class NetworkManager {
 	public CharacterData pingReceive(){
 		
 		try {
-			ois = new ObjectInputStream(s.getInputStream());
-			
+			ois = new ObjectInputStream(s.getInputStream());		
 			CharacterData cd = (CharacterData)ois.readObject();
-			
 			return cd;
 			
 			

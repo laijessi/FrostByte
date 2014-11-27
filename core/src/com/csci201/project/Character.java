@@ -278,5 +278,19 @@ public class Character extends Sprite implements InputProcessor {
 		return false;
 	}
 
+	public void setCharacterData(CharacterData cd) {
+		
+		if(!(cd == null)){
+			
+			charData = cd;
+			
+			System.out.println(charData.toString());
+	
+		}
+		
+		
+		
+	}
+
 	
 }

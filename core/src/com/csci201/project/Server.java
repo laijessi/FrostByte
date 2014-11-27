@@ -43,10 +43,10 @@ public class Server {
 					if(sockets.size() == 2 && firstTime){
 						for(Socket socket : sockets){
 						
-								oos = new ObjectOutputStream(socket.getOutputStream());
-								oos.writeObject(new String("begin"));
-								oos.flush();
-								firstTime = false;
+							oos = new ObjectOutputStream(socket.getOutputStream());
+							oos.writeObject(new String("begin"));
+							oos.flush();
+							firstTime = false;
 						
 						}
 					}
@@ -55,11 +55,11 @@ public class Server {
 					
 					for (Socket socket : sockets){
 						if(!socket.equals(s)){
-							System.out.println("In server");
-							String line = ois.readObject().toString();
-							System.out.println(line);
+							
+							CharacterData opp = (CharacterData)ois.readObject();
+							
 							oos = new ObjectOutputStream(socket.getOutputStream());
-							oos.writeObject(line);
+							oos.writeObject(opp);
 							oos.flush();
 						}
 					}

@@ -33,13 +33,13 @@ public class NetworkManager {
 			//ObjectOutputStream oos = new ObjectOutputStream(s.getOutputStream());
 			while(true){
 
-			ois = new ObjectInputStream(s.getInputStream());
-			
-			System.out.println("getting data from server");
-			if (ois.readObject().toString().equals("begin")){
-				System.out.println("work");
-				break;
-			}
+				ois = new ObjectInputStream(s.getInputStream());
+				
+				System.out.println("getting data from server");
+				if (ois.readObject().toString().equals("begin")){
+					System.out.println("work");
+					break;
+				}
 			
 			}
 			//s.close();
@@ -56,8 +56,8 @@ public class NetworkManager {
 		
 		try {
 			ois = new ObjectInputStream(s.getInputStream());
-			String line = ois.readObject().toString();
-			System.out.println(line);
+			CharacterData cd = (CharacterData)ois.readObject();
+			System.out.println(cd.toString());
 			//CharacterData opponent = (CharacterData)ois.readObject();
 			//System.out.println("Opponent: " + opponent.toString());
 		} catch (IOException e) {

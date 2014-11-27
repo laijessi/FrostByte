@@ -56,7 +56,7 @@ public class NetworkManager {
 		
 		try {
 			ois = new ObjectInputStream(s.getInputStream());
-			if(ois.readObject().toString().equals("begin")){}
+			if(ois.readObject() instanceof String){}
 			else{
 				CharacterData cd = (CharacterData)ois.readObject();
 				System.out.println(cd.toString());

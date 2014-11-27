@@ -34,7 +34,6 @@ public class Item extends Sprite implements Serializable{
 	}
 	public Item(int val){
 		super(itemTexture);
-		System.out.println("This is val " + val);
 		randomItem();
 		
 		if(val == 0){
@@ -62,7 +61,6 @@ public class Item extends Sprite implements Serializable{
 		}
 		this.increaseFactor = 2;
 		itemRect = new Rectangle(startX, startY, 32, 64);
-		System.out.println("Was drawn here " + startX + " " + startY);
 	}
 	public Rectangle getRect(){
 		return itemRect;

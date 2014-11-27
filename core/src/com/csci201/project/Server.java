@@ -30,8 +30,10 @@ public class Server {
 		private Socket s;
 		private Scanner sc;
 		private PrintWriter pw;
-		ObjectOutputStream oos;
-		ObjectInputStream ois;
+		private ObjectOutputStream oos;
+		private ObjectInputStream ois;
+		private boolean done;
+		
 		public ServerThread(Socket s ) {
 			try {
 				this.s = s;
@@ -40,23 +42,38 @@ public class Server {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
+			done = false;
+			try {
+				ois = new ObjectInputStream(s.getInputStream());
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
 		}
 		public void run() {
 			try {
-				if(sockets.size() == 2){
-					oos.writeObject(new String("begin"));
-					oos.flush();
+				
+				while(true){
+					if(sockets.size() == 2){
+						for(Socket socket : sockets){
+							if(!socket.equals(s)){
+								oos = new ObjectOutputStream(socket.getOutputStream());
+								oos.writeObject(new String("begin"));
+								oos.flush();
+								done = true;
+							}
+						}
+						if(done) break;
+					}
 				}
+		
 				while(true){
 					for (int i = 0; i < sockets.size(); i++){
-						oos = new ObjectOutputStream(sockets.get(i).getOutputStream());
 						
 						System.out.println("In server");
 						
-						String line = ois.readObject().toString();
-						//CharacterData c = (CharacterData)ois.readObject();
-						//System.out.println(c.toString());
 						
+						String line = ois.readObject().toString();
+
 						if(!sockets.get(i).equals(s)){
 							oos.writeObject(line);
 							oos.flush();

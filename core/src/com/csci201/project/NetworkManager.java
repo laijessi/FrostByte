@@ -73,7 +73,7 @@ public class NetworkManager {
 	public void pingSend(CharacterData cd){
 		try {
 			oos = new ObjectOutputStream(s.getOutputStream());
-			oos.writeObject(cd.toString());
+			oos.writeObject(cd);
 			oos.flush();
 			
 			

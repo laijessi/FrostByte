@@ -44,7 +44,7 @@ public class Character extends Sprite implements InputProcessor {
 	public Character(MainMap mainMap){
 		super(characterTexture, width, height*2, width, height);
 		System.out.println("Character constructor was called");
-		charData = new CharacterData();
+		charData = new CharacterData(width, height);
 		
 		// camera data
 		Gdx.input.setInputProcessor(this);
@@ -61,11 +61,11 @@ public class Character extends Sprite implements InputProcessor {
 		
 		if(dir.equals("A")) {
 			if(charData.getLeft().getRightFoot()){
-				this.setRegion(0, charData.imgHeight()*1, charData.imgWidth(), charData.imgHeight());
+				this.setRegion(0, height*1, width, height);
 			}
 			
 			else if (charData.getLeft().getLeftFoot()){
-				this.setRegion(charData.imgWidth()*2, charData.imgHeight()*1, charData.imgWidth(), charData.imgHeight());
+				this.setRegion(width*2, height*1, width, height);
 			}
 			
 			charData.getLeft().changeFoot();
@@ -77,11 +77,11 @@ public class Character extends Sprite implements InputProcessor {
 		
 		else if(dir.equals("D")){
 			if(charData.getRight().getRightFoot()){
-				this.setRegion(0, charData.imgHeight()*2, charData.imgWidth(), charData.imgHeight());
+				this.setRegion(0, height*2, width, height);
 			}
 
 			else if (charData.getRight().getLeftFoot()){
-				this.setRegion(charData.imgWidth()*2, charData.imgHeight()*2, charData.imgWidth(), charData.imgHeight());
+				this.setRegion(width*2, height*2, width, height);
 			}
 			
 			charData.getRight().changeFoot();
@@ -92,11 +92,11 @@ public class Character extends Sprite implements InputProcessor {
 		}
 		else if(dir.equals("W")){
 			if(charData.getUp().getRightFoot()){
-				this.setRegion(0, charData.imgHeight()*3, charData.imgWidth(), charData.imgHeight());
+				this.setRegion(0, height*3, width, height);
 			}
 			
 			else if (charData.getUp().getLeftFoot()){
-				this.setRegion(charData.imgWidth()*2, charData.imgHeight()*3, charData.imgWidth(), charData.imgHeight());
+				this.setRegion(width*2, height*3, width, height);
 			}
 			
 			charData.getUp().changeFoot();
@@ -107,11 +107,11 @@ public class Character extends Sprite implements InputProcessor {
 		}
 		else if(dir.equals("S")){
 			if(charData.getDown().getRightFoot()){
-				this.setRegion(0, charData.imgHeight()*0, charData.imgWidth(), charData.imgHeight());
+				this.setRegion(0, height*0, width, height);
 			}
 			
 			else if (charData.getDown().getLeftFoot()){
-				this.setRegion(charData.imgWidth()*2, charData.imgHeight()*0, charData.imgWidth(), charData.imgHeight());
+				this.setRegion(width*2, 0, width, height);
 			}
 			
 			charData.getDown().changeFoot();

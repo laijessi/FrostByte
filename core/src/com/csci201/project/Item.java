@@ -24,14 +24,9 @@ public class Item extends Sprite implements Serializable{
 	private String type; 
 	private Rectangle itemRect;
 	private boolean available;
-	
-	TiledMap tiledMap;
-	TiledMapRenderer tiledMapRenderer;
 	public Item(){
 
 		super(itemTexture);
-		tiledMap = new TmxMapLoader().load("map1.tmx");
-		tiledMapRenderer = new OrthogonalTiledMapRenderer(tiledMap);
 		randomItem();
 		randomLocation();
 		System.out.println("Was drawn here " + startX + " " + startY);
@@ -39,9 +34,6 @@ public class Item extends Sprite implements Serializable{
 	}
 	public Item(int val){
 		super(itemTexture);
-		available = true;
-		tiledMap = new TmxMapLoader().load("map1.tmx");
-		tiledMapRenderer = new OrthogonalTiledMapRenderer(tiledMap);
 		System.out.println("This is val " + val);
 		randomItem();
 		

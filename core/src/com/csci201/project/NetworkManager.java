@@ -32,19 +32,18 @@ public class NetworkManager {
 			System.out.println("Getting oos");
 			//ObjectOutputStream oos = new ObjectOutputStream(s.getOutputStream());
 			ois = new ObjectInputStream(s.getInputStream());
-			oos = new ObjectOutputStream(s.getOutputStream());
 			
 			System.out.println("Writing object c");
 			//oos.writeObject(c.getCharData());
 			//oos.flush();
 			System.out.println("Done connecting");
-			if (ois.readObject().equals("begin")){
+			if (ois.readObject().toString().equals("begin")){
 				System.out.println("work");
 			}
 			
 			while(true){
 				CharacterData opponent = (CharacterData)ois.readObject();
-				System.out.println(opponent.toString());
+				System.out.println("Opponent: " + opponent.toString());
 			}
 			//s.close();
 		
@@ -58,7 +57,7 @@ public class NetworkManager {
 	//Happens in "GameplayScreen.render()" which is a while loop in practice
 	public void ping(CharacterData cd){
 		try {
-			
+			oos = new ObjectOutputStream(s.getOutputStream());
 			oos.writeObject(cd);
 			oos.flush();
 			

@@ -24,6 +24,7 @@ public class GameplayScreen implements Screen{
 
 	private Character me;
 	private Character opponent;
+	
 	private NinePatch startingBackground; 
 	private NinePatch loadingHealthGreen;
 	private NinePatch loadingEnergyBlue;
@@ -100,7 +101,7 @@ public class GameplayScreen implements Screen{
 		
 		network.pingSend(me.getCharData());
 		
-		network.pingReceive();
+		opponent.setCharacterData(network.pingReceive());
 		
 		setCamera();
 		
@@ -111,6 +112,8 @@ public class GameplayScreen implements Screen{
 		drawItems();
 				
 		drawChar(me);
+		
+		drawChar(opponent);
 		
 		shootProjectile();	
 		

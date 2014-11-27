@@ -18,8 +18,8 @@ public class CharacterData implements Serializable{
 	private static int width = characterTexture.getWidth()/3;
 	private static int height = characterTexture.getHeight()/4;*/
 	
-	private static float characterX;
-	private static float characterY;
+	private float characterX;
+	private float characterY;
 	float characterSpeed = 200f;
 	float amountMoved; 
 
@@ -31,7 +31,7 @@ public class CharacterData implements Serializable{
 	
 	private long startTime; //for item 
 	private boolean itemActive;
-	private Item currItem; 
+	private Item currItem;
 	
 	
 	private int health;

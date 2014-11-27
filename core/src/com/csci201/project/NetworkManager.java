@@ -52,25 +52,24 @@ public class NetworkManager {
 		}
 	}
 	
-	public void pingReceive(){
+	public CharacterData pingReceive(){
 		
 		try {
 			ois = new ObjectInputStream(s.getInputStream());
 			
-			System.out.println(ois.readObject().toString());
+			CharacterData cd = (CharacterData)ois.readObject();
 			
-			/*if(ois.readObject() instanceof CharacterData){
-
-				CharacterData cd = (CharacterData)ois.readObject();
-				System.out.println(cd.toString());
-				//CharacterData opponent = (CharacterData)ois.readObject();
-				//System.out.println("Opponent: " + opponent.toString());
-			}*/
+			return cd;
+			
+			
+			
 		} catch (IOException e) {
 			e.printStackTrace();
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
 		}
+		
+		return null;
 		
 		
 	}

@@ -1,4 +1,3 @@
-
 package com.csci201.project;
 
 
@@ -24,7 +23,6 @@ public class GameplayScreen implements Screen{
 
 	private Character me;
 	private Character opponent;
-	
 	private NinePatch startingBackground; 
 	private NinePatch loadingHealthGreen;
 	private NinePatch loadingEnergyBlue;
@@ -101,7 +99,7 @@ public class GameplayScreen implements Screen{
 		
 		network.pingSend(me.getCharData());
 		
-		opponent.setCharacterData(network.pingReceive());
+		network.pingReceive();
 		
 		setCamera();
 		
@@ -112,8 +110,6 @@ public class GameplayScreen implements Screen{
 		drawItems();
 				
 		drawChar(me);
-		
-		drawChar(opponent);
 		
 		shootProjectile();	
 		

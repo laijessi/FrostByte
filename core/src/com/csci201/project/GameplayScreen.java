@@ -114,7 +114,7 @@ public class GameplayScreen implements Screen{
 
 		batch.end();
 		
-		//network.ping();
+		network.ping(me.getCharData());
 		
 	}
 	

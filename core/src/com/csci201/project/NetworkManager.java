@@ -13,12 +13,13 @@ public class NetworkManager {
 	private int port;
 	private Character c;
 	private Socket s;
+	private ObjectOutputStream oos;
+	private ObjectInputStream ois;
 	
 	public NetworkManager(Character c){
 		port = 12345;
 		host = "localhost";
 		this.c = c;
-		
 		connect();
 		
 	}
@@ -29,12 +30,22 @@ public class NetworkManager {
 			System.out.println("Connecting");
 			s = new Socket(host, port);
 			System.out.println("Getting oos");
-			ObjectOutputStream oos = new ObjectOutputStream(s.getOutputStream());
-			System.out.println("Writing object c");
-			oos.writeObject(c.getCharData());
-			oos.flush();
-			System.out.println("Done connecting");
+			//ObjectOutputStream oos = new ObjectOutputStream(s.getOutputStream());
+			ois = new ObjectInputStream(s.getInputStream());
+			oos = new ObjectOutputStream(s.getOutputStream());
 			
+			System.out.println("Writing object c");
+			//oos.writeObject(c.getCharData());
+			//oos.flush();
+			System.out.println("Done connecting");
+			if (ois.readObject().equals("begin")){
+				System.out.println("work");
+			}
+			
+			while(true){
+				CharacterData opponent = (CharacterData)ois.readObject();
+				System.out.println(opponent.toString());
+			}
 			//s.close();
 		
 			
@@ -45,24 +56,14 @@ public class NetworkManager {
 	}
 	
 	//Happens in "GameplayScreen.render()" which is a while loop in practice
-	public void ping(){
-	
-		
+	public void ping(CharacterData cd){
 		try {
-			System.out.println("Pinging");
-			ObjectInputStream ois = new ObjectInputStream(s.getInputStream());
-			Character opponent = (Character)ois.readObject();
-			System.out.println(opponent.toString());
 			
-			
-			ObjectOutputStream oos = new ObjectOutputStream(s.getOutputStream());
-			oos.writeObject(c);
+			oos.writeObject(cd);
 			oos.flush();
 			
 		} catch (IOException e1) {
 			e1.printStackTrace();
-		} catch (ClassNotFoundException e) {
-			e.printStackTrace();
 		}
 		
 

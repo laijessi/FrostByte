@@ -37,12 +37,21 @@ public class Server {
 			try {
 				while(true){
 					for (int i = 0; i < sockets.size(); i++){
-						s = sockets.get(i);
+						ObjectOutputStream oos = new ObjectOutputStream(sockets.get(i).getOutputStream());
+						
+						if(sockets.size() == 2){
+							oos.writeObject(new String("begin"));
+							oos.flush();
+						}
 						System.out.println("In server");
 						ObjectInputStream ois = new ObjectInputStream(s.getInputStream());
 						CharacterData c = (CharacterData)ois.readObject();
 						System.out.println(c.toString());
 						
+						if(!sockets.get(i).equals(s)){
+							oos.writeObject(c);
+							oos.flush();
+						}
 					}
 				}
 			} catch (IOException ioe) {

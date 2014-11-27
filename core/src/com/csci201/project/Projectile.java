@@ -48,7 +48,7 @@ public class Projectile extends Sprite implements Serializable {
 	static FileHandle projectileFileHandle = Gdx.files.internal("data/projectile.png"); 
 	static Texture projectileTexture = new Texture(projectileFileHandle);
 	
-	private Sound sound;
+	//private Sound sound;
 	
 	public Projectile(int mouseX, int mouseY) {  
 		super(projectileTexture, 0, 0, 30, 30);
@@ -94,8 +94,8 @@ public class Projectile extends Sprite implements Serializable {
 			radians += Math.PI;
 		}
 		
-		sound = Gdx.audio.newSound(Gdx.files.internal("throw.mp3"));
-		sound.play(1f);
+		//sound = Gdx.audio.newSound(Gdx.files.internal("throw.mp3"));
+		//sound.play(1f);
 		//sound.dispose();
 	}
 

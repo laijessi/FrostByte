@@ -12,11 +12,11 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Rectangle;
 
 public class CharacterData extends Sprite implements Serializable{
-	static FileHandle characterFileHandle = Gdx.files.internal("data/reindeer.png"); 
+	/*static FileHandle characterFileHandle = Gdx.files.internal("data/reindeer.png"); 
 	private static Texture characterTexture = new Texture(characterFileHandle);
 	
 	private static int width = characterTexture.getWidth()/3;
-	private static int height = characterTexture.getHeight()/4;
+	private static int height = characterTexture.getHeight()/4;*/
 	
 	private static float characterX;
 	private static float characterY;
@@ -45,7 +45,7 @@ public class CharacterData extends Sprite implements Serializable{
 	private ArrayList<Rectangle> itemRects;
 	
 	public CharacterData(){
-		super(characterTexture, width, height*2, width, height);
+		//super(characterTexture, width, height*2, width, height);
 		characterX = 280;
 	    characterY = 220;
 	    
@@ -66,7 +66,12 @@ public class CharacterData extends Sprite implements Serializable{
 		//collision initialization
 		characterCollisionBox = new Rectangle(characterX, characterY + 2*this.getHeight()/3, this.getWidth() - 10, this.getHeight()/3);	
 	}
-
+	public float imgHeight(){
+		return this.getHeight();
+	}
+	public float imgWidth(){
+		return this.getWidth();
+	}
 	public float getCharacterSpeed(){
 		return characterSpeed;
 	}

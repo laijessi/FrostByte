@@ -82,7 +82,7 @@ public class GameplayScreen implements Screen{
 		mainMap.takeItemRects(itemRect);
 		
 		
-		//network = new NetworkManager(me);
+		network = new NetworkManager(me);
 		
 		//Projectile data
 	/*	FileHandle projectileFileHandle = Gdx.files.internal("data/projectile.png"); 
@@ -204,7 +204,6 @@ public class GameplayScreen implements Screen{
 		camera.update();  
 		batch.setProjectionMatrix(camera.combined);
 		batch.draw(c, c.getCharacterX(), c.getCharacterY());
-		System.out.println("From draw character: " + c.toString());
 		drawEnergybar(c);
 		drawHealthbar(c);
 	}

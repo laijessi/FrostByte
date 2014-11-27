@@ -41,6 +41,7 @@ public class NetworkManager {
 				System.out.println("work");
 			}
 			
+			
 			//s.close();
 		
 			

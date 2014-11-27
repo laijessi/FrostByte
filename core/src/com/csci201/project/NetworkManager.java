@@ -51,25 +51,31 @@ public class NetworkManager {
 		}
 	}
 	
+	public void pingReceive(){
+		
+		try {
+			ois = new ObjectInputStream(s.getInputStream());
+			CharacterData opponent = (CharacterData)ois.readObject();
+			System.out.println("Opponent: " + opponent.toString());
+		} catch (IOException e) {
+			e.printStackTrace();
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		}
+		
+		
+	}
+	
 	//Happens in "GameplayScreen.render()" which is a while loop in practice
-	public void ping(CharacterData cd){
+	public void pingSend(CharacterData cd){
 		try {
 			oos = new ObjectOutputStream(s.getOutputStream());
 			oos.writeObject(cd);
 			oos.flush();
 			
-
-			//while(true){
-				ois = new ObjectInputStream(s.getInputStream());
-				CharacterData opponent = (CharacterData)ois.readObject();
-				System.out.println("Opponent: " + opponent.toString());
-			//}
 			
 		} catch (IOException e1) {
 			e1.printStackTrace();
-		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
 		}
 		
 

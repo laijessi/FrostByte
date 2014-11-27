@@ -98,6 +98,8 @@ public class GameplayScreen implements Screen{
 	@Override
 	public void render(float delta) {
 		
+		network.pingReceive();
+		
 		setCamera();
 		
 		moveChar();
@@ -114,7 +116,7 @@ public class GameplayScreen implements Screen{
 
 		batch.end();
 		
-		network.ping(me.getCharData());
+		network.pingSend(me.getCharData());
 		
 	}
 	

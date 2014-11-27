@@ -56,13 +56,16 @@ public class NetworkManager {
 		
 		try {
 			ois = new ObjectInputStream(s.getInputStream());
-			if(ois.readObject() instanceof String){}
-			else{
+			
+			System.out.println(ois.readObject().toString());
+			
+			/*if(ois.readObject() instanceof CharacterData){
+
 				CharacterData cd = (CharacterData)ois.readObject();
 				System.out.println(cd.toString());
 				//CharacterData opponent = (CharacterData)ois.readObject();
 				//System.out.println("Opponent: " + opponent.toString());
-			}
+			}*/
 		} catch (IOException e) {
 			e.printStackTrace();
 		} catch (ClassNotFoundException e) {

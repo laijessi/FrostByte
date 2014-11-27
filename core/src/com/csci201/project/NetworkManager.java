@@ -18,7 +18,7 @@ public class NetworkManager {
 	
 	public NetworkManager(Character c){
 		port = 12345;
-		host = "192.168.0.15";
+		host = "localhost";
 		this.c = c;
 		connect();
 		
@@ -30,18 +30,18 @@ public class NetworkManager {
 			System.out.println("Connecting");
 			s = new Socket(host, port);
 			System.out.println("Getting oos");
-			//ObjectOutputStream oos = new ObjectOutputStream(s.getOutputStream());
 			ois = new ObjectInputStream(s.getInputStream());
+			//ObjectOutputStream oos = new ObjectOutputStream(s.getOutputStream());
+			while(true){
 			
-			System.out.println("Writing object c");
-			//oos.writeObject(c.getCharData());
-			//oos.flush();
-			System.out.println("Done connecting");
+			
+			System.out.println("getting data from server");
 			if (ois.readObject().toString().equals("begin")){
 				System.out.println("work");
+				break;
 			}
 			
-			
+			}
 			//s.close();
 		
 			

@@ -28,26 +28,11 @@ public class Server {
 
 	class ServerThread extends Thread {
 		private Socket s;
-		private Scanner sc;
-		private PrintWriter pw;
 		private ObjectOutputStream oos;
 		private ObjectInputStream ois;
-		private boolean done;
 		
 		public ServerThread(Socket s ) {
-			try {
-				this.s = s;
-				ois = new ObjectInputStream(s.getInputStream());
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			done = false;
-			try {
-				ois = new ObjectInputStream(s.getInputStream());
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
+			this.s = s;
 		}
 		public void run() {
 			try {
@@ -55,36 +40,33 @@ public class Server {
 				while(true){
 					if(sockets.size() == 2){
 						for(Socket socket : sockets){
-							if(!socket.equals(s)){
-								oos = new ObjectOutputStream(socket.getOutputStream());
+						//	if(!socket.equals(s)){
+						System.out.println("found two users");
+								oos = new ObjectOutputStream(s.getOutputStream());
 								oos.writeObject(new String("begin"));
 								oos.flush();
-								done = true;
-							}
+						//	}
 						}
-						if(done) break;
 					}
-				}
-		
-				while(true){
-					for (int i = 0; i < sockets.size(); i++){
-						
-						System.out.println("In server");
-						
-						
-						String line = ois.readObject().toString();
 
-						if(!sockets.get(i).equals(s)){
+					ois = new ObjectInputStream(s.getInputStream());
+					
+					/*for (Socket socket : sockets){
+						if(!socket.equals(s)){
+							System.out.println("In server");
+							String line = ois.readObject().toString();
+							System.out.println(line);
+							oos = new ObjectOutputStream(socket.getOutputStream());
 							oos.writeObject(line);
 							oos.flush();
 						}
-					}
+					}*/
 				}
 			} catch (IOException ioe) {
 				System.out.println("IOExceptionin ServerThreadconstructor: " + ioe.getMessage());
-			} catch (ClassNotFoundException e) {
-				e.printStackTrace();
-			}
+			}// catch (ClassNotFoundException e) {
+			//	e.printStackTrace();
+			//}
 		}
 	}
 }

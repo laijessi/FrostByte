@@ -30,21 +30,28 @@ public class Server {
 		private Socket s;
 		private Scanner sc;
 		private PrintWriter pw;
+		ObjectOutputStream oos;
+		ObjectInputStream ois;
 		public ServerThread(Socket s ) {
-			this.s = s;
+			try {
+				this.s = s;
+				ois = new ObjectInputStream(s.getInputStream());
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 		public void run() {
 			try {
+				if(sockets.size() == 2){
+					oos.writeObject(new String("begin"));
+					oos.flush();
+				}
 				while(true){
 					for (int i = 0; i < sockets.size(); i++){
-						ObjectOutputStream oos = new ObjectOutputStream(sockets.get(i).getOutputStream());
+						oos = new ObjectOutputStream(sockets.get(i).getOutputStream());
 						
-						if(sockets.size() == 2){
-							oos.writeObject(new String("begin"));
-							oos.flush();
-						}
 						System.out.println("In server");
-						ObjectInputStream ois = new ObjectInputStream(s.getInputStream());
 						
 						String line = ois.readObject().toString();
 						//CharacterData c = (CharacterData)ois.readObject();

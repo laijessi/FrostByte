@@ -56,8 +56,10 @@ public class NetworkManager {
 		
 		try {
 			ois = new ObjectInputStream(s.getInputStream());
-			CharacterData opponent = (CharacterData)ois.readObject();
-			System.out.println("Opponent: " + opponent.toString());
+			String line = ois.readObject().toString();
+			System.out.println(line);
+			//CharacterData opponent = (CharacterData)ois.readObject();
+			//System.out.println("Opponent: " + opponent.toString());
 		} catch (IOException e) {
 			e.printStackTrace();
 		} catch (ClassNotFoundException e) {
@@ -71,7 +73,7 @@ public class NetworkManager {
 	public void pingSend(CharacterData cd){
 		try {
 			oos = new ObjectOutputStream(s.getOutputStream());
-			oos.writeObject(cd);
+			oos.writeObject(cd.toString());
 			oos.flush();
 			
 			

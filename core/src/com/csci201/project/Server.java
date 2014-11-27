@@ -45,11 +45,13 @@ public class Server {
 						}
 						System.out.println("In server");
 						ObjectInputStream ois = new ObjectInputStream(s.getInputStream());
-						CharacterData c = (CharacterData)ois.readObject();
-						System.out.println(c.toString());
+						
+						String line = ois.readObject().toString();
+						//CharacterData c = (CharacterData)ois.readObject();
+						//System.out.println(c.toString());
 						
 						if(!sockets.get(i).equals(s)){
-							oos.writeObject(c);
+							oos.writeObject(line);
 							oos.flush();
 						}
 					}

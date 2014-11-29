@@ -32,7 +32,6 @@ public class NetworkManager {
 				
 				System.out.println("getting data from server");
 				Object obj = ois.readObject();
-				System.out.println(obj.getClass());
 				if (obj instanceof ArrayList<?>){
 					@SuppressWarnings("unchecked")
 					ArrayList<String> files = (ArrayList<String>) obj;

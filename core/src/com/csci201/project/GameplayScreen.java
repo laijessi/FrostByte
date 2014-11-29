@@ -122,7 +122,6 @@ public class GameplayScreen implements Screen{
 		
 		drawProjectiles(opponent);
 		
-		checkDamage();
 	
 		
 
@@ -132,14 +131,13 @@ public class GameplayScreen implements Screen{
 		
 	}
 	
-	public void checkDamage(){
-		
-		for(Projectile p: opponent.getProjectiles()){
-			if(p.exists()){
-				me.checkDamage(p);
+	public void checkDamage(Projectile p){
+		if(p.exists()){
+			if(me.checkDamage(p)){
+				System.out.println("I got hit");
+				p.setExists(false);
 			}
 		}
-		
 	}
 	public void drawProjectiles(Character temp){
 
@@ -155,6 +153,15 @@ public class GameplayScreen implements Screen{
 				//batch.draw(p, p.getX(), p.getY());
 				
 				batch.draw(new Texture(Gdx.files.internal("data/projectile.png")), p.getX(), p.getY());
+				if(temp != me){
+					System.out.println("Checking for damages");
+					checkDamage(p);
+				}
+				if(temp == me){
+					if(Intersector.overlaps(opponent.getCharData().getCharacterCollisionBox(), p.getColBox())){
+						p.setExists(false);
+					}
+				}
 			}
 			if(p.distanceUp() > 100 || p.detectCollision(mainMap)){
 				p.setExists(false);

@@ -71,7 +71,7 @@ public class CharacterData implements Serializable{
 		regionY = h+h;
 		
 		//energy data
-		health = 50;
+		health = 100;
 		energy = 100;
 		
 		//collision initialization

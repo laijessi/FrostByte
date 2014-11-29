@@ -212,12 +212,13 @@ public class Character extends Sprite implements InputProcessor {
 		return -1;
 	}
 	
-	public void checkDamage(Projectile p){
+	public boolean checkDamage(Projectile p){
 		if(Intersector.overlaps(charData.getCharacterCollisionBox(), p.getColBox())){
 			if(charData.getHealth() - 5 > 0){
 				charData.addHealth(-5);
 				healthbar.addHealth(-5);
 				System.out.println("My health got decreased. New health: " + charData.getHealth() );
+				//return true;
 			}
 			else if(charData.getHealth() - 5 == 0){
 				charData.addHealth(-charData.getHealth());
@@ -227,8 +228,10 @@ public class Character extends Sprite implements InputProcessor {
 			if(charData.getHealth() == 0){
 				System.out.println("My health is 0, game over");
 			}
+			return true;
 		}
 		else{
+			return false;
 			//System.out.print("I was not hit. ");
 			//System.out.println(" This was projectiles x and y: " + p.getX() + p.getY());
 		}

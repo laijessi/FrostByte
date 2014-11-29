@@ -16,25 +16,17 @@ import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Rectangle;
 
 public class Item extends Sprite implements Serializable{
-	static FileHandle itemFileHandle = Gdx.files.internal("data/item.png"); //whatever shit it is  
-	private static Texture itemTexture = new Texture(itemFileHandle);
 	private float startX; 
 	private float startY; 
 	private int increaseFactor;
 	private String type; 
 	private Rectangle itemRect;
 	private boolean available;
-	public Item(){
-
-		super(itemTexture);
-		randomItem();
-		randomLocation();
-		System.out.println("Was drawn here " + startX + " " + startY);
-		this.increaseFactor = 2;
-	}
+	
 	public Item(int val){
-		super(itemTexture);
+		super(new Texture(Gdx.files.internal("data/item.png")));
 		randomItem();
+		available = true;
 		
 		if(val == 0){
 			this.startX = 416;

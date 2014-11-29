@@ -162,6 +162,9 @@ public class CharacterData implements Serializable{
 	public void setEnergy(int i){
 		energy += i;
 	}
+	public void resetEnergy(int i ){
+		energy = i;
+	}
 	public void addProjectile(Projectile p){
 		projectiles.add(p);
 		setEnergy(-10);	

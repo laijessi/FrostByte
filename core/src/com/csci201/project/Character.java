@@ -48,6 +48,8 @@ public class Character extends Sprite implements InputProcessor {
 		super(characterTexture, width, height*2, width, height);
 		System.out.println("Character constructor was called");
 		charData = new CharacterData(width, height);
+		energybar = new Energybar();
+		healthbar = new Healthbar();
 		
 		// camera data
 		Gdx.input.setInputProcessor(this);

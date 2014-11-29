@@ -164,6 +164,7 @@ public class GameplayScreen implements Screen{
 		    
 			if(me.getEnergy() >= 10){
 				me.getEnergybar().setEnergy(-10);
+				me.getCharData().resetEnergy(me.getEnergybar().getEnergy());
 				me.addProjectile( new Projectile(projX - w/2,
 										projY-h/2,
 										me.getCharacterX(),

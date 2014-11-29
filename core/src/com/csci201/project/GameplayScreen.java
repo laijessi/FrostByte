@@ -117,7 +117,10 @@ public class GameplayScreen implements Screen{
 		
 		shootProjectile();	
 		
-		drawProjectiles();
+		drawProjectiles(me);
+		
+		drawProjectiles(opponent);
+		
 
 		batch.end();
 		
@@ -125,23 +128,26 @@ public class GameplayScreen implements Screen{
 		
 	}
 	
-	public void drawProjectiles(){
-		for(Projectile p : me.getProjectiles()){
-			
+	public void drawProjectiles(Character temp){
+
+		for(Projectile p : temp.getProjectiles()){
 			if(p.exists()){
 				double ACCELERATOR = 7.77;
-				
+
 				p.setX( Math.cos(p.getRadians()) * ACCELERATOR );
 				p.setY( Math.sin(p.getRadians()) * ACCELERATOR );
-				
+
 				p.getColBox().setPosition(p.getX(), p.getY()); 
 
-				batch.draw(p, p.getX(), p.getY());
+				//batch.draw(p, p.getX(), p.getY());
+				
+				batch.draw(new Texture(Gdx.files.internal("data/projectile.png")), p.getX(), p.getY());
 			}
 			if(p.distanceUp() > 100 || p.detectCollision(mainMap)){
 				p.setExists(false);
-			}
+			}	
 		}
+		
 	}
 	
 	public void shootProjectile(){

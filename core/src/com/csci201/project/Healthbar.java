@@ -29,7 +29,7 @@ public class Healthbar implements Runnable, Serializable{
 
 	}
 	public void run(){
-	
+	/*
 		while(true){
 			try{
 
@@ -53,7 +53,7 @@ public class Healthbar implements Runnable, Serializable{
 			}
 			catch(Exception e){
 			}		
-		}
+		}*/
 	}
 
 	public int getHealth(){
@@ -63,7 +63,8 @@ public class Healthbar implements Runnable, Serializable{
 
 	public void addHealth(int i){
 		System.out.println("I'm adding health " + i);
-		healthLock.lock();
+		health+=i;
+		/*healthLock.lock();
 		
 		if(i > 0){
 			healthUpTo = health + i;
@@ -75,6 +76,6 @@ public class Healthbar implements Runnable, Serializable{
 		healthDownTo = health;
 		healthUpTo = health;
 		
-		healthLock.unlock();
+		healthLock.unlock();*/
 	}
 }

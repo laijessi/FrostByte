@@ -58,7 +58,7 @@ public class Projectile extends Sprite implements Serializable {
 	public Projectile(float goX, float goY, float shipX, float shipY) {  
 		super(new Texture(Gdx.files.internal("data/projectile.png")));
 
-		projectileCollisionBox = new Rectangle(posX, posY, this.getWidth() - 10, this.getHeight() -10);
+		projectileCollisionBox = new Rectangle(posX, posY, this.getWidth() - 5, this.getHeight() -5);
 		
 		this.posX = shipX;
 		this.posY = shipY;

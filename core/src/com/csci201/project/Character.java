@@ -126,6 +126,7 @@ public class Character extends Sprite implements InputProcessor {
 			charData.addY(-amountMoved);
 		}
 		charData.getCharacterCollisionBox().setPosition(charData.getX(), charData.getY()); 
+		charData.getCharacterHitBox().setPosition(charData.getX(), charData.getY());
 		
 		charData.setRegionX(this.getRegionX());
 		charData.setRegionY(this.getRegionY());
@@ -213,7 +214,7 @@ public class Character extends Sprite implements InputProcessor {
 	}
 	
 	public boolean checkDamage(Projectile p){
-		if(Intersector.overlaps(charData.getCharacterCollisionBox(), p.getColBox())){
+		if(Intersector.overlaps(charData.getCharacterHitBox(), p.getColBox())){
 			if(charData.getHealth() - 5 > 0){
 				charData.addHealth(-5);
 				healthbar.addHealth(-5);

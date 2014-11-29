@@ -20,12 +20,22 @@ public class MainMap implements Serializable{
 	private ArrayList<Rectangle> itemRects;
 	private ArrayList<Item> itemList;
 	private ArrayList<Rectangle> projectileCollisionRects; 
+	private int [] backgroundLayers = {0,1,2,3,4,5,6,7,8,9,10,11};
+	private int [] foregroundLayers = {12};
 	
 	public MainMap (String mapName) {
 		mainMap = new TmxMapLoader().load(mapName);
         tiledMapRenderer = new OrthogonalTiledMapRenderer(mainMap);
         
         setUpCollisionRectangles(); 
+	}
+	
+	public void renderForegroundLayers() {
+		tiledMapRenderer.render(foregroundLayers);
+	}
+	
+	public void renderBackgroundLayers() {
+		tiledMapRenderer.render(backgroundLayers);
 	}
 	
 	private void setUpCollisionRectangles() {

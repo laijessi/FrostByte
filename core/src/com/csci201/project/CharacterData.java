@@ -47,6 +47,7 @@ public class CharacterData implements Serializable{
 	//collision variables
 	private ArrayList<Rectangle> collisionRects; 
 	private Rectangle characterCollisionBox; 
+	private Rectangle characterHitBox; 
 	private ArrayList<Rectangle> itemRects;
 	
 	public CharacterData(int w, int h){
@@ -76,6 +77,7 @@ public class CharacterData implements Serializable{
 		
 		//collision initialization
 		characterCollisionBox = new Rectangle(characterX, characterY + 2*h/3, w - 10, h/3);	
+		characterHitBox = new Rectangle(characterX, characterY, w, h);
 	}
 	public float getCharacterSpeed(){
 		return characterSpeed;
@@ -178,5 +180,8 @@ public class CharacterData implements Serializable{
 	}
 	public Rectangle getCharacterCollisionBox(){
 		return characterCollisionBox;
+	}
+	public Rectangle getCharacterHitBox() {
+		return characterHitBox; 
 	}
 }

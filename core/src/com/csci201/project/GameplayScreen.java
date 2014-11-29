@@ -106,6 +106,8 @@ public class GameplayScreen implements Screen{
 		
 		setCamera();
 		
+		mainMap.renderBackgroundLayers(); 
+		
 		moveChar();
 		
 		batch.begin();
@@ -122,12 +124,9 @@ public class GameplayScreen implements Screen{
 		
 		drawProjectiles(opponent);
 		
-	
-		
-
 		batch.end();
 		
-		
+		mainMap.renderForegroundLayers();
 		
 	}
 	
@@ -158,7 +157,7 @@ public class GameplayScreen implements Screen{
 					checkDamage(p);
 				}
 				if(temp == me){
-					if(Intersector.overlaps(opponent.getCharData().getCharacterCollisionBox(), p.getColBox())){
+					if(Intersector.overlaps(opponent.getCharData().getCharacterHitBox(), p.getColBox())){
 						p.setExists(false);
 					}
 				}
@@ -232,7 +231,6 @@ public class GameplayScreen implements Screen{
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		camera.update();
 		mainMap.getMapRenderer().setView(camera);
-		mainMap.getMapRenderer().render();
 	}
 	
 	public void drawChar(Character c){

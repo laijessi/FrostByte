@@ -240,6 +240,7 @@ public class GameplayScreen implements Screen{
 		}
 		
 		else{ //set the opponents movement
+			drawOppHealth(c);
 			c.setRegion(c.getCharData().getRegionX(),
 						c.getCharData().getRegionY(),
 						c.getCharData().getWidth(),
@@ -255,6 +256,11 @@ public class GameplayScreen implements Screen{
 	public void drawHealthbar(Character c){
 		startingBackground.draw(batch, c.getCharacterX()-250, c.getCharacterY()-165, 220, 25);
 		loadingHealthGreen.draw(batch, c.getCharacterX()-248, c.getCharacterY()-163, c.getHealthbar().getHealth()*2 + 16, 21);
+	}
+	
+	public void drawOppHealth(Character c){
+		startingBackground.draw(batch, c.getCharacterX()-10, c.getCharacterY()+68, 80, 14);
+		loadingHealthGreen.draw(batch, c.getCharacterX()-8, c.getCharacterY()+70, (int)(c.getHealthbar().getHealth()*.6) + 16, 10);
 	}
 	
 	@Override

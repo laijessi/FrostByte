@@ -18,7 +18,7 @@ public class NetworkManager {
 	
 	public NetworkManager(Character c){
 		port = 12345;
-		host = "192.168.0.7";
+		host = "localhost";
 		this.c = c;
 		connect();
 		

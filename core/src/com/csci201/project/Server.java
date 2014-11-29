@@ -55,7 +55,7 @@ public class Server {
 					
 					if(sockets.size() == 2){
 						for (Socket socket : sockets){
-							
+							//s is me, socket is other guy 
 							if(!socket.equals(s)){
 	
 								ois = new ObjectInputStream(socket.getInputStream());
@@ -64,7 +64,10 @@ public class Server {
 								
 								if(obj instanceof CharacterData){
 									CharacterData cd = (CharacterData) obj;
-									System.out.println(cd.toString());
+									//System.out.println(cd.toString());
+									
+									
+									
 								}
 								
 								oos = new ObjectOutputStream(s.getOutputStream());

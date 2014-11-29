@@ -54,6 +54,10 @@ public class GameplayScreen implements Screen{
 
 		batch = new SpriteBatch();
 		mainMap = new MainMap("map3.tmx");
+
+		camera = new OrthographicCamera();
+		camera.setToOrtho(false,w,h);
+		camera.update();
 		
 		startingBackground = new NinePatch(new Texture(Gdx.files.internal("data/bar.png")), 9, 9, 9, 9);
 		loadingHealthGreen = new NinePatch(new Texture(Gdx.files.internal("data/health.png")), 9, 9, 9, 9);
@@ -79,14 +83,12 @@ public class GameplayScreen implements Screen{
 		Texture t = new Texture(Gdx.files.internal(charFiles.get(0)));
 		ArrayList<Integer> starting = setStartPos(charFiles.get(0));
 		me = new Character(mainMap, t, starting.get(0), starting.get(1));
+		camera.translate(starting.get(0)-280, starting.get(1)-220);
 		
 		t = new Texture(Gdx.files.internal(charFiles.get(1)));
 		starting = setStartPos(charFiles.get(1));
 		opponent = new Character(mainMap, t, starting.get(0), starting.get(1));
 		
-		camera = new OrthographicCamera();
-		camera.setToOrtho(false,w,h);
-		camera.update();
 		//Projectile data
 	/*	FileHandle projectileFileHandle = Gdx.files.internal("data/projectile.png"); 
 		projectileTexture = new Texture(projectileFileHandle);
@@ -105,13 +107,13 @@ public class GameplayScreen implements Screen{
 			pos.add(280); pos.add(220);  //bottom left
 		}
 		else if (file.equals("data/santa.png")){
-			pos.add(880); pos.add(220);  //bottom right
+			pos.add(1710); pos.add(220);  //bottom right
 		}
-		else if (file.equals("data/mrs.clause.png")){
-			pos.add(280); pos.add(820);  //top left
+		else if (file.equals("data/mrsclause.png")){
+			pos.add(280); pos.add(1800);  //top left
 		}
 		else{
-			pos.add(880); pos.add(820);  //top right
+			pos.add(1710); pos.add(1850);  //top right
 		}
 		return pos;
 	}

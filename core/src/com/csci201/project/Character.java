@@ -220,7 +220,7 @@ public class Character extends Sprite implements InputProcessor {
 				System.out.println("My health got decreased. New health: " + charData.getHealth() );
 				//return true;
 			}
-			else if(charData.getHealth() - 5 == 0){
+			else if(charData.getHealth() - 5 <= 0){
 				charData.addHealth(-charData.getHealth());
 				healthbar.addHealth(-charData.getHealth());
 				System.out.println("My health got decreased to 0. New health: " + charData.getHealth() );

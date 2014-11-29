@@ -60,12 +60,15 @@ public class Server {
 	
 								ois = new ObjectInputStream(socket.getInputStream());
 								
-								CharacterData opp = (CharacterData)ois.readObject();
+								Object obj = ois.readObject();
 								
-								System.out.println(opp.toString());
+								if(obj instanceof CharacterData){
+									CharacterData cd = (CharacterData) obj;
+									System.out.println(cd.toString());
+								}
 								
 								oos = new ObjectOutputStream(s.getOutputStream());
-								oos.writeObject(opp);
+								oos.writeObject(obj);
 								oos.flush();
 							}
 						}

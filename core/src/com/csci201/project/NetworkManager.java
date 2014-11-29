@@ -42,6 +42,7 @@ public class NetworkManager {
 				}
 			
 			}
+			
 			//s.close();
 		
 			
@@ -57,14 +58,16 @@ public class NetworkManager {
 		try {
 			ois = new ObjectInputStream(s.getInputStream());
 			
-			System.out.println(ois.readObject().toString());
+			Object obj = ois.readObject();
 			
-			/*if(ois.readObject() instanceof CharacterData){
-				CharacterData cd = (CharacterData)ois.readObject();
+			if(obj instanceof CharacterData){
+				CharacterData cd = (CharacterData) obj;
 				System.out.println(cd.toString());
+				//CharacterData cd = (CharacterData)ois.readObject();
+				//System.out.println(cd.toString());
 				//CharacterData opponent = (CharacterData)ois.readObject();
 				//System.out.println("Opponent: " + opponent.toString());
-			}*/
+			}
 		} catch (IOException e) {
 			e.printStackTrace();
 		} catch (ClassNotFoundException e) {

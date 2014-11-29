@@ -177,7 +177,8 @@ public class Character extends Sprite implements InputProcessor {
 					if(powerType.equals("Health")){
 						//Sound health = Gdx.audio.newSound(Gdx.files.internal("health.mp3"));
 						//health.play(1f);
-						charData.setHealth(10); //add 10 
+						charData.addHealth(10); //add 10 
+						healthbar.addHealth(10);
 						charData.setCurrItem(mainMap.getItemList().get(val));
 						charData.setItemActive(true);
 					}

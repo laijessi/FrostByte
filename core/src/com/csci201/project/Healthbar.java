@@ -50,7 +50,7 @@ public class Healthbar implements Runnable, Serializable{
 
 	}
 
-	public void setHealth(int i){
+	public void addHealth(int i){
 		if(i > 0){
 			healthUpTo = health + i;
 		}

@@ -153,7 +153,7 @@ public class CharacterData implements Serializable{
 	public int getHealth(){
 		return health;
 	}
-	public void setHealth(int i){
+	public void addHealth(int i){
 		health += i;
 	}
 	public int getEnergy(){

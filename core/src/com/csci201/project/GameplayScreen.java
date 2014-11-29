@@ -161,10 +161,10 @@ public class GameplayScreen implements Screen{
 		    //dimensions of the height and width of the screen and divide by 2
 		    
 			//System.out.println(Gdx.graphics.getWidth());
-		    
+
+			me.getCharData().resetEnergy(me.getEnergybar().getEnergy());
 			if(me.getEnergy() >= 10){
 				me.getEnergybar().setEnergy(-10);
-				me.getCharData().resetEnergy(me.getEnergybar().getEnergy());
 				me.addProjectile( new Projectile(projX - w/2,
 										projY-h/2,
 										me.getCharacterX(),
@@ -241,7 +241,7 @@ public class GameplayScreen implements Screen{
 	
 	public void drawHealthbar(Character c){
 		startingBackground.draw(batch, c.getCharacterX()-250, c.getCharacterY()-165, 220, 25);
-		loadingHealthGreen.draw(batch, c.getCharacterX()-248, c.getCharacterY()-163, c.getHealth()*2 + 16, 21);
+		loadingHealthGreen.draw(batch, c.getCharacterX()-248, c.getCharacterY()-163, c.getHealthbar().getHealth()*2 + 16, 21);
 	}
 	
 	@Override

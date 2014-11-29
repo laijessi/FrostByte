@@ -34,6 +34,9 @@ public class Character extends Sprite implements InputProcessor {
 	
 	private CharacterData charData;
 	
+	private Energybar energybar;
+	private Healthbar healthbar;
+	
 	//main variables
 	MainMap mainMap; 
 	
@@ -228,6 +231,14 @@ public class Character extends Sprite implements InputProcessor {
 	
 	public int getHealth(){
 		return charData.getHealth();
+	}
+	
+	public Energybar getEnergybar(){
+		return energybar;
+	}
+	
+	public Healthbar getHealthbar(){
+		return healthbar;
 	}
 	
 	public CharacterData getCharData(){

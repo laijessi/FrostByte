@@ -13,6 +13,7 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.NinePatch;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.Intersector;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.utils.Array;
 
@@ -121,6 +122,9 @@ public class GameplayScreen implements Screen{
 		
 		drawProjectiles(opponent);
 		
+		checkDamage();
+	
+		
 
 		batch.end();
 		
@@ -128,6 +132,15 @@ public class GameplayScreen implements Screen{
 		
 	}
 	
+	public void checkDamage(){
+		
+		for(Projectile p: opponent.getProjectiles()){
+			if(p.exists()){
+				me.checkDamage(p);
+			}
+		}
+		
+	}
 	public void drawProjectiles(Character temp){
 
 		for(Projectile p : temp.getProjectiles()){

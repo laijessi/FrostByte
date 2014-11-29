@@ -64,7 +64,7 @@ public class NetworkManager {
 			
 			if(obj instanceof CharacterData){
 				cd = (CharacterData) obj;
-				System.out.println(cd.toString());
+				//System.out.println(cd.toString());
 				//CharacterData cd = (CharacterData)ois.readObject();
 				//System.out.println(cd.toString());
 				//CharacterData opponent = (CharacterData)ois.readObject();

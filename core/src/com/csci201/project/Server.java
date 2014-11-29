@@ -5,7 +5,6 @@ import java.net.Socket;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Random;
-import java.util.Scanner;
 import java.io.*;
 
 public class Server {
@@ -72,6 +71,7 @@ public class Server {
 				while(true){
 					if(sockets.size() == 2 && firstTime){
 						for(Socket socket : sockets){
+							//keeping opponent and char files in sync
 							if(s.equals(sockets.get(0))){ }
 							else if (s.equals(sockets.get(1))){
 								Collections.swap(charFiles,0,1);

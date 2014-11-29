@@ -1,29 +1,14 @@
 
 package com.csci201.project;
 
-import java.io.PrintWriter;
-import java.io.Serializable;
-import java.net.Socket;
-import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.Queue;
-import java.util.Scanner;
-
-import javax.swing.JDialog;
-import javax.swing.JLabel;
-import javax.swing.SwingConstants;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputProcessor;
-import com.badlogic.gdx.files.FileHandle;
-import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Intersector;
 import com.badlogic.gdx.math.Rectangle;
-import com.badlogic.gdx.utils.Array;
 
 public class Character extends Sprite implements InputProcessor {
 	//static FileHandle characterFileHandle = Gdx.files.internal("data/reindeer.png"); 
@@ -44,24 +29,21 @@ public class Character extends Sprite implements InputProcessor {
 		return charData.toString();
 	}
 	
-	public Character(MainMap mainMap, Texture characterTexture){
+	public Character(MainMap mainMap, Texture characterTexture, int startX, int startY){
 		super(characterTexture, characterTexture.getWidth()/3, characterTexture.getHeight()/2, characterTexture.getWidth()/3, characterTexture.getHeight()/4);
 		System.out.println("Character constructor was called");
 
 		width = characterTexture.getWidth()/3;
 		height = characterTexture.getHeight()/4;
-		charData = new CharacterData(width, height);
+		charData = new CharacterData(width, height, startX, startY);
 		energybar = new Energybar();
 		healthbar = new Healthbar();
 		
 		// camera data
 		Gdx.input.setInputProcessor(this);
 		
-		
 		//map initialization
 		this.mainMap = mainMap; 
-
-		//connect();
 	}
 
 	public float moveChar(String dir) {

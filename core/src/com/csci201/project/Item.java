@@ -4,21 +4,13 @@ import java.io.Serializable;
 import java.util.Random;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.files.FileHandle;
-import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.maps.tiled.TiledMap;
-import com.badlogic.gdx.maps.tiled.TiledMapRenderer;
-import com.badlogic.gdx.maps.tiled.TmxMapLoader;
-import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Rectangle;
 
 public class Item extends Sprite implements Serializable{
 	private float startX; 
 	private float startY; 
-	private int increaseFactor;
 	private String type; 
 	private Rectangle itemRect;
 	private boolean available;
@@ -51,7 +43,6 @@ public class Item extends Sprite implements Serializable{
 		else{
 			System.out.println("Idek");
 		}
-		this.increaseFactor = 2;
 		itemRect = new Rectangle(startX, startY, 32, 64);
 	}
 	public Rectangle getRect(){

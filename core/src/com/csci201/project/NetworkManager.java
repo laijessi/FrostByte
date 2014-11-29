@@ -3,25 +3,20 @@ package com.csci201.project;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.io.PrintWriter;
 import java.net.Socket;
 import java.util.ArrayList;
-import java.util.Scanner;
 
 public class NetworkManager {
 
 	private String host;
 	private int port;
-	private Character c;
 	private Socket s;
 	private ObjectOutputStream oos;
 	private ObjectInputStream ois;
 	
 	public NetworkManager(Character c){
 		port = 12345;
-		host = "localhost";
-		this.c = c;
-		
+		host = "localhost";		
 	}
 	
 	public ArrayList<String> connect(){

@@ -1,14 +1,9 @@
 package com.csci201.project;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.Queue;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.files.FileHandle;
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Rectangle;
 
 public class CharacterData implements Serializable{
@@ -45,14 +40,11 @@ public class CharacterData implements Serializable{
 	private Queue<Projectile> projectiles;
 	
 	//collision variables
-	private ArrayList<Rectangle> collisionRects; 
 	private Rectangle characterCollisionBox; 
-	private ArrayList<Rectangle> itemRects;
 	
-	public CharacterData(int w, int h){
-		//super(characterTexture, width, height*2, width, height);
-		characterX = 280;
-	    characterY = 220;
+	public CharacterData(int w, int h, int startX, int startY){
+		characterX = startX;
+	    characterY = startY;
 	    
 	    projectiles = new LinkedList<Projectile>();
 	    

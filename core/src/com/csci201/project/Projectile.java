@@ -3,11 +3,8 @@ package com.csci201.project;
 import java.io.Serializable;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.audio.Sound;
-import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Intersector;
 import com.badlogic.gdx.math.Rectangle;
 
@@ -17,7 +14,6 @@ public class Projectile extends Sprite implements Serializable {
 	//private Texture projectileTexture;
 	
 	private float posX, posY;
-	private float goX, goY;
 	private float xDistance, yDistance;
 	
 	private float radians;
@@ -63,9 +59,6 @@ public class Projectile extends Sprite implements Serializable {
 		this.posX = shipX;
 		this.posY = shipY;
 
-		this.goX = goX;
-		this.goY = goY;
-		
 		this.xDistance = (goX);
 		this.yDistance = -1*(goY);
 		

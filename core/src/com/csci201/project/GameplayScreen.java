@@ -7,15 +7,12 @@ import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.NinePatch;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.math.Intersector;
 import com.badlogic.gdx.math.Rectangle;
-import com.badlogic.gdx.utils.Array;
 
 
 public class GameplayScreen implements Screen{
@@ -27,8 +24,6 @@ public class GameplayScreen implements Screen{
 	private NinePatch startingBackground; 
 	private NinePatch loadingHealthGreen;
 	private NinePatch loadingEnergyBlue;
-	
-	private ArrayList<Character> characters;
 	
 	private int projX;
 	private int projY;
@@ -51,7 +46,6 @@ public class GameplayScreen implements Screen{
 		//long id = sound.play(.5f);
 		//sound.setLooping(id,true);
 		game = g;
-		characters = new ArrayList<Character>();
 		create();
 	}
 
@@ -64,10 +58,6 @@ public class GameplayScreen implements Screen{
 		startingBackground = new NinePatch(new Texture(Gdx.files.internal("data/bar.png")), 9, 9, 9, 9);
 		loadingHealthGreen = new NinePatch(new Texture(Gdx.files.internal("data/health.png")), 9, 9, 9, 9);
 		loadingEnergyBlue = new NinePatch(new Texture(Gdx.files.internal("data/energy.png")), 9, 9, 9, 9);
-		
-		camera = new OrthographicCamera();
-		camera.setToOrtho(false,w,h);
-		camera.update();
 		
 		for(int i = 0; i < 5; i++){
 			Item temp = new Item(i);
@@ -84,17 +74,19 @@ public class GameplayScreen implements Screen{
 		
 		network = new NetworkManager(me);
 		ArrayList<String> charFiles = network.connect();
-		System.out.println(charFiles.get(0));
-		System.out.println(charFiles.get(1));
+		
 
-		//TODO: create new constructor for me and opponent
 		Texture t = new Texture(Gdx.files.internal(charFiles.get(0)));
-		me = new Character(mainMap, t);
+		ArrayList<Integer> starting = setStartPos(charFiles.get(0));
+		me = new Character(mainMap, t, starting.get(0), starting.get(1));
 		
-		//TODO: create a function in character to change the image...
 		t = new Texture(Gdx.files.internal(charFiles.get(1)));
-		opponent = new Character(mainMap, t);
+		starting = setStartPos(charFiles.get(1));
+		opponent = new Character(mainMap, t, starting.get(0), starting.get(1));
 		
+		camera = new OrthographicCamera();
+		camera.setToOrtho(false,w,h);
+		camera.update();
 		//Projectile data
 	/*	FileHandle projectileFileHandle = Gdx.files.internal("data/projectile.png"); 
 		projectileTexture = new Texture(projectileFileHandle);
@@ -105,7 +97,24 @@ public class GameplayScreen implements Screen{
 */
 		
 	}
-
+	
+	public ArrayList<Integer> setStartPos(String file){
+		ArrayList<Integer> pos = new ArrayList<Integer>();
+		// x, y
+		if (file.equals("data/reindeer.png")){
+			pos.add(280); pos.add(220);  //bottom left
+		}
+		else if (file.equals("data/santa.png")){
+			pos.add(880); pos.add(220);  //bottom right
+		}
+		else if (file.equals("data/mrs.clause.png")){
+			pos.add(280); pos.add(820);  //top left
+		}
+		else{
+			pos.add(880); pos.add(820);  //top right
+		}
+		return pos;
+	}
 	@Override
 	public void render(float delta) {
 		

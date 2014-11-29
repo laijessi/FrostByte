@@ -19,7 +19,7 @@ public class Healthbar implements Runnable, Serializable{
 	public Healthbar(){
 		
 		//health = 100;
-		health = 50; //temporary default
+		health = 100; //temporary default
 		healthUpTo = health;
 		healthDownTo = health;
 		healthLock = new ReentrantLock();
@@ -71,6 +71,9 @@ public class Healthbar implements Runnable, Serializable{
 		else{
 			healthDownTo = health + i;
 		}
+		
+		healthDownTo = health;
+		healthUpTo = health;
 		
 		healthLock.unlock();
 	}

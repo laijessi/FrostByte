@@ -52,7 +52,7 @@ public class Server {
 					}
 			
 					System.out.println(sockets.size());
-					
+
 					if(sockets.size() == 2){
 						for (Socket socket : sockets){
 							//s is me, socket is other guy 

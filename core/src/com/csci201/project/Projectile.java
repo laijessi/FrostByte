@@ -45,17 +45,17 @@ public class Projectile extends Sprite implements Serializable {
 		
 	}*/
 
-	static FileHandle projectileFileHandle = Gdx.files.internal("data/projectile.png"); 
-	static Texture projectileTexture = new Texture(projectileFileHandle);
+	//static FileHandle projectileFileHandle = Gdx.files.internal("data/projectile.png"); 
+	//static Texture projectileTexture = new Texture(projectileFileHandle);
 	
 	//private Sound sound;
 	
 	public Projectile(int mouseX, int mouseY) {  
-		super(projectileTexture, 0, 0, 30, 30);
+		super(new Texture(new FileHandle("data/projectile.png")), 0, 0, 30, 30);
 	}
 	
 	public Projectile(float goX, float goY, float shipX, float shipY) {  
-		super(projectileTexture, 0, 0, 30, 30);
+		super(new Texture(new FileHandle("data/projectile.png")), 0, 0, 30, 30);
 
 		projectileCollisionBox = new Rectangle(posX, posY, this.getWidth() - 10, this.getHeight() -10);
 		

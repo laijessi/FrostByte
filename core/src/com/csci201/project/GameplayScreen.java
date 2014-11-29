@@ -46,9 +46,9 @@ public class GameplayScreen implements Screen{
 	Game game;
 	
 	public GameplayScreen(Game g){
-		Sound sound = Gdx.audio.newSound(Gdx.files.internal("soundtrack.mp3"));
-		long id = sound.play(.5f);
-		sound.setLooping(id,true);
+		//Sound sound = Gdx.audio.newSound(Gdx.files.internal("soundtrack.mp3"));
+		//long id = sound.play(.5f);
+		//sound.setLooping(id,true);
 		game = g;
 		characters = new ArrayList<Character>();
 		create();
@@ -60,6 +60,8 @@ public class GameplayScreen implements Screen{
 		batch = new SpriteBatch();
 		mainMap = new MainMap("map3.tmx");
 		me = new Character(mainMap);
+		opponent = new Character(mainMap);
+		
 		startingBackground = new NinePatch(new Texture(Gdx.files.internal("data/bar.png")), 9, 9, 9, 9);
 		loadingHealthGreen = new NinePatch(new Texture(Gdx.files.internal("data/health.png")), 9, 9, 9, 9);
 		loadingEnergyBlue = new NinePatch(new Texture(Gdx.files.internal("data/energy.png")), 9, 9, 9, 9);
@@ -99,7 +101,7 @@ public class GameplayScreen implements Screen{
 		
 		network.pingSend(me.getCharData());
 		
-		network.pingReceive();
+		opponent.setCharacterData(network.pingReceive());
 		
 		setCamera();
 		
@@ -110,6 +112,8 @@ public class GameplayScreen implements Screen{
 		drawItems();
 				
 		drawChar(me);
+		
+		drawChar(opponent);
 		
 		shootProjectile();	
 		
@@ -207,8 +211,11 @@ public class GameplayScreen implements Screen{
 		camera.update();  
 		batch.setProjectionMatrix(camera.combined);
 		batch.draw(c, c.getCharacterX(), c.getCharacterY());
-		drawEnergybar(c);
-		drawHealthbar(c);
+		
+		if(c == me){
+			drawEnergybar(c);
+			drawHealthbar(c);
+		}
 	}
 	
 	public void drawEnergybar(Character c){

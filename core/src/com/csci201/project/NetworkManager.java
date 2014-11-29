@@ -53,7 +53,9 @@ public class NetworkManager {
 		}
 	}
 	
-	public void pingReceive(){
+	public CharacterData pingReceive(){
+		
+		CharacterData cd = null;
 		
 		try {
 			ois = new ObjectInputStream(s.getInputStream());
@@ -61,7 +63,7 @@ public class NetworkManager {
 			Object obj = ois.readObject();
 			
 			if(obj instanceof CharacterData){
-				CharacterData cd = (CharacterData) obj;
+				cd = (CharacterData) obj;
 				System.out.println(cd.toString());
 				//CharacterData cd = (CharacterData)ois.readObject();
 				//System.out.println(cd.toString());
@@ -74,7 +76,7 @@ public class NetworkManager {
 			e.printStackTrace();
 		}
 		
-		
+		return cd;
 	}
 	
 	//Happens in "GameplayScreen.render()" which is a while loop in practice

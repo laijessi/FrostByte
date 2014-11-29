@@ -12,6 +12,7 @@ public class Healthbar implements Runnable, Serializable{
 	private int health;
 	private int healthUpTo;
 	private int healthDownTo;
+	private Lock healthLock;
 	
 	private Thread t;
 	
@@ -21,6 +22,7 @@ public class Healthbar implements Runnable, Serializable{
 		health = 50; //temporary default
 		healthUpTo = health;
 		healthDownTo = health;
+		healthLock = new ReentrantLock();
 		
 		t = new Thread(this);
 		t.start();
@@ -32,10 +34,19 @@ public class Healthbar implements Runnable, Serializable{
 			try{
 
 				Thread.sleep(100);
-				if(health < healthUpTo){
+				while(health < healthUpTo){
 					health++;
+					if(health > healthDownTo){
+						healthUpTo = health;
+					}
 					if(health >= 100){
 						health = 100;
+					}
+				}
+				while(health > healthDownTo){
+					health--;
+					if(health == 0){
+						health = 0;
 					}
 				}
 
@@ -51,24 +62,16 @@ public class Healthbar implements Runnable, Serializable{
 	}
 
 	public void addHealth(int i){
+		
+		healthLock.lock();
+		
 		if(i > 0){
 			healthUpTo = health + i;
 		}
+		else{
+			healthDownTo = health + i;
+		}
 		
-		/*else if(i < 0){
-			if(healthLock.tryLock()){
-				for(int j = 0; j > i; j--){
-					health--;
-					healthLock.unlock();
-				}
-			}
-			else{
-				for(int j = 0; j > i; j--){
-					health--;
-				}
-			}
-		}*/
+		healthLock.unlock();
 	}
-
-
 }

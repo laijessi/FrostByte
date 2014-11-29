@@ -215,11 +215,13 @@ public class Character extends Sprite implements InputProcessor {
 	public void checkDamage(Projectile p){
 		if(Intersector.overlaps(charData.getCharacterCollisionBox(), p.getColBox())){
 			if(charData.getHealth() - 5 > 0){
-				charData.setHealth(-5);
+				charData.addHealth(-5);
+				healthbar.addHealth(-5);
 				System.out.println("My health got decreased. New health: " + charData.getHealth() );
 			}
 			else if(charData.getHealth() - 5 == 0){
-				charData.setHealth(-charData.getHealth());
+				charData.addHealth(-charData.getHealth());
+				healthbar.addHealth(-charData.getHealth());
 				System.out.println("My health got decreased to 0. New health: " + charData.getHealth() );
 			}
 			if(charData.getHealth() == 0){

@@ -3,27 +3,57 @@ package com.csci201.project;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Random;
 import java.util.Scanner;
 import java.io.*;
 
 public class Server {
 	public static ArrayList<Socket> sockets = new ArrayList<Socket>();
+	public static ArrayList<String> charFiles = new ArrayList<String>();
 	public Server(int port) {
 		try {
 			ServerSocket ss= new ServerSocket( port );
+			
 			while(true) {
 				Socket s = ss.accept();
 				sockets.add(s);
 				ServerThread st= new ServerThread(s);
 				st.start();
 			}
+			
 		} catch (IOException ioe) {
 			System.out.println("IOExceptionin Server constructor: " + ioe.getMessage());
 		}
 	}
 	
 	public static void main(String [] args) {
+		charFiles = new ArrayList<String>();
+		for (int j = 0; j < 2; j++){
+			Random rn = new Random();
+			int i = rn.nextInt(4);
+			String charFile = "";
+			
+			if (i == 0){
+				charFile = "data/reindeer.png";
+			}
+			else if (i == 1){
+				charFile = "data/penguin.png";
+			}
+			else if (i == 2){
+				charFile = "data/santa.png";
+			}
+			else if (i == 3){
+				charFile = "data/mrsclause.png";
+			}
+			if( charFiles.size() == 1 && charFiles.get(0).equals(charFile)){
+				j--;
+			}
+			else{
+				charFiles.add(charFile);
+			}
+		}
+		
 		Server server= new Server(12345);
 	}
 
@@ -32,7 +62,6 @@ public class Server {
 		private ObjectOutputStream oos;
 		private ObjectInputStream ois;
 		private boolean firstTime;
-		
 		public ServerThread(Socket s ) {
 			this.s = s;
 			firstTime = true;
@@ -43,32 +72,18 @@ public class Server {
 				while(true){
 					if(sockets.size() == 2 && firstTime){
 						for(Socket socket : sockets){
-						//TODO: randomize image!
-							Random rn = new Random();
-							int i = rn.nextInt(4);
-							String charFile = "";
-							
-							if (i == 0){
-								charFile = "data/reindeer.png";
-							}
-							else if (i == 1){
-								charFile = "data/penguin.png";
-							}
-							else if (i == 2){
-								charFile = "data/santa.png";
-							}
-							else if (i == 3){
-								charFile = "data/mrsclause.png";
+							if(s.equals(sockets.get(0))){ }
+							else if (s.equals(sockets.get(1))){
+								Collections.swap(charFiles,0,1);
 							}
 							oos = new ObjectOutputStream(s.getOutputStream());
-							oos.writeObject(charFile);
+							oos.writeObject(charFiles);
 							oos.flush();
 							firstTime = false;
-						
 						}
 					}
 			
-					System.out.println(sockets.size());
+					System.out.print(sockets.size());
 
 					if(sockets.size() == 2){
 						for (Socket socket : sockets){
@@ -85,8 +100,6 @@ public class Server {
 									oos = new ObjectOutputStream(s.getOutputStream());
 									oos.writeObject(obj);
 									oos.flush();
-									
-									
 								}
 								
 								

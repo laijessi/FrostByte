@@ -83,14 +83,16 @@ public class GameplayScreen implements Screen{
 		
 		
 		network = new NetworkManager(me);
-		String charFile = network.connect();
+		ArrayList<String> charFiles = network.connect();
+		System.out.println(charFiles.get(0));
+		System.out.println(charFiles.get(1));
 
 		//TODO: create new constructor for me and opponent
-		Texture t = new Texture(Gdx.files.internal(charFile));
+		Texture t = new Texture(Gdx.files.internal(charFiles.get(0)));
 		me = new Character(mainMap, t);
 		
 		//TODO: create a function in character to change the image...
-		t = new Texture(Gdx.files.internal("data/reindeer.png"));
+		t = new Texture(Gdx.files.internal(charFiles.get(1)));
 		opponent = new Character(mainMap, t);
 		
 		//Projectile data

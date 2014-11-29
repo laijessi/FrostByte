@@ -5,6 +5,7 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.PrintWriter;
 import java.net.Socket;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class NetworkManager {
@@ -23,21 +24,24 @@ public class NetworkManager {
 		
 	}
 	
-	public String connect(){
+	public ArrayList<String> connect(){
 		try{
 			
 			System.out.println("Connecting");
 			s = new Socket(host, port);
 			System.out.println("Getting oos");
-			//ObjectOutputStream oos = new ObjectOutputStream(s.getOutputStream());
+			
 			while(true){
 
 				ois = new ObjectInputStream(s.getInputStream());
 				
 				System.out.println("getting data from server");
 				Object obj = ois.readObject();
-				if (obj instanceof String){
-					return obj.toString();
+				System.out.println(obj.getClass());
+				if (obj instanceof ArrayList<?>){
+					@SuppressWarnings("unchecked")
+					ArrayList<String> files = (ArrayList<String>) obj;
+					return files;
 				}
 			
 			}
@@ -48,7 +52,7 @@ public class NetworkManager {
 			System.out.println("Exception in client: " + e);
 			e.printStackTrace();
 		}
-		return "data/reindeer.png";
+		return null;
 	}
 	
 	public CharacterData pingReceive(){

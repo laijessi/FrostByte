@@ -29,6 +29,11 @@ public class CharacterData implements Serializable{
 	private MoveState left;
 	private MoveState up;
 	
+	private int regionX;
+	private int regionY;
+	private int width;
+	private int height;
+	
 	private long startTime; //for item 
 	private boolean itemActive;
 	private Item currItem;
@@ -59,6 +64,12 @@ public class CharacterData implements Serializable{
 		left = new MoveState();
 		up = new MoveState();
 		
+		
+		width = w;
+		height = h;
+		regionX = w;
+		regionY = h+h;
+		
 		//energy data
 		health = 50;
 		energy = 100;
@@ -72,6 +83,31 @@ public class CharacterData implements Serializable{
 	public void setCharacterSpeed(float num){
 		characterSpeed = num;
 	}
+	
+	public int getWidth(){
+		return width;
+	}
+	
+	public int getHeight(){
+		return height;
+	}
+	
+	public void setRegionX(int x){
+		regionX = x;
+	}
+	
+	public void setRegionY(int y){
+		regionY = y;	
+	}
+	
+	public int getRegionX(){
+		return regionX;
+	}
+	
+	public int getRegionY(){
+		return regionY;
+	}
+	
 	public float getX(){
 		return characterX;
 	}

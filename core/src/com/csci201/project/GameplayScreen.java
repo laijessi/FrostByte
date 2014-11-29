@@ -218,9 +218,17 @@ public class GameplayScreen implements Screen{
 		batch.setProjectionMatrix(camera.combined);
 		batch.draw(c, c.getCharacterX(), c.getCharacterY());
 		
-		if(c == me){
+		
+		if(c == me){ //draw the energy bars
 			drawEnergybar(c);
 			drawHealthbar(c);
+		}
+		
+		else{ //set the opponents movement
+			c.setRegion(c.getCharData().getRegionX(),
+						c.getCharData().getRegionY(),
+						c.getCharData().getWidth(),
+						c.getCharData().getHeight());
 		}
 	}
 	

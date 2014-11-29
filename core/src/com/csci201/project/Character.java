@@ -121,6 +121,10 @@ public class Character extends Sprite implements InputProcessor {
 			charData.addY(-amountMoved);
 		}
 		charData.getCharacterCollisionBox().setPosition(charData.getX(), charData.getY()); 
+		
+		charData.setRegionX(this.getRegionX());
+		charData.setRegionY(this.getRegionY());
+		
 		//Item detect 		
 		detectItem();
 		

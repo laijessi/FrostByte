@@ -65,14 +65,14 @@ public class Server {
 								if(obj instanceof CharacterData){
 									CharacterData cd = (CharacterData) obj;
 									//System.out.println(cd.toString());
-									
+									oos = new ObjectOutputStream(s.getOutputStream());
+									oos.writeObject(obj);
+									oos.flush();
 									
 									
 								}
 								
-								oos = new ObjectOutputStream(s.getOutputStream());
-								oos.writeObject(obj);
-								oos.flush();
+								
 							}
 						}
 					}

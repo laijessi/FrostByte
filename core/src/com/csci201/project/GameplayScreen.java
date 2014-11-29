@@ -60,8 +60,6 @@ public class GameplayScreen implements Screen{
 
 		batch = new SpriteBatch();
 		mainMap = new MainMap("map3.tmx");
-		me = new Character(mainMap);
-		opponent = new Character(mainMap);
 		
 		startingBackground = new NinePatch(new Texture(Gdx.files.internal("data/bar.png")), 9, 9, 9, 9);
 		loadingHealthGreen = new NinePatch(new Texture(Gdx.files.internal("data/health.png")), 9, 9, 9, 9);
@@ -85,6 +83,15 @@ public class GameplayScreen implements Screen{
 		
 		
 		network = new NetworkManager(me);
+		String charFile = network.connect();
+
+		//TODO: create new constructor for me and opponent
+		Texture t = new Texture(Gdx.files.internal(charFile));
+		me = new Character(mainMap, t);
+		
+		//TODO: create a function in character to change the image...
+		t = new Texture(Gdx.files.internal("data/reindeer.png"));
+		opponent = new Character(mainMap, t);
 		
 		//Projectile data
 	/*	FileHandle projectileFileHandle = Gdx.files.internal("data/projectile.png"); 

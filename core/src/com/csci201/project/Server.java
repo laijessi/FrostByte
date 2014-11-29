@@ -3,6 +3,7 @@ package com.csci201.project;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
+import java.util.Random;
 import java.util.Scanner;
 import java.io.*;
 
@@ -42,9 +43,25 @@ public class Server {
 				while(true){
 					if(sockets.size() == 2 && firstTime){
 						for(Socket socket : sockets){
-						
+						//TODO: randomize image!
+							Random rn = new Random();
+							int i = rn.nextInt(4);
+							String charFile = "";
+							
+							if (i == 0){
+								charFile = "data/reindeer.png";
+							}
+							else if (i == 1){
+								charFile = "data/penguin.png";
+							}
+							else if (i == 2){
+								charFile = "data/santa.png";
+							}
+							else if (i == 3){
+								charFile = "data/mrsclause.png";
+							}
 							oos = new ObjectOutputStream(s.getOutputStream());
-							oos.writeObject(new String("begin"));
+							oos.writeObject(charFile);
 							oos.flush();
 							firstTime = false;
 						

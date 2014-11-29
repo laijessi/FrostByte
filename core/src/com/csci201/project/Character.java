@@ -26,11 +26,11 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.utils.Array;
 
 public class Character extends Sprite implements InputProcessor {
-	static FileHandle characterFileHandle = Gdx.files.internal("data/reindeer.png"); 
-	private static Texture characterTexture = new Texture(characterFileHandle);
+	//static FileHandle characterFileHandle = Gdx.files.internal("data/reindeer.png"); 
+	//private static Texture characterTexture = new Texture(characterFileHandle);
 
-	private static int width = characterTexture.getWidth()/3;
-	private static int height = characterTexture.getHeight()/4;
+	private int width;
+	private int height;
 	
 	private CharacterData charData;
 	
@@ -44,9 +44,12 @@ public class Character extends Sprite implements InputProcessor {
 		return charData.toString();
 	}
 	
-	public Character(MainMap mainMap){
-		super(characterTexture, width, height*2, width, height);
+	public Character(MainMap mainMap, Texture characterTexture){
+		super(characterTexture, characterTexture.getWidth()/3, characterTexture.getHeight()/2, characterTexture.getWidth()/3, characterTexture.getHeight()/4);
 		System.out.println("Character constructor was called");
+
+		width = characterTexture.getWidth()/3;
+		height = characterTexture.getHeight()/4;
 		charData = new CharacterData(width, height);
 		energybar = new Energybar();
 		healthbar = new Healthbar();

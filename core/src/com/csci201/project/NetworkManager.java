@@ -20,11 +20,10 @@ public class NetworkManager {
 		port = 12345;
 		host = "localhost";
 		this.c = c;
-		connect();
 		
 	}
 	
-	public void connect(){
+	public String connect(){
 		try{
 			
 			System.out.println("Connecting");
@@ -36,14 +35,12 @@ public class NetworkManager {
 				ois = new ObjectInputStream(s.getInputStream());
 				
 				System.out.println("getting data from server");
-				if (ois.readObject().toString().equals("begin")){
-					System.out.println("work");
-					break;
+				Object obj = ois.readObject();
+				if (obj instanceof String){
+					return obj.toString();
 				}
 			
 			}
-			
-			//s.close();
 		
 			
 		}
@@ -51,6 +48,7 @@ public class NetworkManager {
 			System.out.println("Exception in client: " + e);
 			e.printStackTrace();
 		}
+		return "data/reindeer.png";
 	}
 	
 	public CharacterData pingReceive(){

@@ -22,16 +22,11 @@ public class Item extends Sprite implements Serializable{
 	private String type; 
 	private Rectangle itemRect;
 	private boolean available;
-	public Item(){
-		super(new Texture(Gdx.files.internal("data/item.png")));
-		randomItem();
-		randomLocation();
-		System.out.println("Was drawn here " + startX + " " + startY);
-		this.increaseFactor = 2;
-	}
+	
 	public Item(int val){
 		super(new Texture(Gdx.files.internal("data/item.png")));
 		randomItem();
+		available = true;
 		
 		if(val == 0){
 			this.startX = 416;

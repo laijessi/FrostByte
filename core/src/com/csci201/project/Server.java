@@ -171,7 +171,6 @@ public class Server {
 												insert.setString(3, Integer.toString(lose));
 												insert.setString(4, Float.toString(timePlayed));
 												insert.setString(5, Integer.toString(shotsFired));
-												insert.setString(5, Integer.toString(timePlayed));
 												insert.executeUpdate();
 											}
 											

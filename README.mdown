@@ -18,6 +18,9 @@ FrostByte contains special features such as networking to incorporate a chat fea
 	* Each attack consumes energy. Energy will constantly replenish, based on a timer, albeit gradually. We hope to implement future features that expend energy, such as sepcial moves and blinking
 6. Chat
 	* FrostByte enables players to communicate with eachother via a built-in chat client. This chat client is written using networking principles.
+7. Database
+	* Frostbyte saves gameplay statistics into a MySQL database
+	* Statistics saved include: username, wins, losses, time spent playing, and total projectiles fired
 
 ###Code Location
 1. Java Back-End
@@ -32,3 +35,7 @@ FrostByte contains special features such as networking to incorporate a chat fea
 3. Create additional maps for varied gameplay
 4. Create an equipment toolbar for players to buy equipment that increases their health or damage
 	* Additionally, there would be a shop where players can trade in "gold" from kills to buy special armor or weapons
+	
+###Instructional download and additional information
+1. Running the project from the Eclipse IDE can be found in README.txt
+2. Nuances and functionality can be found in README.txt

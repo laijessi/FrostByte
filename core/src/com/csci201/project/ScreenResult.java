@@ -2,46 +2,33 @@ package com.csci201.project;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 
-public class ScreenLose implements Screen{
-	private Label winnerLabel;
-	private Skin skin;
-	private Stage stage;
-	private Table table;
+public class ScreenResult implements Screen{
+	private Texture texture;
+	private SpriteBatch batch;
 	
-	public ScreenLose(){
-		initGUIElem();
-		Gdx.input.setInputProcessor(stage);
-		addGUIElem();
+	public ScreenResult(String file){
+		batch = new SpriteBatch();
+		texture = new Texture(Gdx.files.internal(file));
 		
 	}
-	
-	public void initGUIElem(){
-		stage = new Stage();
-		table = new Table();
-		skin = new Skin(Gdx.files.internal("uiskin.json"));
-		winnerLabel = new Label("You Lose!", skin);
-	}
-	
-	public void addGUIElem(){
-		table.setPosition(Gdx.graphics.getWidth()/2, Gdx.graphics.getHeight()/2);
-		table.add(winnerLabel);
-		
-		stage.addActor(table);
-	}
-
 	@Override
 	public void render(float delta) {
-		Gdx.gl.glClearColor(0, 0, 0, 0);
+		Gdx.gl.glClearColor(1, 0, 0, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-		
-		stage.act(delta);
-		stage.draw();
+
+		batch.begin();
+		batch.draw(texture,0,0,Gdx.graphics.getWidth(), Gdx.graphics.getHeight() );
+		batch.end();
 	}
 
 	@Override
@@ -52,7 +39,6 @@ public class ScreenLose implements Screen{
 
 	@Override
 	public void show() {
-		// TODO Auto-generated method stub
 		
 	}
 

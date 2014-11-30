@@ -285,7 +285,7 @@ public class GameplayScreen implements Screen{
 		}
 		else{
 			network.sendGameOver();
-			game.setScreen(new ScreenLose());
+			game.setScreen(new ScreenResult("lose.png"));
 		}
 	}
 	
@@ -296,7 +296,7 @@ public class GameplayScreen implements Screen{
 		}
 		else{
 			network.sendGameOver();
-			game.setScreen(new ScreenWin());
+			game.setScreen(new ScreenResult("win.png"));
 		}
 	}
 	

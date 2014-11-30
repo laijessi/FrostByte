@@ -16,7 +16,7 @@ public class NetworkManager {
 	
 	public NetworkManager(Character c){
 		port = 12345;
-		host = "192.168.0.10";		
+		host = "localhost";		
 	}
 	
 	public ArrayList<String> connect(){
@@ -90,5 +90,16 @@ public class NetworkManager {
 
 	}
 	
+	public void sendGameOver(){
+		try {
+			oos = new ObjectOutputStream(s.getOutputStream());
+			oos.writeObject(new String("Game Over"));
+			oos.flush();
+			
+			
+		} catch (IOException e1) {
+			e1.printStackTrace();
+		}
+	}
 	
 }

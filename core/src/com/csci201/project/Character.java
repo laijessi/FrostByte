@@ -24,17 +24,19 @@ public class Character extends Sprite implements InputProcessor {
 	//main variables
 	MainMap mainMap; 
 	
+	String name;
+	
 	public String toString(){
 		return charData.toString();
 	}
 	
-	public Character(MainMap mainMap, Texture characterTexture, int startX, int startY){
-		super(characterTexture, characterTexture.getWidth()/3, characterTexture.getHeight()/2, characterTexture.getWidth()/3, characterTexture.getHeight()/4);
-		System.out.println("Character constructor was called");
+	public Character(MainMap mainMap, Texture characterTexture, int startX, int startY, String name){
+		super(characterTexture, 0, 0, characterTexture.getWidth()/3, characterTexture.getHeight()/4);
+		this.name = name;
 
 		width = characterTexture.getWidth()/3;
 		height = characterTexture.getHeight()/4;
-		charData = new CharacterData(width, height, startX, startY);
+		charData = new CharacterData(width, height, startX, startY, name);
 		energybar = new Energybar();
 		
 		// camera data
@@ -198,7 +200,7 @@ public class Character extends Sprite implements InputProcessor {
 	public boolean checkDamage(Projectile p){
 		if(Intersector.overlaps(charData.getCharacterHitBox(), p.getColBox())){
 			if(charData.getHealth() - 5 > 0){
-				charData.addHealth(-5);
+				charData.addHealth(-100);
 				System.out.println("My health got decreased. New health: " + charData.getHealth() );
 				//return true;
 			}

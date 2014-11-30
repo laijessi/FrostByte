@@ -284,6 +284,7 @@ public class GameplayScreen implements Screen{
 			loadingHealthGreen.draw(batch, c.getCharacterX()-248, c.getCharacterY()-163, c.getHealth()*2 + 16, 21);
 		}
 		else{
+			network.sendGameOver();
 			game.setScreen(new ScreenLose());
 		}
 	}
@@ -294,6 +295,7 @@ public class GameplayScreen implements Screen{
 			loadingHealthGreen.draw(batch, c.getCharacterX()-8, c.getCharacterY()+70, (int)(c.getHealth()*.6) + 16, 10);
 		}
 		else{
+			network.sendGameOver();
 			game.setScreen(new ScreenWin());
 		}
 	}

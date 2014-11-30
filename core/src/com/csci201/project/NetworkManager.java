@@ -90,5 +90,16 @@ public class NetworkManager {
 
 	}
 	
+	public void sendGameOver(){
+		try {
+			oos = new ObjectOutputStream(s.getOutputStream());
+			oos.writeObject(new String("Game Over"));
+			oos.flush();
+			
+			
+		} catch (IOException e1) {
+			e1.printStackTrace();
+		}
+	}
 	
 }

@@ -101,8 +101,11 @@ public class Server {
 									oos.writeObject(obj);
 									oos.flush();
 								}
-								
-								
+								else if(obj instanceof String){
+									if (obj.toString().equals("Game Over")){
+										System.out.println("Got the game over String");
+									}
+								}
 							}
 						}
 					}

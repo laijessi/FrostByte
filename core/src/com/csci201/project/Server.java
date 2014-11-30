@@ -2,6 +2,12 @@ package com.csci201.project;
 
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Random;
@@ -61,6 +67,7 @@ public class Server {
 		private ObjectOutputStream oos;
 		private ObjectInputStream ois;
 		private boolean firstTime;
+		private CharacterData charFile; 
 		public ServerThread(Socket s ) {
 			this.s = s;
 			firstTime = true;
@@ -97,6 +104,7 @@ public class Server {
 								if(obj instanceof CharacterData){
 									CharacterData cd = (CharacterData) obj;
 									//System.out.println(cd.toString());
+									charFile = cd; 
 									oos = new ObjectOutputStream(s.getOutputStream());
 									oos.writeObject(obj);
 									oos.flush();
@@ -104,6 +112,74 @@ public class Server {
 								else if(obj instanceof String){
 									if (obj.toString().equals("Game Over")){
 										System.out.println("Got the game over String");
+										Connection conn; 
+										
+										try {
+											Class.forName("com.mysql.jdbc.Driver");
+											conn = DriverManager.getConnection("jdbc:mysql://localhost/FrostByte", "root", "");
+											String userName = charFile.getName(); 
+											int win, lose;
+											int shotsFired = charFile.getProjectiles().size(); 
+											charFile.setEnd(System.currentTimeMillis());
+											long timePlayedLong = (charFile.getEnd() - charFile.getStart())/1000; 
+											int timePlayed = (int) (timePlayedLong + 0); 
+											boolean exists = false; 
+											
+											if(charFile.getHealth() == 0) {
+												win = 0; 
+												lose = 1;
+											}
+											
+											else {
+												win = 1; 
+												lose = 0; 
+											}
+											
+											Statement select = conn.createStatement();
+											ResultSet results = select.executeQuery("SELECT * FROM PlayerInfo"); 
+											String wins = null, losses = null, timeSpent = null; 
+											
+											while(results.next()) {
+												if(results.getString("Username").equals(userName)) {
+													exists = true; 
+													wins = results.getString("Wins");
+													losses = results.getString("Losses");
+													timeSpent = results.getString("Time_Played");
+												}
+											}
+											
+											//if user exists in database already
+											if(exists) {
+												win += Integer.parseInt(wins);
+												lose += Integer.parseInt(losses);
+												timePlayed += Integer.parseInt(timeSpent);
+												
+												PreparedStatement insert = conn.prepareStatement("UPDATE PlayerInfo SET Shots_Fired=?, Wins=?, Losses=?, Time_Played=? WHERE UserName=?");
+												insert.setString(1, Integer.toString(shotsFired));
+												insert.setString(2, Integer.toString(win));
+												insert.setString(3, Integer.toString(lose));
+												insert.setString(4, Integer.toString(timePlayed));
+												insert.setString(5, userName);
+												insert.executeUpdate();
+											}
+											
+											//if user is not in database already
+											else {
+												PreparedStatement insert = conn.prepareStatement("INSERT INTO PlayerInfo (UserName, Wins, Losses, Time_Played, Shots_Fired) VALUES (?, ?, ?, ?, ?)");
+												insert.setString(1, userName);
+												insert.setString(2, Integer.toString(win));
+												insert.setString(3, Integer.toString(lose));
+												insert.setString(4, Float.toString(timePlayed));
+												insert.setString(5, Integer.toString(shotsFired));
+												insert.setString(5, Integer.toString(timePlayed));
+												insert.executeUpdate();
+											}
+											
+										} 
+										
+										catch (SQLException e) {
+											e.printStackTrace();
+										}
 									}
 								}
 							}

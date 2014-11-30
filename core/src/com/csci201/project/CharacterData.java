@@ -45,6 +45,9 @@ public class CharacterData implements Serializable{
 	private Rectangle characterCollisionBox; 
 	private Rectangle characterHitBox; 
 	
+	long start;
+	long end; 
+	
 	public CharacterData(int w, int h, int startX, int startY, String name){
 		characterX = startX;
 	    characterY = startY;
@@ -74,6 +77,8 @@ public class CharacterData implements Serializable{
 		//collision initialization
 		characterCollisionBox = new Rectangle(characterX, characterY + 2*h/3, w - 10, h/3);	
 		characterHitBox = new Rectangle(characterX, characterY, w, h);
+		
+		start = System.currentTimeMillis();
 	}
 	public float getCharacterSpeed(){
 		return characterSpeed;
@@ -193,5 +198,16 @@ public class CharacterData implements Serializable{
 	}
 	public Rectangle getCharacterHitBox() {
 		return characterHitBox; 
+	}
+	public long getStart() {
+		return start; 
+	}
+	
+	public long getEnd() {
+		return end; 
+	}
+	
+	public void setEnd(long end) {
+		this.end = end;
 	}
 }

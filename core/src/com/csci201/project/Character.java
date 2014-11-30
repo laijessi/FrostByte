@@ -210,6 +210,7 @@ public class Character extends Sprite implements InputProcessor {
 			}
 			if(charData.getHealth() == 0){
 				System.out.println("My health is 0, game over");
+				charData.setEnd(System.currentTimeMillis());
 			}
 			return true;
 		}

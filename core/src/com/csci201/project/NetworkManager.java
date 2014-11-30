@@ -14,9 +14,9 @@ public class NetworkManager {
 	private ObjectOutputStream oos;
 	private ObjectInputStream ois;
 	
-	public NetworkManager(Character c){
+	public NetworkManager(Character c, String host){
 		port = 12345;
-		host = "localhost";		
+		this.host = host;
 	}
 	
 	public ArrayList<String> connect(){

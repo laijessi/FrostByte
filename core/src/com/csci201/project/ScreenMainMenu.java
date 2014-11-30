@@ -92,7 +92,7 @@ public class ScreenMainMenu implements Screen{
 				}else{
 					ChatWindow cw = new ChatWindow(fieldUserName.getText(), fieldHostName.getText());
 					statusLabel.setText("Connecting to server... Waiting for other player");				
-					game.setScreen(new GameplayScreen(game, fieldUserName.getText()));
+					game.setScreen(new GameplayScreen(game, fieldUserName.getText(), fieldHostName.getText()));
 				}
 			}
 		});

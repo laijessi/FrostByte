@@ -43,13 +43,15 @@ public class GameplayScreen implements Screen{
 	Game game;
 	
 	String username;
+	String hostName;
 	
-	public GameplayScreen(Game g, String username){
+	public GameplayScreen(Game g, String username, String host){
 		//Sound sound = Gdx.audio.newSound(Gdx.files.internal("soundtrack.mp3"));
 		//long id = sound.play(.5f);
 		//sound.setLooping(id,true);
 		game = g;
 		this.username = username;
+		hostName = host;
 		
 		create();
 	}
@@ -81,7 +83,7 @@ public class GameplayScreen implements Screen{
 		mainMap.takeItemRects(itemRect);
 		
 		
-		network = new NetworkManager(me);
+		network = new NetworkManager(me, hostName);
 		ArrayList<String> charFiles = network.connect();
 		
 

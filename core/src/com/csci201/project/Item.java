@@ -109,5 +109,6 @@ public class Item extends Sprite implements Serializable{
 	}
 	public void setAvailable(){
 		available = true;
+		randomItem();
 	}
 }

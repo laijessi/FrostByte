@@ -287,7 +287,7 @@ public class GameplayScreen implements Screen{
 	public void drawHealthbar(Character c){
 		startingBackground.draw(batch, c.getCharacterX()-250, c.getCharacterY()-165, 220, 25);
 		if(c.getHealth() != 0){
-			loadingHealthGreen.draw(batch, c.getCharacterX()-248, c.getCharacterY()-163, c.getHealth()*2 + 16, 21);
+			loadingHealthGreen.draw(batch, c.getCharacterX()-248, c.getCharacterY()-163, (int)(c.getHealth()*2.15)+1, 21);
 		}
 		else{
 			network.sendGameOver();
@@ -298,7 +298,7 @@ public class GameplayScreen implements Screen{
 	public void drawOppHealth(Character c){
 		startingBackground.draw(batch, c.getCharacterX()-10, c.getCharacterY()+68, 80, 14);
 		if(c.getHealth() != 0){
-			loadingHealthGreen.draw(batch, c.getCharacterX()-8, c.getCharacterY()+70, (int)(c.getHealth()*.6) + 16, 10);
+			loadingHealthGreen.draw(batch, c.getCharacterX()-8, c.getCharacterY()+70, (int)(c.getHealth()*.7)+5, 10);
 		}
 		else{
 			network.sendGameOver();

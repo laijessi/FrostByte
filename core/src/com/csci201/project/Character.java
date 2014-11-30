@@ -129,7 +129,8 @@ public class Character extends Sprite implements InputProcessor {
 				if(charData.getCurrItem().getType().equals("Health")){
 					charData.getCurrItem().setAvailable();
 				}
-				else if(charData.getCurrItem().getType().equals("Strength")){
+				else if(charData.getCurrItem().getType().equals("Slow")){
+					charData.setCharacterSpeed(charData.getCharacterSpeed()*2);
 					charData.getCurrItem().setAvailable();
 				}
 				else if(charData.getCurrItem().getType().equals("Speed")){
@@ -146,11 +147,12 @@ public class Character extends Sprite implements InputProcessor {
 				if(mainMap.getItemList().get(val).isActive()){
 					mainMap.getItemList().get(val).deactivate();
 					charData.setStartTime(System.currentTimeMillis());
-					if(powerType.equals("Strength")){
+					if(powerType.equals("Slow")){
 						//Sound strength = Gdx.audio.newSound(Gdx.files.internal("strength.mp3"));
 						//strength.play(1f);
 						charData.setCurrItem(mainMap.getItemList().get(val));
 						charData.setItemActive(true);
+						charData.setCharacterSpeed(charData.getCharacterSpeed()/2);
 						
 					}
 					if(powerType.equals("Speed")){

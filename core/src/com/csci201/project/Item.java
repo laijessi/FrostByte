@@ -55,7 +55,7 @@ public class Item extends Sprite implements Serializable{
 			this.type = "Speed";
 		}
 		if(val == 1){
-			this.type = "Strength";
+			this.type = "Slow";
 		}
 		if(val == 2){
 			this.type = "Health";

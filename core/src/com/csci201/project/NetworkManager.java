@@ -21,16 +21,12 @@ public class NetworkManager {
 	
 	public ArrayList<String> connect(){
 		try{
-			
-			System.out.println("Connecting");
 			s = new Socket(host, port);
-			System.out.println("Getting oos");
 			
 			while(true){
 
 				ois = new ObjectInputStream(s.getInputStream());
 				
-				System.out.println("getting data from server");
 				Object obj = ois.readObject();
 				if (obj instanceof ArrayList<?>){
 					@SuppressWarnings("unchecked")

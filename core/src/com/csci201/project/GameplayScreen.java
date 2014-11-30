@@ -160,7 +160,6 @@ public class GameplayScreen implements Screen{
 	public void checkDamage(Projectile p){
 		if(p.exists()){
 			if(me.checkDamage(p)){
-				System.out.println("I got hit");
 				p.setExists(false);
 			}
 		}

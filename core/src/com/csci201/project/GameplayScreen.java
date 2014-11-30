@@ -281,7 +281,7 @@ public class GameplayScreen implements Screen{
 	public void drawHealthbar(Character c){
 		startingBackground.draw(batch, c.getCharacterX()-250, c.getCharacterY()-165, 220, 25);
 		if(c.getHealth() != 0){
-			loadingHealthGreen.draw(batch, c.getCharacterX()-248, c.getCharacterY()-163, c.getHealthbar().getHealth()*2 + 16, 21);
+			loadingHealthGreen.draw(batch, c.getCharacterX()-248, c.getCharacterY()-163, c.getHealth()*2 + 16, 21);
 		}
 	}
 	

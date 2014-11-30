@@ -20,7 +20,6 @@ public class Character extends Sprite implements InputProcessor {
 	private CharacterData charData;
 	
 	private Energybar energybar;
-	private Healthbar healthbar;
 	
 	//main variables
 	MainMap mainMap; 
@@ -37,7 +36,6 @@ public class Character extends Sprite implements InputProcessor {
 		height = characterTexture.getHeight()/4;
 		charData = new CharacterData(width, height, startX, startY);
 		energybar = new Energybar();
-		healthbar = new Healthbar();
 		
 		// camera data
 		Gdx.input.setInputProcessor(this);
@@ -164,7 +162,6 @@ public class Character extends Sprite implements InputProcessor {
 						//Sound health = Gdx.audio.newSound(Gdx.files.internal("health.mp3"));
 						//health.play(1f);
 						charData.addHealth(10); //add 10 
-						healthbar.addHealth(10);
 						charData.setCurrItem(mainMap.getItemList().get(val));
 						charData.setItemActive(true);
 					}
@@ -202,15 +199,11 @@ public class Character extends Sprite implements InputProcessor {
 		if(Intersector.overlaps(charData.getCharacterHitBox(), p.getColBox())){
 			if(charData.getHealth() - 5 > 0){
 				charData.addHealth(-5);
-				healthbar.addHealth(-5);
-				System.out.println("heatlhbar: " + healthbar.getHealth());
 				System.out.println("My health got decreased. New health: " + charData.getHealth() );
 				//return true;
 			}
 			else if(charData.getHealth() - 5 <= 0){
 				charData.addHealth(-charData.getHealth());
-				healthbar.addHealth(-charData.getHealth());
-				System.out.println("heatlhbar: " + healthbar.getHealth());
 				System.out.println("My health got decreased to 0. New health: " + charData.getHealth() );
 			}
 			if(charData.getHealth() == 0){
@@ -251,10 +244,6 @@ public class Character extends Sprite implements InputProcessor {
 	
 	public Energybar getEnergybar(){
 		return energybar;
-	}
-	
-	public Healthbar getHealthbar(){
-		return healthbar;
 	}
 	
 	public CharacterData getCharData(){

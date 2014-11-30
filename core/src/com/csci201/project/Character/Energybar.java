@@ -1,4 +1,4 @@
-package com.csci201.project;
+package com.csci201.project.Character;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;

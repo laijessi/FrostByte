@@ -1,4 +1,4 @@
-package com.csci201.project;
+package com.csci201.project.Character;
 
 import java.io.Serializable;
 

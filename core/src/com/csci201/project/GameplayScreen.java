@@ -14,6 +14,10 @@ import com.badlogic.gdx.graphics.g2d.NinePatch;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Intersector;
 import com.badlogic.gdx.math.Rectangle;
+import com.csci201.project.Character.Character;
+import com.csci201.project.Character.Item;
+import com.csci201.project.Character.MainMap;
+import com.csci201.project.Character.Projectile;
 
 
 public class GameplayScreen implements Screen{

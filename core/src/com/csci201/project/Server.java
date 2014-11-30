@@ -13,6 +13,8 @@ import java.util.Collections;
 import java.util.Random;
 import java.io.*;
 
+import com.csci201.project.Character.CharacterData;
+
 public class Server {
 	public static ArrayList<Socket> sockets = new ArrayList<Socket>();
 	public static ArrayList<String> charFiles = new ArrayList<String>();

@@ -1,4 +1,4 @@
-package com.csci201.project;
+package com.csci201.project.Chat;
 
 import java.awt.BorderLayout;
 import java.awt.Component;

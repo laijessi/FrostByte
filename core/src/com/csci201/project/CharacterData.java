@@ -41,6 +41,7 @@ public class CharacterData implements Serializable{
 	
 	//collision variables
 	private Rectangle characterCollisionBox; 
+	private Rectangle characterHitBox; 
 	
 	public CharacterData(int w, int h, int startX, int startY){
 		characterX = startX;
@@ -68,6 +69,7 @@ public class CharacterData implements Serializable{
 		
 		//collision initialization
 		characterCollisionBox = new Rectangle(characterX, characterY + 2*h/3, w - 10, h/3);	
+		characterHitBox = new Rectangle(characterX, characterY, w, h);
 	}
 	public float getCharacterSpeed(){
 		return characterSpeed;
@@ -146,7 +148,13 @@ public class CharacterData implements Serializable{
 		return health;
 	}
 	public void addHealth(int i){
-		health += i;
+		if(health + i <= 100) {
+			health += i;
+		}
+		
+		else if(health + i > 100) {
+			health = 100; 
+		}
 	}
 	public int getEnergy(){
 		return energy;
@@ -170,5 +178,8 @@ public class CharacterData implements Serializable{
 	}
 	public Rectangle getCharacterCollisionBox(){
 		return characterCollisionBox;
+	}
+	public Rectangle getCharacterHitBox() {
+		return characterHitBox; 
 	}
 }

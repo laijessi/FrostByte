@@ -111,6 +111,7 @@ public class Character extends Sprite implements InputProcessor {
 			charData.addY(-amountMoved);
 		}
 		charData.getCharacterCollisionBox().setPosition(charData.getX(), charData.getY()); 
+		charData.getCharacterHitBox().setPosition(charData.getX(), charData.getY());
 		
 		charData.setRegionX(this.getRegionX());
 		charData.setRegionY(this.getRegionY());
@@ -197,14 +198,15 @@ public class Character extends Sprite implements InputProcessor {
 		return -1;
 	}
 	
-	public void checkDamage(Projectile p){
-		if(Intersector.overlaps(charData.getCharacterCollisionBox(), p.getColBox())){
+	public boolean checkDamage(Projectile p){
+		if(Intersector.overlaps(charData.getCharacterHitBox(), p.getColBox())){
 			if(charData.getHealth() - 5 > 0){
 				charData.addHealth(-5);
 				healthbar.addHealth(-5);
 				System.out.println("My health got decreased. New health: " + charData.getHealth() );
+				//return true;
 			}
-			else if(charData.getHealth() - 5 == 0){
+			else if(charData.getHealth() - 5 <= 0){
 				charData.addHealth(-charData.getHealth());
 				healthbar.addHealth(-charData.getHealth());
 				System.out.println("My health got decreased to 0. New health: " + charData.getHealth() );
@@ -212,8 +214,10 @@ public class Character extends Sprite implements InputProcessor {
 			if(charData.getHealth() == 0){
 				System.out.println("My health is 0, game over");
 			}
+			return true;
 		}
 		else{
+			return false;
 			//System.out.print("I was not hit. ");
 			//System.out.println(" This was projectiles x and y: " + p.getX() + p.getY());
 		}

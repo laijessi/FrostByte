@@ -12,6 +12,7 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.NinePatch;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.Intersector;
 import com.badlogic.gdx.math.Rectangle;
 
 
@@ -126,6 +127,8 @@ public class GameplayScreen implements Screen{
 		
 		setCamera();
 		
+		mainMap.renderBackgroundLayers(); 
+		
 		moveChar();
 		
 		batch.begin();
@@ -142,24 +145,19 @@ public class GameplayScreen implements Screen{
 		
 		drawProjectiles(opponent);
 		
-		checkDamage();
-	
-		
-
 		batch.end();
 		
-		
+		mainMap.renderForegroundLayers();
 		
 	}
 	
-	public void checkDamage(){
-		
-		for(Projectile p: opponent.getProjectiles()){
-			if(p.exists()){
-				me.checkDamage(p);
+	public void checkDamage(Projectile p){
+		if(p.exists()){
+			if(me.checkDamage(p)){
+				System.out.println("I got hit");
+				p.setExists(false);
 			}
 		}
-		
 	}
 	public void drawProjectiles(Character temp){
 
@@ -175,6 +173,15 @@ public class GameplayScreen implements Screen{
 				//batch.draw(p, p.getX(), p.getY());
 				
 				batch.draw(new Texture(Gdx.files.internal("data/projectile.png")), p.getX(), p.getY());
+				if(temp != me){
+					System.out.println("Checking for damages");
+					checkDamage(p);
+				}
+				if(temp == me){
+					if(Intersector.overlaps(opponent.getCharData().getCharacterHitBox(), p.getColBox())){
+						p.setExists(false);
+					}
+				}
 			}
 			if(p.distanceUp() > 100 || p.detectCollision(mainMap)){
 				p.setExists(false);
@@ -245,7 +252,6 @@ public class GameplayScreen implements Screen{
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		camera.update();
 		mainMap.getMapRenderer().setView(camera);
-		mainMap.getMapRenderer().render();
 	}
 	
 	public void drawChar(Character c){

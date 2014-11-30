@@ -22,10 +22,13 @@ Instructions to run from Eclipse:
 			- csci201project
 
 3) In order to play the game
-	a) First run the server
+	a) First run the servers, there is one server for the game and another server for the chat
 		i) Click CSCI201_Project-core
 		ii) Go to src -> com.csci201.project
 		iii) Open and run Server.java
+		iv) Click CSCI201_Project-core
+		v) Go to src -> com.csci201.Chat
+		vi) Open and run ChatServer.java
 	b) Next run the game itself
 		i) Click CSCI201_Project-desktop
 		ii) Right click the src directory and click 'Run As' and then 'Java Application'

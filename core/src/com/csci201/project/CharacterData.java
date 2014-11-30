@@ -156,7 +156,13 @@ public class CharacterData implements Serializable{
 		return health;
 	}
 	public void addHealth(int i){
-		health += i;
+		if(health + i <= 100) {
+			health += i;
+		}
+		
+		else if(health + i > 100) {
+			health = 100; 
+		}
 	}
 	public int getEnergy(){
 		return energy;

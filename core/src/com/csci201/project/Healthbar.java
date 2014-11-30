@@ -63,7 +63,13 @@ public class Healthbar implements Runnable, Serializable{
 
 	public void addHealth(int i){
 		System.out.println("I'm adding health " + i);
-		health+=i;
+		if(health + i <= 100) {
+			health+=i;
+		}
+		
+		else if(health + i > 100) {
+			health = 100; 
+		}
 		/*healthLock.lock();
 		
 		if(i > 0){

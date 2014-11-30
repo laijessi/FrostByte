@@ -29,9 +29,9 @@ public class Character extends Sprite implements InputProcessor {
 	}
 	
 	public Character(MainMap mainMap, Texture characterTexture, int startX, int startY){
-		super(characterTexture, characterTexture.getWidth()/3, characterTexture.getHeight()/2, characterTexture.getWidth()/3, characterTexture.getHeight()/4);
-		System.out.println("Character constructor was called");
-
+		super(characterTexture, 0, 0, characterTexture.getWidth()/3, characterTexture.getHeight()/4);
+		
+		
 		width = characterTexture.getWidth()/3;
 		height = characterTexture.getHeight()/4;
 		charData = new CharacterData(width, height, startX, startY);

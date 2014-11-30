@@ -91,6 +91,7 @@ public class ScreenMainMenu implements Screen{
 					statusLabel.setText("Please enter a valid username and host IP address");
 				}else{
 					ChatWindow cw = new ChatWindow(fieldUserName.getText(), fieldHostName.getText());
+					statusLabel.setText("Connecting to server... Waiting for other player");				
 					game.setScreen(new GameplayScreen(game));
 				}
 			}

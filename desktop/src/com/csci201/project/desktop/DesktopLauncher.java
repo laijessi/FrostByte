@@ -15,4 +15,3 @@ public class DesktopLauncher {
 		new LwjglApplication(new FrostByte(), config);
 	}
 }
-

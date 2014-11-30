@@ -24,17 +24,19 @@ public class Character extends Sprite implements InputProcessor {
 	//main variables
 	MainMap mainMap; 
 	
+	String name;
+	
 	public String toString(){
 		return charData.toString();
 	}
 	
-	public Character(MainMap mainMap, Texture characterTexture, int startX, int startY){
+	public Character(MainMap mainMap, Texture characterTexture, int startX, int startY, String name){
 		super(characterTexture, 0, 0, characterTexture.getWidth()/3, characterTexture.getHeight()/4);
-		
-		
+		this.name = name;
+
 		width = characterTexture.getWidth()/3;
 		height = characterTexture.getHeight()/4;
-		charData = new CharacterData(width, height, startX, startY);
+		charData = new CharacterData(width, height, startX, startY, name);
 		energybar = new Energybar();
 		
 		// camera data

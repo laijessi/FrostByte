@@ -87,55 +87,39 @@ public class ScreenMainMenu implements Screen{
 		buttonPlay.addListener(new ClickListener(){
 			@Override
 			public void touchUp(InputEvent e, float x, float y, int point, int button){
-				game.setScreen(new GameplayScreen(game));
-				//TODO: need to add in server socket things
+				if(fieldUserName.getText().equals("") || fieldHostName.getText().equals("")){
+					statusLabel.setText("Please enter a valid username and host IP address");
+				}else{
+					ChatWindow cw = new ChatWindow(fieldUserName.getText(), fieldHostName.getText());
+					statusLabel.setText("Connecting to server... Waiting for other player");				
+					game.setScreen(new GameplayScreen(game, fieldUserName.getText()));
+				}
 			}
 		});
 	}
 
 	@Override
 	public void render(float delta) {
-		// TODO Auto-generated method stub
 		Gdx.gl.glClearColor(0, 0, 0, 0);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		
 		stage.act(delta);
 		stage.draw();
 	}
-
-	@Override
-	public void resize(int width, int height) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void show() {
-		// TODO Auto-generated method stub
-	}
-
-	@Override
-	public void hide() {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void pause() {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void resume() {
-		// TODO Auto-generated method stub
-		
-	}
-
+	
 	@Override
 	public void dispose() {
-		// TODO Auto-generated method stub
 		Gdx.app.debug("FrostByte", "dispose main menu");
 	}
 
+	@Override
+	public void resize(int width, int height) {}
+	@Override
+	public void show() {}
+	@Override
+	public void hide() {}
+	@Override
+	public void pause() {}
+	@Override
+	public void resume() {}
 }

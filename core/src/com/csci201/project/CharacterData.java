@@ -36,6 +36,8 @@ public class CharacterData implements Serializable{
 	
 	private int health;
 	private int energy;
+	
+	private String name;
 
 	private Queue<Projectile> projectiles;
 	
@@ -43,9 +45,11 @@ public class CharacterData implements Serializable{
 	private Rectangle characterCollisionBox; 
 	private Rectangle characterHitBox; 
 	
-	public CharacterData(int w, int h, int startX, int startY){
+	public CharacterData(int w, int h, int startX, int startY, String name){
 		characterX = startX;
 	    characterY = startY;
+	    
+	    this.name = name;
 	    
 	    projectiles = new LinkedList<Projectile>();
 	    
@@ -84,6 +88,14 @@ public class CharacterData implements Serializable{
 	
 	public int getHeight(){
 		return height;
+	}
+	
+	public String getName(){
+		return name;
+	}
+	
+	public void setName(String n){
+		name = n;
 	}
 	
 	public void setRegionX(int x){

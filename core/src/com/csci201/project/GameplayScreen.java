@@ -42,11 +42,15 @@ public class GameplayScreen implements Screen{
 	
 	Game game;
 	
-	public GameplayScreen(Game g){
+	String username;
+	
+	public GameplayScreen(Game g, String username){
 		//Sound sound = Gdx.audio.newSound(Gdx.files.internal("soundtrack.mp3"));
 		//long id = sound.play(.5f);
 		//sound.setLooping(id,true);
 		game = g;
+		this.username = username;
+		
 		create();
 	}
 
@@ -83,12 +87,12 @@ public class GameplayScreen implements Screen{
 
 		Texture t = new Texture(Gdx.files.internal(charFiles.get(0)));
 		ArrayList<Integer> starting = setStartPos(charFiles.get(0));
-		me = new Character(mainMap, t, starting.get(0), starting.get(1));
+		me = new Character(mainMap, t, starting.get(0), starting.get(1), username);
 		camera.translate(starting.get(0)-280, starting.get(1)-220);
 		
 		t = new Texture(Gdx.files.internal(charFiles.get(1)));
 		starting = setStartPos(charFiles.get(1));
-		opponent = new Character(mainMap, t, starting.get(0), starting.get(1));
+		opponent = new Character(mainMap, t, starting.get(0), starting.get(1), "");
 		
 		//Projectile data
 	/*	FileHandle projectileFileHandle = Gdx.files.internal("data/projectile.png"); 
@@ -301,38 +305,15 @@ public class GameplayScreen implements Screen{
 	}
 	
 	@Override
-	public void resize(int width, int height) {
-		// TODO Auto-generated method stub
-		
-	}
-
+	public void resize(int width, int height) {}
 	@Override
-	public void show() {
-		// TODO Auto-generated method stub
-		
-	}
-
+	public void show() {}
 	@Override
-	public void hide() {
-		// TODO Auto-generated method stub
-		
-	}
-
+	public void hide() {}
 	@Override
-	public void pause() {
-		// TODO Auto-generated method stub
-		
-	}
-
+	public void pause() {}
 	@Override
-	public void resume() {
-		// TODO Auto-generated method stub
-		
-	}
-
+	public void resume() {}
 	@Override
-	public void dispose() {
-		// TODO Auto-generated method stub
-		
-	}
+	public void dispose() {}
 }

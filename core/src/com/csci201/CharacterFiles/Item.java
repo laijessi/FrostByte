@@ -1,4 +1,4 @@
-package com.csci201.project.Character;
+package com.csci201.CharacterFiles;
 
 import java.io.Serializable;
 import java.util.Random;

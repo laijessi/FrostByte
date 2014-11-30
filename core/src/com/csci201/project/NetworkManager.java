@@ -6,8 +6,8 @@ import java.io.ObjectOutputStream;
 import java.net.Socket;
 import java.util.ArrayList;
 
-import com.csci201.project.Character.Character;
-import com.csci201.project.Character.CharacterData;
+import com.csci201.CharacterFiles.Character;
+import com.csci201.CharacterFiles.CharacterData;
 
 public class NetworkManager {
 

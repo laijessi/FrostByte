@@ -205,6 +205,7 @@ public class Character extends Sprite implements InputProcessor {
 			}
 			else if(charData.getHealth() - 5 <= 0){
 				charData.addHealth(-charData.getHealth());
+				charData.setEnd(System.currentTimeMillis());
 			}
 			return true;
 		}

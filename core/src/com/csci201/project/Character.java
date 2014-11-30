@@ -127,10 +127,10 @@ public class Character extends Sprite implements InputProcessor {
 				if(charData.getCurrItem().getType().equals("Health")){
 					charData.getCurrItem().setAvailable();
 				}
-				if(charData.getCurrItem().getType().equals("Strength")){
+				else if(charData.getCurrItem().getType().equals("Strength")){
 					charData.getCurrItem().setAvailable();
 				}
-				if(charData.getCurrItem().getType().equals("Speed")){
+				else if(charData.getCurrItem().getType().equals("Speed")){
 					charData.setCharacterSpeed(charData.getCharacterSpeed()/2);
 					charData.getCurrItem().setAvailable();
 				}

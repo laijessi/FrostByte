@@ -283,12 +283,18 @@ public class GameplayScreen implements Screen{
 		if(c.getHealth() != 0){
 			loadingHealthGreen.draw(batch, c.getCharacterX()-248, c.getCharacterY()-163, c.getHealth()*2 + 16, 21);
 		}
+		else{
+			game.setScreen(new ScreenLose());
+		}
 	}
 	
 	public void drawOppHealth(Character c){
 		startingBackground.draw(batch, c.getCharacterX()-10, c.getCharacterY()+68, 80, 14);
 		if(c.getHealth() != 0){
 			loadingHealthGreen.draw(batch, c.getCharacterX()-8, c.getCharacterY()+70, (int)(c.getHealth()*.6) + 16, 10);
+		}
+		else{
+			game.setScreen(new ScreenWin());
 		}
 	}
 	

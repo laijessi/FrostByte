@@ -46,16 +46,18 @@ public class ChatWindow extends JFrame{
 	JButton submit;
 	
 	String username;
+	String hostIP;
 	
 	//class variables
 	Scanner input;
 	PrintWriter output;
 	
 	//constructor
-	public ChatWindow(String username){
+	public ChatWindow(String username, String hostIP){
 		super("Chat Window");
 		
 		this.username = username;
+		this.hostIP = hostIP;
 		
 		createWindow();
 		
@@ -70,7 +72,7 @@ public class ChatWindow extends JFrame{
 		setVisible(true);
 		
 		try{
-			Socket s = new Socket("localhost", 6789);
+			Socket s = new Socket(hostIP, 6789);
 			input = new Scanner(s.getInputStream());
 			output = new PrintWriter(s.getOutputStream());
 			
@@ -157,9 +159,9 @@ public class ChatWindow extends JFrame{
 		});
 	}
 	
-	public static void main(String[] args){
+	/*public static void main(String[] args){
 		new ChatWindow("Amos");
-	}
+	}*/
 	
 	class buttonListener implements ActionListener{
 

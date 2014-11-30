@@ -203,12 +203,14 @@ public class Character extends Sprite implements InputProcessor {
 			if(charData.getHealth() - 5 > 0){
 				charData.addHealth(-5);
 				healthbar.addHealth(-5);
+				System.out.println("heatlhbar: " + healthbar.getHealth());
 				System.out.println("My health got decreased. New health: " + charData.getHealth() );
 				//return true;
 			}
 			else if(charData.getHealth() - 5 <= 0){
 				charData.addHealth(-charData.getHealth());
 				healthbar.addHealth(-charData.getHealth());
+				System.out.println("heatlhbar: " + healthbar.getHealth());
 				System.out.println("My health got decreased to 0. New health: " + charData.getHealth() );
 			}
 			if(charData.getHealth() == 0){

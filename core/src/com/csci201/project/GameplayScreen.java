@@ -155,9 +155,17 @@ public class GameplayScreen implements Screen{
 		
 		drawProjectiles(opponent);
 		
-		batch.end();
+		batch.end(); 
 		
 		mainMap.renderForegroundLayers();
+		
+		batch.begin(); 
+		
+		renderBars(me);
+		
+		renderBars(opponent);
+		
+		batch.end();
 		
 	}
 	
@@ -267,18 +275,22 @@ public class GameplayScreen implements Screen{
 		batch.setProjectionMatrix(camera.combined);
 		batch.draw(c, c.getCharacterX(), c.getCharacterY());
 		
-		
-		if(c == me){ //draw the energy bars
-			drawEnergybar(c);
-			drawHealthbar(c);
-		}
-		
-		else{ //set the opponents movement
-			drawOppHealth(c);
+		if(c != me){ //set the opponents movement
 			c.setRegion(c.getCharData().getRegionX(),
 						c.getCharData().getRegionY(),
 						c.getCharData().getWidth(),
 						c.getCharData().getHeight());
+		}
+	}
+	
+	public void renderBars(Character c) {
+		if(c == me){ //draw your energy bars
+			drawEnergybar(c);
+			drawHealthbar(c);
+		}
+		
+		else{ //draws opponent's health
+			drawOppHealth(c);
 		}
 	}
 	

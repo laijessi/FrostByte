@@ -65,7 +65,7 @@
    eJzt2rEJAkEUBNC94rUD7UA7ODvQDrQD7UBjv8jCBqZy4rwHn0t3hgunNQDgX6ym1tbT0q9Yzqayb4Pz7yr7Pjj/XNkPwfkBAAAAAAAAfpU9w3vPcKw7BfbQ9wznuktYD69/v+8ZrnW3oYcE45bnXt/H0EOCT1ue3kOCOSQnAAAAwDc8AYUSG4c=
   </data>
  </layer>
- <objectgroup name="CollisionLayer" visible="0">
+ <objectgroup name="CollisionLayer">
   <object x="1917.2" y="0" width="138.46" height="2048.76"/>
   <object x="-5.96481" y="1936.69" width="2054.88" height="131.226"/>
   <object x="1.95387" y="3.97693" width="125.273" height="2044.14"/>

@@ -119,8 +119,8 @@ public class Server {
 										try {
 											Class.forName("com.mysql.jdbc.Driver");
 											conn = DriverManager.getConnection("jdbc:mysql://localhost/FrostByte", "root", "");
-											String userName = charFile.getName(); 
-											int win, lose;
+											String username = charFile.getName(); 
+											int wins, losses;
 											int shotsFired = charFile.getProjectiles().size(); 
 											charFile.setEnd(System.currentTimeMillis());
 											long timePlayedLong = (charFile.getEnd() - charFile.getStart())/1000; 
@@ -128,49 +128,49 @@ public class Server {
 											boolean exists = false; 
 											
 											if(charFile.getHealth() == 0) {
-												win = 0; 
-												lose = 1;
+												wins = 0; 
+												losses = 1;
 											}
 											
 											else {
-												win = 1; 
-												lose = 0; 
+												wins = 1; 
+												losses = 0; 
 											}
 											
 											Statement select = conn.createStatement();
 											ResultSet results = select.executeQuery("SELECT * FROM PlayerInfo"); 
-											String wins = null, losses = null, timeSpent = null; 
+											String databaseWins = null, databaseLosses = null, databaseTimePlayed = null; 
 											
 											while(results.next()) {
-												if(results.getString("Username").equals(userName)) {
+												if(results.getString("Username").equals(username)) {
 													exists = true; 
-													wins = results.getString("Wins");
-													losses = results.getString("Losses");
-													timeSpent = results.getString("Time_Played");
+													databaseWins = results.getString("Wins");
+													databaseLosses = results.getString("Losses");
+													databaseTimePlayed = results.getString("Time_Played");
 												}
 											}
 											
 											//if user exists in database already
 											if(exists) {
-												win += Integer.parseInt(wins);
-												lose += Integer.parseInt(losses);
-												timePlayed += Integer.parseInt(timeSpent);
+												wins += Integer.parseInt(databaseWins);
+												losses += Integer.parseInt(databaseLosses);
+												timePlayed += Integer.parseInt(databaseTimePlayed);
 												
-												PreparedStatement insert = conn.prepareStatement("UPDATE PlayerInfo SET Shots_Fired=?, Wins=?, Losses=?, Time_Played=? WHERE UserName=?");
-												insert.setString(1, Integer.toString(shotsFired));
-												insert.setString(2, Integer.toString(win));
-												insert.setString(3, Integer.toString(lose));
-												insert.setString(4, Integer.toString(timePlayed));
-												insert.setString(5, userName);
+												PreparedStatement insert = conn.prepareStatement("UPDATE PlayerInfo SET Wins=?, Losses=?, Time_Played=?, Shots_Fired=? WHERE Username=?");
+												insert.setString(1, Integer.toString(wins));
+												insert.setString(2, Integer.toString(losses));
+												insert.setString(3, Integer.toString(timePlayed));
+												insert.setString(4, Integer.toString(shotsFired));
+												insert.setString(5, username);
 												insert.executeUpdate();
 											}
 											
 											//if user is not in database already
 											else {
-												PreparedStatement insert = conn.prepareStatement("INSERT INTO PlayerInfo (UserName, Wins, Losses, Time_Played, Shots_Fired) VALUES (?, ?, ?, ?, ?)");
-												insert.setString(1, userName);
-												insert.setString(2, Integer.toString(win));
-												insert.setString(3, Integer.toString(lose));
+												PreparedStatement insert = conn.prepareStatement("INSERT INTO PlayerInfo (Username, Wins, Losses, Time_Played, Shots_Fired) VALUES (?, ?, ?, ?, ?)");
+												insert.setString(1, username);
+												insert.setString(2, Integer.toString(wins));
+												insert.setString(3, Integer.toString(losses));
 												insert.setString(4, Float.toString(timePlayed));
 												insert.setString(5, Integer.toString(shotsFired));
 												insert.executeUpdate();

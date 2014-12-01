@@ -159,14 +159,6 @@ public class GameplayScreen implements Screen{
 		
 		mainMap.renderForegroundLayers();
 		
-		batch.begin(); 
-		
-		renderBars(me);
-		
-		renderBars(opponent);
-		
-		batch.end();
-		
 	}
 	
 	public void checkDamage(Projectile p){
@@ -274,23 +266,17 @@ public class GameplayScreen implements Screen{
 		camera.update();  
 		batch.setProjectionMatrix(camera.combined);
 		batch.draw(c, c.getCharacterX(), c.getCharacterY());
-		
-		if(c != me){ //set the opponents movement
-			c.setRegion(c.getCharData().getRegionX(),
-						c.getCharData().getRegionY(),
-						c.getCharData().getWidth(),
-						c.getCharData().getHeight());
-		}
-	}
-	
-	public void renderBars(Character c) {
 		if(c == me){ //draw your energy bars
 			drawEnergybar(c);
 			drawHealthbar(c);
 		}
 		
-		else{ //draws opponent's health
+		if(c != me){ //set the opponents movement
 			drawOppHealth(c);
+			c.setRegion(c.getCharData().getRegionX(),
+						c.getCharData().getRegionY(),
+						c.getCharData().getWidth(),
+						c.getCharData().getHeight());
 		}
 	}
 	

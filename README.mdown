@@ -24,7 +24,7 @@ FrostByte contains special features such as networking to incorporate a chat fea
 
 ###Code Location
 1. Java Back-End
-	* All Java back-end code can be found in core/src/com/csci201/project
+	* All Java back-end code can be found in core/src/com/csci201
 
 ###Future expansion
 1. libGDX provides the ability to easily translate code into other platforms (web, android)
